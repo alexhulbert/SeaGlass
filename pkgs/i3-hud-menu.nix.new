@@ -1,0 +1,28 @@
+{ config, lib, pkgs, ... }:
+
+let
+  i3-hud-menu = builtins.fetchTarball {
+    url = "https://github.com/nick87720z/i3-hud-menu/archive/master.tar.gz";
+  };
+  mod = config.home-manager.users.alex.xsession.windowManager.i3.config.modifier;
+  custom-python-env = pkgs.python3.withPackages (pythonPackages: with pythonPackages; [
+    dbus-python
+    pygobject3
+  ]);
+in {
+  environment.systemPackages = [
+    custom-python-env
+    pkgs.gobjectIntrospection
+    pkgs.gtk3
+    pkgs.pango
+    pkgs.gdk_pixbuf
+  ];
+
+  home-manager.users.alex.xsession.windowManager.i3 = {
+    config.keybindings = {
+      "${mod}+x" = "exec ${i3-hud-menu}/i3-hud-menu.py";
+    };
+    extraConfig = "exec ${lib.getBin custom-python-env}/bin/python3 ${i3-hud-menu}/i3-appmenu-service.py";
+  };
+}
+
