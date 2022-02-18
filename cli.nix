@@ -2,6 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
+    bc
+    feh
     acpi
     vim
     wget
@@ -48,6 +50,7 @@
     m4
     utillinux
     procps
+    (callPackage ./pkgs/pywalfox-native.nix {})
   ];
 }
 

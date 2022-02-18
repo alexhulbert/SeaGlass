@@ -1,0 +1,17 @@
+[kdeglobals][KDE]
+widgetStyle=QtCurve
+
+[kdeglobals][General]
+ColorScheme=Pywal
+
+[kdeglobals][Icons]
+Theme=breeze
+
+[plasmarc][Theme]
+name=breeze
+
+[kwinrc][org.kde.kdecoration2]
+theme=org.kde.breeze
+
+[kcminputrc][Mouse]
+cursorTheme=breeze_cursors

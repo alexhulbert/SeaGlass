@@ -7,12 +7,13 @@
       ./syspkgs.nix
       ./cli.nix
       ./gui.nix
+      ./theme.nix
       ./hardware-configuration.nix
       ./home.nix
     ];
 
   nixpkgs.config.packageOverrides = pkgs: {
-    nur = import (builtins.fetchTarball "https://github.com/nix-commmunity/NUR/archive/master.tar.gz") {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
       inherit pkgs;
     };
   };
@@ -49,6 +50,7 @@
   users.users.alex = {
     isNormalUser = true;
     extraGroups = [ "wheel" "docker" "networkmanager" ];
+    shell = pkgs.fish;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
