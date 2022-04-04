@@ -1,18 +1,21 @@
 { config, pkgs, ... }:
 
-{
+let
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  fenix = import (fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz") { };
+in {
   environment.systemPackages = with pkgs; [
+    steam-run
     bc
     feh
     acpi
-    vim
-    wget
-    curl
+    neovim
+    (writeShellScriptBin "vim" "nvim $@")
+    wget curl
     tmux
     ripgrep
     gnupg
     nmap
-    bat
     bash
     killall
     less
@@ -25,22 +28,31 @@
     unzip
     git
     p7zip
-    lsd
     fzf
     fish
     sbt
     gcc
-    rustup
-    rustc
     go
     nodejs
     gnugrep
     pciutils
+    xdotool
+    docker
+    bind
     any-nix-shell
     fishPlugins.foreign-env
+    exa bat fd
 
+    python310
+    qemu
+    python39Packages.rpm
+    packer  
+    patchelf
+    nix-index
+    bintools-unwrapped
+    rnix-lsp
     llvm
-    bazelisk
+    unstable.bazel_4
     gnumake
     autoconf
     automake
@@ -50,7 +62,6 @@
     m4
     utillinux
     procps
-    (callPackage ./pkgs/pywalfox-native.nix {})
   ];
 }
 

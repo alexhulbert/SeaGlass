@@ -1,11 +1,11 @@
 [kdeglobals][KDE]
-widgetStyle=QtCurve
+widgetStyle=Lightly
 
 [kdeglobals][General]
 ColorScheme=Pywal
 
 [kdeglobals][Icons]
-Theme=breeze
+Theme=flattrcolor
 
 [plasmarc][Theme]
 name=breeze
@@ -14,4 +14,4 @@ name=breeze
 theme=org.kde.breeze
 
 [kcminputrc][Mouse]
-cursorTheme=breeze_cursors
+cursorTheme=Bibata-Modern-Ice

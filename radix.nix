@@ -2,7 +2,7 @@
 
 {
   environment.systemPackages = with pkgs; [
-    pywal
+    adoptopenjdk-openj9-bin-11
   ];
 }
 

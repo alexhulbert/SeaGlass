@@ -1,12 +1,12 @@
 { lib, config, pkgs, ... }:
 
 let
-  buildFirefoxXpiAddon = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon;
+  spicetify = fetchTarball https://github.com/alexhulbert/spicetify-nix/archive/././master.tar.gz;
 in {
   imports = [
     (import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz}/nixos")
   ];
-  home-manager.users.alex = { config, ... }: {
+  home-manager.users.alex = { config, options, ... }: {
     nixpkgs.config.allowUnfree = true;
     nixpkgs.config.packageOverrides = pkgs: {
       nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -16,12 +16,23 @@ in {
 
     imports = [
       ./libs/kde-home-manager.nix
+      ./pkgs/hud-menu/service.nix
+      # ./vim.nix
+      # ./pkgs/spicetify/module.nix
     ];
     home.file = {
-      ".local/share/kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
-      ".mozilla/native-messaging-hosts/pywalfox.json".source = ./resources/pywalfox.json;
-      #".local/share/plasma/look-and-feel/nixos".source = ./resources/theme/kde-theme;
+      ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
+        "${pkgs.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
+      ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
+        name = "darkreader";
+        description = "custom darkreader native host for syncing with pywal";
+        path = "/etc/nixos/resources/darkreader/index.js";
+        type = "stdio";
+        allowed_extensions = [ "darkreader@alexhulbert.com" ];
+      };
+      ".local/share/plasma/look-and-feel/nixos".source = ./resources/theme/kde-theme;
     };
+
     programs.git = {
       enable = true;
       userName = "alexhulbert";
@@ -31,10 +42,27 @@ in {
       enable = true;
       config = {
         bars = [];
-        # i3-hud-menu
+        gaps = {
+          inner = 15;
+          outer = 0;
+        };
+        modifier = "Mod4";
+        terminal = "konsole";
+        keycodebindings = {
+          "66" = "workspace back_and_forth";
+          "control+66" = "exec --no-startup-id xdotool key Caps_Lock";
+        };
+        keybindings = let modifier = config.xsession.windowManager.i3.config.modifier; in lib.mkOptionDefault {
+          "${modifier}+control+shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
+          "${modifier}+e" = "exec --no-startup-id hud-menu";
+          "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner; sleep 0.1; i3-msg [class=krunner] move absolute position 1320 0'\"";
+        };
       };
       extraConfig = ''
+        for_window [class="^.*"] border pixel 0
         for_window [title="Desktop — Plasma"] kill; floating enable; border none
+        for_window [title="win0"] floating enable
+        for_window [title="Picture-in-Picture"] sticky enable
         for_window [window_role="pop-up"] floating enable
         for_window [window_role="task_dialog"] floating enable
         for_window [class="plasmashell"] floating enable
@@ -42,8 +70,9 @@ in {
         for_window [title="plasma-desktop"] floating enable; border none
         for_window [class="krunner"] floating enable; border none
         for_window [class="Plasmoidviewer"] floating enable; border none
-        for_window [class="plasmashell" window_type="notification"] border none, move right 700px, move down 450px
+        for_window [class="plasmashell" window_type="notification"] border none, move right 1400px, move down 900px
         no_focus [class="plasmashell" window_type="notification"]
+	      exec --no-startup-id i3-msg workspace 1
       '';
     };
 
@@ -53,6 +82,8 @@ in {
       FZF_LEGACY_KEYBINDINGS = "0";
       FZF_TMUX = "1";
     };
+
+    programs.rofi.theme = ./resources/launchpad.rasi;
 
     home.packages = [
       (
@@ -68,6 +99,18 @@ in {
       )
     ];
 
+    xdg.dataFile."konsole/Pywal.profile".source = ./resources/konsole.profile;
+    xdg.dataFile."kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
+
+    xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh" ''
+      cd /etc/nixos/resources/theme
+      ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
+    '';
+
+    xdg.configFile."plasma-workspace/env/kde-theme.sh".source = pkgs.writeScript "kde-theme.sh" ''
+      (sleep 10; lookandfeeltool -a nixos) &
+    '';
+
     xdg.configFile."fish/conf.d/hm-session-vars.fish".text = ''
       set --prepend fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
       fenv source ${config.home.profileDirectory}/etc/profile.d/hm-session-vars-2.sh > /dev/null
@@ -77,112 +120,289 @@ in {
     xdg.configFile."fish/conf.d/theme.fish".text = ''
       # fenv source ${config.home.homeDirectory}/.cache/wal/colors-tty.sh
       cat ${config.home.homeDirectory}/.cache/wal/sequences &
+      source ${config.home.homeDirectory}/.cache/wal/pywal.fish
     '';
 
     xdg.configFile."fish/conf.d/any-nix-shell.fish".text = ''
       any-nix-shell fish --info-right | source
     '';
 
-    programs.firefox = {
+    xdg.configFile."wal/templates/pywal.fish".source = ./resources/theme/pywal.fish;
+
+    services.picom = {
       enable = true;
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        ublock-origin
-        plasma-integration
-        https-everywhere
-        lastpass-password-manager
-        vimium
-        greasemonkey
-        unpaywall
-        zoom-redirector
-        (buildFirefoxXpiAddon {
-          pname = "pywalfox";
-          addonId = "pywalfox@frewacom.org";
-          version = "2.0.7";
-          url = "https://addons.mozilla.org/firefox/downloads/file/3789954/pywalfox-2.0.7-fx.xpi";
-          sha256 = "1ga1f3g5zgf0i06jjah8jyjmxifpdx1zb0n28cdijlxzlip09kdf";
-          meta = {};
-        })
-        (buildFirefoxXpiAddon {
-          pname = "youtube-smart-tv";
-          addonId = "{d2bcedce-889b-4d53-8ce9-493d8f78612a}";
-          version = "0.0.3";
-          url = "https://addons.mozilla.org/firefox/downloads/file/3420768/youtubetm_for_tv-0.0.3-fx.xpi";
-          sha256 = "1ajgl61jrx64m2iqqs729i9f1pa7s7wgfwhygfgqrl033rqbpxjx";
-          meta = {};
-        })
-        #(buildFirefoxXpiAddon {
-        #  pname = "dark-reader";
-        #  addonId = "addon@alexhulbert.com";
-        #  version = "4.9.26";
-        #  url = "https://alexhulbert.com/dark_reader-4.9.26-an+fx.xpi";
-        #  sha256 = "01j57h137q4pp53ikydzljhygp3i9k4jflvhcs5rb2v6x9qy5qy0";
-        #  meta = {};
-        #})
-        (buildFirefoxXpiAddon {
-          pname = "midnight-lizard";
-          addonId = "{8fbc7259-8015-4172-9af1-20e1edfbbd3a}";
-          version = "10.7.1";
-          url = "https://addons.mozilla.org/firefox/downloads/file/3711856/midnight_lizard-10.7.1-an+fx.xpi";
-          sha256 = "1k19kr9phkhxlgbfvkqajyk4ivvzbvr6pxblhlah074jwy5wsdrq";
-          meta = {};
-        })
-      ];
-      profiles.default = {
-        id = 0;
-        settings = {
-          "xpinstall.signatures.required" = false;
-          "extensions.update.enabled" = false;
+      package = pkgs.picom.overrideAttrs(o: {
+        src = pkgs.fetchFromGitHub {
+          repo = "picom-jonaburg-fix";
+          owner = "Arian8j2";
+          rev = "31d25da22b44f37cbb9be49fe5c239ef8d00df12";
+          sha256 = "0vkf4azs2xr0j03vkmn4z9ll4lw7j8s2k0rdsfw630hd78l1ngnp";
         };
-      };
+      });
+      shadow = true;
+      blur = true;
+      experimentalBackends = true;
+      opacityRule = [
+        "92:class_g = 'Code'"
+        "92:class_g = 'jetbrains-idea-ce'"
+        "92:class_g = 'qBittorrent'"
+      ];
+      extraOptions = ''
+        corner-radius = 20;
+        blur-method = "dual_kawase";
+        blur-strength = 8;
+        xinerama-shadow-crop = true;
+        rounded-corners-exclude = [
+          "window_type = 'dock'",
+          "window_type = 'desktop'"
+        ];
+      '';
+      shadowExclude = [
+        "bounding_shaped && !rounded_corners"
+      ];
+      fade = true;
+      fadeDelta = 5;
+      vSync = true;
     };
+
+    /*programs.spicetify = {
+      enable = true;
+      theme = "Dribbblish";
+      colorScheme = "nord-dark";
+      enabledCustomApps = ["reddit"];
+      enabledExtensions = ["newRelease.js"];
+      # spotifyLaunchFlags = " --deviceScaleFactor=2 ";
+    };*/
 
     programs.vscode = {
       enable = true;
       userSettings = {
         "workbench.colorTheme" = "Wal";
+        "breadcrumbs.enabled" = "false";
+        "editor.minimap.enabled" = "false";
+        "editor.scrollbar.horizontal" = "hidden";
+        "editor.scrollbar.vertical" = "hidden";
+        "editor.overviewRulerBorder" = "false";
+        "editor.hideCursorInOverviewRuler" = "true";
+        "editor.occurrencesHighlight" = "false";
+        "vim.handleKeys" = { 
+          "<C-k>" = "false";
+          "<C-a>" = "false";
+          "<C-t>" = "false";
+          "<C-g>" = "false";
+          "<C-f>" = "false";
+          "<C-c>" = "false";
+          "<C-v>" = "false";
+          "<C-x>" = "false";
+        };
+        "editor.fontLigatures" = "true";
+        "editor.fontFamily" = "FiraCode Nerd Font";
+      };
+      keybindings = [{
+        key = "ctrl+c";
+        command = "workbench.action.terminal.copySelection";
+        when = "terminalFocus && terminalProcessSupported && terminalTextSelected";
+      } {
+        key = "ctrl+v";
+        command = "workbench.action.terminal.paste";
+        when = "terminalFocus";
+      }];
+    };
+
+    programs.fish = {
+      enable = true;
+      shellAliases = {
+        start = "sudo systemctl start";
+        stop = "sudo systemctl stop";
+        restart = "sudo systemctl restart";
+        slog = "sudo systemctl status";
+        log = "sudo journalctl";
+
+        ustart = "systemctl start --user";
+        ustop = "systemctl stop --user";
+        urestart = "systemctl restart --user";
+        uslog = "systemctl status --user";
+        ulog = "journalctl --user";
+
+        e = "nvim";
+        se = "sudo nvim";
+        
+        ls = "exa";
+        cat = "bat";
+
+        sw = "sudo nixos-rebuild switch";
+        nix-repl = "nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
+        
+        ldm = "sudo systemctl restart display-manager";
+
+        radix-up = "sudo docker start radix || sudo docker run --privileged --network host -v /root/.docker/config.json:/root/.docker/config.json -v /opt/radix:/opt/radix -v /home/alex/monorepo:/monorepo -v /home/alex/.cache/bazel:/root/.cache/bazel -v /home/alex/.cache/fish:/root/.cache/fish -td --name radix timberland";
+        radix-down = "sudo docker stop radix";
+        radix-remove = "sudo docker rm radix";
+        rdx = "sudo docker exec -w (printf / && pwd | grep -o \"(monorepo|opt/radix).*\\$\") -it radix";
+        razel = "rdx bazel";
+      };
+      shellInit = ''
+        set fish_greeting
+        bind \cH backward-kill-word
+        bind \e\[3\;5~ kill-word
+        bind \e\[5C forward-word
+        bind \e\[5D backward-word 
+      '';
+      plugins = [{
+        name = "nix-env";
+        src = pkgs.fetchFromGitHub {
+          owner = "lilyball";
+          repo = "nix-env.fish";
+          rev = "a3c55307dce38c73485eac1f654c8f392341bda2";
+          sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
+        };
+      } {
+        name = "fzf";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "fzf";
+          rev = "479fa67d7439b23095e01b64987ae79a91a4e283";
+          sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
+        };
+      } {
+        name = "z";
+        src = pkgs.fetchFromGitHub {
+          owner = "jethrokuan";
+          repo = "z";
+          rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
+          sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
+        };
+      } {
+        name = "hydro";
+        src = pkgs.fetchFromGitHub {
+          owner = "jorgebucaran";
+          repo = "hydro";
+          rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
+          sha256 = "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww";
+        };
+      }];
+    };
+
+    programs.starship = {
+      enable = true;
+      settings = {
+        character = {
+          success_symbol = "[‍](bold)";
+          error_symbol = "[‍](bold)";
+        };
+        format = "$character";
+        right_format = "$all";
+        add_newline = false;
+        line_break.disabled = true;
+        package.disabled = true;
+        git_status = {
+          untracked = "";
+          stashed = "";
+          modified = "";
+          staged = "";
+          renamed = "";
+          deleted = "";
+        };
+        terraform.symbol = " ";
+        git_branch.symbol = " ";
+        directory.read_only = " ";
+        rust = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        scala = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        nix_shell = {
+          format = "[$symbol$name ]($style)";
+          symbol = " ";
+        };
+        nodejs = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        golang = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        java = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        deno = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        lua = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        docker_context = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
+        python = {
+          format = "[$symbol]($style)";
+          symbol = " ";
+        };
       };
     };
 
-    programs.fish.enable = true;
-    programs.fish.plugins = [{
-      name = "nix-env";
-      src = pkgs.fetchFromGitHub {
-        owner = "lilyball";
-        repo = "nix-env.fish";
-        rev = "a3c55307dce38c73485eac1f654c8f392341bda2";
-        sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-      };
-    } {
-      name = "fzf";
-      src = pkgs.fetchFromGitHub {
-        owner = "jethrokuan";
-        repo = "fzf";
-        rev = "479fa67d7439b23095e01b64987ae79a91a4e283";
-        sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-      };
-    } {
-      name = "z";
-      src = pkgs.fetchFromGitHub {
-        owner = "jethrokuan";
-        repo = "z";
-        rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
-        sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
-      };
-    } {
-      name = "hydro";
-      src = pkgs.fetchFromGitHub {
-        owner = "jorgebucaran";
-        repo = "hydro";
-        rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-        sha256 = "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww";
-      };
-    }];
+    services.unclutter.enable = true;
     
+    programs.firefox = {
+      enable = true;
+      profiles.default = {
+        id = 0;
+        settings = {
+          "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "layers.acceleration.force-enabled" = true;
+          "gfx.webrender.all" = true;
+          "gfx.webrender.enabled" = true;
+          "svg.context-properties.content.enabled" = true;
+          "layout.css.backdrop-filter.enabled" = true;
+          "dom.w3c_touch_events.enabled" = 1;
+        };
+        userChrome = ''
+          @import url('blurredfox/userChrome.css');
+	  @import url('userContent.css');
+          @import url('oneline.css');
+        '';
+      };
+    };
+
+    home.file.".mozilla/firefox/default/chrome/blurredfox".source = pkgs.fetchFromGitHub {
+      owner = "manilarome";
+      repo = "blurredfox";
+      rev = "6976b5460f47bd28b4dc53bd093012780e6bfed3";
+      sha256 = "0mj47pv27dv2bk4hsdjl3c81kw6bz9kk7gkdz30l4z88ckj31j0j";
+    };
+
+    home.file.".mozilla/firefox/default/chrome/oneline.css".source = ./resources/theme/oneline.css;
+
+    home.file.".mozilla/firefox/default/chrome/blur.css".source = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/pavlukivan/dotfiles/6dfa74974cb25d9730a37bf4895a0f8421092b9e/firefox-transparency.css";
+      sha256 = "0k1h14hpzm25sh7jrrxrgafrhld742gy0ybf74fz1n7s8w0fd1kn";
+    };
+
     programs.kde = {
       enable = true;
+      files = [ "konsolerc" "kdeglobals" "ksplashrc" "kwalletrc" ];
       settings = {
         kdeglobals = {
           General.BrowserApplication = "firefox.desktop";
+        };
+        konsolerc = {
+          "Desktop Entry" = {
+            DefaultProfile = "Pywal.profile";
+          };
+          MainWindow = {
+            MenuBar = "Disabled";
+            StatusBar = "Disabled";
+            ToolBarsMovable = "Disabled";
+            State = "AAAA/wAAAAD9AAAAAAAAB1MAAAjMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAHABzAGUAcwBzAGkAbwBuAFQAbwBvAGwAYgBhAHIAAAAAAP////8AAAAAAAAAAA==";
+          };
         };
         ksplashrc = {
           KSplash = {
@@ -190,8 +410,8 @@ in {
             Theme = "None";
           };
         };
+	    kwalletrc.Wallet.Enabled = "false";
       };
     };
   };
 }
-

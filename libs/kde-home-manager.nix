@@ -12,7 +12,7 @@ let
     ''# export ${k}="${toString v}"''
   ) (config.home.sessionVariables // config.programs.bash.sessionVariables)));
 
-  settingsFile = pkgs.writeText "50-kde-settings.sh" ''
+  settingsFile = pkgs.writeScript "50-kde-settings.sh" ''
     ${cfg.scriptHeader}
 
     # extraSettings
@@ -20,7 +20,7 @@ let
 
     # settings
     for f in ${lib.concatStringsSep " " (lib.attrNames cfg.settings)}; do
-      _msg "Processing: $f"
+      echo "Processing: $f"
       ${lib.getBin pkgs.crudini}/bin/crudini --merge \
         ${config.xdg.configHome}/$f < \
         ${etcDrv}/etc/$f || true

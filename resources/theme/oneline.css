@@ -1,0 +1,34 @@
+:root .tabbrowser-tab[fadein]:not([pinned]) {
+  max-width: 225px !important;
+}
+
+#tabbrowser-tabs {
+  margin-left: 8px !important;
+}
+
+#tabbrowser-tabs:not([noshadowfortests]) .tab-background:is([selected], [multiselected]) {
+  box-shadow: none !important;
+}
+
+#navigator-toolbox {
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+}
+
+#titlebar {
+  transition: margin-top 150ms ease;
+}
+
+#navigator-toolbox:focus-within #titlebar {
+  margin-top: -48px;
+}
+
+#nav-bar {
+  transition: opacity 100ms ease;
+  opacity: 0;
+}
+
+#navigator-toolbox:focus-within #nav-bar {
+  opacity: 1;
+}
