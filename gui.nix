@@ -51,26 +51,10 @@ in {
     miraclecast
     i3
     qbittorrent
-    (firefox-bin.override {
-      extraPolicies = {
-        DisableFirefoxStudies = true;
-        DisableFormHistory = true;
-        DisablePocket = true;
-        DisableTelemetry = true;
-        FirefoxHome = {
-          Pocket = false;
-          Snippets = false;
-        };
-        PasswordManagerEnabled = false;
-      };
-    })
     jetbrains.idea-community
     (vscode-with-extensions.override { vscodeExtensions = extensions; })
     # (glass.patch_vscode (callPackage ./pkgs/vscode.nix {}) glass.default_theme_vscode)
     spectacle
-    (xfce.xfdashboard.overrideAttrs (_: {
-      src = /home/alex/src/xfdashboard;
-    }))
     gparted
     bibata-cursors
     rofi

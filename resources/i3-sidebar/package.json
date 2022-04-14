@@ -1,0 +1,6 @@
+{
+  "name": "i3-sidebar",
+  "version": "1.0.0",
+  "dependencies": { "i3": "^0.3.0" },
+  "bin": { "i3-sidebar": "client.js" }
+}

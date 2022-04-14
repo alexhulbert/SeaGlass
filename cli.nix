@@ -3,6 +3,12 @@
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   fenix = import (fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz") { };
+  comma = import (pkgs.fetchFromGitHub {
+    owner = "nix-community";
+    repo = "comma";
+    rev = "67f26046b946f1eceb7e4df36875fef91cf39a04";
+    sha256 = "0sar50z1x7l33ayxyy4w1jfc7lx71xrnsa1wlhdq9pldiszz45v5";
+  }) {};
 in {
   environment.systemPackages = with pkgs; [
     steam-run
@@ -42,7 +48,9 @@ in {
     any-nix-shell
     fishPlugins.foreign-env
     exa bat fd
+    comma
 
+    android-tools
     python310
     qemu
     python39Packages.rpm

@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
-{
+let
+  sf-font = pkgs.callPackage ./pkgs/sf-font.nix {};
+in {
   environment.systemPackages = with pkgs; [
     networkmanager
     docker
@@ -9,9 +11,10 @@
     nerdfonts
     crudini
     cron
+    sf-font
   ];
 
-  fonts.fonts = [ pkgs.nerdfonts ];
+  fonts.fonts = [ pkgs.nerdfonts sf-font ];
 
   /*services.cron = {
     enable = true;

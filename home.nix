@@ -2,6 +2,12 @@
 
 let
   spicetify = fetchTarball https://github.com/alexhulbert/spicetify-nix/archive/././master.tar.gz;
+  pinned-firefox = import (builtins.fetchTarball {
+   name = "pinned-firefox-nixpkgs";
+    url = "https://github.com/nixos/nixpkgs/archive/657b329f83519c9205a0f41f6a266890e291d7a1.tar.gz";
+    sha256 = "1gj0mysd6q461ny13cpdclnvqh7f11zrzyr83234mi6vkjw5vdqw";
+  }) {};
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
     (import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz}/nixos")
@@ -17,7 +23,8 @@ in {
     imports = [
       ./libs/kde-home-manager.nix
       ./pkgs/hud-menu/service.nix
-      # ./vim.nix
+      ./pkgs/i3-sidebar.nix
+      # ./emacs
       # ./pkgs/spicetify/module.nix
     ];
     home.file = {
@@ -56,6 +63,11 @@ in {
           "${modifier}+control+shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
           "${modifier}+e" = "exec --no-startup-id hud-menu";
           "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner; sleep 0.1; i3-msg [class=krunner] move absolute position 1320 0'\"";
+          "${modifier}+shift+a" = "exec --no-startup-id \"i3-sidebar Todoist left 0.3 'firefox -P ssb --new-window https://todoist.com'\"";
+          "${modifier}+shift+s" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";
+          "${modifier}+shift+d" = "exec --no-startup-id \"i3-sidebar Messenger right 0.4 'firefox -P ssb --new-window https://messenger.com'\"";
+          "${modifier}+shift+w" = "exec --no-startup-id \"i3-sidebar Konsole top 0.4 konsole\"";
+
         };
       };
       extraConfig = ''
@@ -150,7 +162,7 @@ in {
       extraOptions = ''
         corner-radius = 20;
         blur-method = "dual_kawase";
-        blur-strength = 8;
+        blur-strength = 9;
         xinerama-shadow-crop = true;
         rounded-corners-exclude = [
           "window_type = 'dock'",
@@ -178,24 +190,26 @@ in {
       enable = true;
       userSettings = {
         "workbench.colorTheme" = "Wal";
-        "breadcrumbs.enabled" = "false";
-        "editor.minimap.enabled" = "false";
+        "breadcrumbs.enabled" = false;
+        "editor.minimap.enabled" = false;
         "editor.scrollbar.horizontal" = "hidden";
         "editor.scrollbar.vertical" = "hidden";
-        "editor.overviewRulerBorder" = "false";
-        "editor.hideCursorInOverviewRuler" = "true";
-        "editor.occurrencesHighlight" = "false";
+        "editor.overviewRulerBorder" = false;
+        "editor.hideCursorInOverviewRuler" = true;
+        "editor.occurrencesHighlight" = false;
         "vim.handleKeys" = { 
-          "<C-k>" = "false";
-          "<C-a>" = "false";
-          "<C-t>" = "false";
-          "<C-g>" = "false";
-          "<C-f>" = "false";
-          "<C-c>" = "false";
-          "<C-v>" = "false";
-          "<C-x>" = "false";
+          "<C-k>" = false;
+          "<C-a>" = false;
+          "<C-t>" = false;
+          "<C-g>" = false;
+          "<C-f>" = false;
+          "<C-c>" = false;
+          "<C-v>" = false;
+          "<C-x>" = false;
         };
-        "editor.fontLigatures" = "true";
+        "vim.enableNeovim" = true;
+        "vim.startInInsertMode" = true;
+        "editor.fontLigatures" = true;
         "editor.fontFamily" = "FiraCode Nerd Font";
       };
       keybindings = [{
@@ -235,11 +249,11 @@ in {
         
         ldm = "sudo systemctl restart display-manager";
 
-        radix-up = "sudo docker start radix || sudo docker run --privileged --network host -v /root/.docker/config.json:/root/.docker/config.json -v /opt/radix:/opt/radix -v /home/alex/monorepo:/monorepo -v /home/alex/.cache/bazel:/root/.cache/bazel -v /home/alex/.cache/fish:/root/.cache/fish -td --name radix timberland";
+        radix-up = "sudo docker start radix 2>&1 > /dev/null || sudo docker run --privileged --network host -v /home/alex/.ssh:/home/alex/.ssh -v /root/.docker/config.json:/root/.docker/config.json -v /opt/bazel:/opt/bazel -v /opt/radix:/opt/radix -v /home/alex/monorepo:/home/alex/monorepo -v /home/alex/.cache/bazel:/home/alex/.cache/bazel -td --name radix timberland";
         radix-down = "sudo docker stop radix";
-        radix-remove = "sudo docker rm radix";
-        rdx = "sudo docker exec -w (printf / && pwd | grep -o \"(monorepo|opt/radix).*\\$\") -it radix";
-        razel = "rdx bazel";
+        radix-remove = "radix-down 2>&1 > /dev/null; sudo docker rm radix";
+        rdx = "sudo docker exec -w (printf / && pwd | grep -Eo \"(home/alex/monorepo|opt/radix).*\\$\") -it radix";
+        razel = "rdx sudo -u alex bazel";
       };
       shellInit = ''
         set fish_greeting
@@ -353,6 +367,7 @@ in {
     
     programs.firefox = {
       enable = true;
+      package = pinned-firefox.firefox-esr-91-unwrapped;
       profiles.default = {
         id = 0;
         settings = {
@@ -366,8 +381,17 @@ in {
         };
         userChrome = ''
           @import url('blurredfox/userChrome.css');
-	  @import url('userContent.css');
+          @import url('userContent.css');
           @import url('oneline.css');
+        '';
+      };
+      profiles.ssb = {
+        id = 1;
+        settings = config.programs.firefox.profiles.default.settings;
+        userChrome = ''
+          @import url('blurredfox/userChrome.css');
+          @import url('userContent.css');
+          @import url('nochrome.css');
         '';
       };
     };
@@ -384,6 +408,20 @@ in {
     home.file.".mozilla/firefox/default/chrome/blur.css".source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/pavlukivan/dotfiles/6dfa74974cb25d9730a37bf4895a0f8421092b9e/firefox-transparency.css";
       sha256 = "0k1h14hpzm25sh7jrrxrgafrhld742gy0ybf74fz1n7s8w0fd1kn";
+    };
+
+    home.file.".mozilla/firefox/ssb/chrome/nochrome.css".source = ./resources/theme/nochrome.css;
+    home.file.".mozilla/firefox/ssb/chrome/blurredfox" = {
+      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blurredfox";
+      recursive = true;
+    };
+    home.file.".mozilla/firefox/ssb/chrome/blur.css" = {
+      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blur.css";
+      recursive = true;
+    };
+    home.file.".mozilla/firefox/ssb/chrome/userContent.css" = {
+      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/userContent.css";
+      recursive = true;
     };
 
     programs.kde = {
