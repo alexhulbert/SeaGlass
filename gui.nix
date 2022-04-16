@@ -57,9 +57,7 @@ in {
     spectacle
     gparted
     bibata-cursors
-    rofi
     spotify
-    slack
     wpgtk
     konsole
     plasma-nm

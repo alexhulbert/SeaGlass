@@ -60,14 +60,16 @@ in {
           "control+66" = "exec --no-startup-id xdotool key Caps_Lock";
         };
         keybindings = let modifier = config.xsession.windowManager.i3.config.modifier; in lib.mkOptionDefault {
-          "${modifier}+control+shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
+          "${modifier}+q" = "kill";
+          # "${modifier}+Shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
+          "${modifier}+Shift+q" = "nop";
           "${modifier}+e" = "exec --no-startup-id hud-menu";
           "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner; sleep 0.1; i3-msg [class=krunner] move absolute position 1320 0'\"";
-          "${modifier}+shift+a" = "exec --no-startup-id \"i3-sidebar Todoist left 0.3 'firefox -P ssb --new-window https://todoist.com'\"";
-          "${modifier}+shift+s" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";
-          "${modifier}+shift+d" = "exec --no-startup-id \"i3-sidebar Messenger right 0.4 'firefox -P ssb --new-window https://messenger.com'\"";
-          "${modifier}+shift+w" = "exec --no-startup-id \"i3-sidebar Konsole top 0.4 konsole\"";
-
+          "${modifier}+Shift+a" = "exec --no-startup-id \"i3-sidebar Todoist left 0.3 'firefox -P ssb --new-window https://todoist.com'\"";
+          "${modifier}+Shift+s" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";
+          "${modifier}+Shift+d" = "exec --no-startup-id \"i3-sidebar Messenger right 0.4 'firefox -P ssb --new-window https://messenger.com'\"";
+          "${modifier}+Shift+w" = "exec --no-startup-id \"i3-sidebar Konsole top 0.4 konsole\"";
+          "${modifier}+Shift+e" = "exec --no-startup-id \"i3-sidebar Slack top 0.66 'firefox -P ssb --new-window https://radix-labs.slack.com/ssb/redirect'\"";
         };
       };
       extraConfig = ''
@@ -95,7 +97,11 @@ in {
       FZF_TMUX = "1";
     };
 
-    programs.rofi.theme = ./resources/launchpad.rasi;
+    xdg.configFile."wal/templates/rofi.rasi".source = ./resources/theme/rofi.rasi;
+    programs.rofi = {
+      enable = true;
+      theme = "${config.xdg.cacheHome}/wal/rofi.rasi";
+    };
 
     home.packages = [
       (
@@ -206,6 +212,8 @@ in {
           "<C-c>" = false;
           "<C-v>" = false;
           "<C-x>" = false;
+          "<C-o>" = false;
+          "<C-n>" = false;
         };
         "vim.enableNeovim" = true;
         "vim.startInInsertMode" = true;

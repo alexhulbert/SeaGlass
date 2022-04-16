@@ -8,8 +8,8 @@ buildPythonApplication rec {
   format = "other";
 
   src = pkgs.fetchurl {
-    url = "https://github.com/jamcnaughton/i3-hud-menu/archive/master.tar.gz";
-    sha256 = "0pnvklwffawl6wnrsjd63wz38r0lc09kz9g7l1w0kjvac6xws5rg";
+    url = "https://github.com/alexhulbert/hud-menu/archive/master.tar.gz";
+    sha256 = "0z73fayvl8l2jvrcc9hg6g2292xg0l5j7dwi35vii4hj0sg8kaj6";
   };
   
   nativeBuildInputs = [
