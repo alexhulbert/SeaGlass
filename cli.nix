@@ -16,7 +16,6 @@ in {
     feh
     acpi
     neovim
-    (writeShellScriptBin "vim" "nvim $@")
     wget curl
     tmux
     ripgrep

@@ -24,7 +24,7 @@ in {
       ./libs/kde-home-manager.nix
       ./pkgs/hud-menu/service.nix
       ./pkgs/i3-sidebar.nix
-      # ./emacs
+      ./emacs
       # ./pkgs/spicetify/module.nix
     ];
     home.file = {
@@ -233,6 +233,9 @@ in {
 
     programs.fish = {
       enable = true;
+      functions = {
+        se = "e /sudo:root@localhost:(realpath $argv)";
+      };
       shellAliases = {
         start = "sudo systemctl start";
         stop = "sudo systemctl stop";
@@ -246,8 +249,9 @@ in {
         uslog = "systemctl status --user";
         ulog = "journalctl --user";
 
-        e = "nvim";
-        se = "sudo nvim";
+        emacs = "emacsclient -c";
+        vim = "emacs";
+        e = "emacs";
         
         ls = "exa";
         cat = "bat";
