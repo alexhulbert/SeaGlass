@@ -3,7 +3,7 @@
 #to be run after pywal
 # from https://github.com/bakerk98/pywal-plasma-script/blob/main/move-colors-kde.sh
 
-background=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),234
+background=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),215
 transparent=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),0
 foreground=$(grep -A 1 Foreground] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1)
 
@@ -39,7 +39,7 @@ IntensityAmount=-1
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=$color0,234
+BackgroundAlternate=$color0,215
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -53,8 +53,8 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Selection]
-BackgroundAlternate=$color3,234
-BackgroundNormal=$color3,234
+BackgroundAlternate=$color3,215
+BackgroundNormal=$color3,215
 DecorationFocus=$color3
 DecorationHover=$color3
 ForegroundActive=$background2
@@ -67,7 +67,7 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Tooltip]
-BackgroundAlternate=$color0,234
+BackgroundAlternate=$color0,215
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -95,7 +95,7 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Window]
-BackgroundAlternate=$color0,234
+BackgroundAlternate=$color0,215
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -117,10 +117,10 @@ shadeSortColumn=true
 contrast=5
 
 [WM]
-activeBackground=$color3,234
+activeBackground=$color3,215
 activeBlend=$color3
 activeForeground=$foreground
-inactiveBackground=$color0,234
+inactiveBackground=$color0,215
 inactiveBlend=$color0
 inactiveForeground=$color7" > ~/.local/share/color-schemes/$1.colors
 kwriteconfig5 --file ~/.config/kdeglobals --group WM --key frame $color3 #these lines come from https://github.com/gikari/bismuth/blob/master/TWEAKS.md

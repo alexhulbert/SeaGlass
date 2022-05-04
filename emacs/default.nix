@@ -8,7 +8,7 @@ let
   };
 in {
   home.packages = [ pkgs.emacs-nox ];
-  home.sessionVariables.EDITOR = "emacsclient -c";
+  home.sessionVariables.EDITOR = "emacsclient -c -nw";
   services.emacs = {
     enable = true;
     package = doom-emacs;

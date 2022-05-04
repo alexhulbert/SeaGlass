@@ -12,8 +12,10 @@ in {
     crudini
     cron
     sf-font
+    tailscale
   ];
 
+  services.tailscale.enable = true;
   fonts.fonts = [ pkgs.nerdfonts sf-font ];
 
   /*services.cron = {

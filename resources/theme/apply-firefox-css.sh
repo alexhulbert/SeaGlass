@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-background=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),0.92
+background=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),0.84
 color2=$(grep -A 1 Color2] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1)
 
 echo "
@@ -28,7 +28,7 @@ html:before, html:after {
   margin: 0 !important;
   padding: 0 !important;
   height: max-content !important;
-  overflow: auto !important;
+  overflow: hidden !important;
   min-height: 100vh !important;
   width: 100% !important;
   position: relative !important;
@@ -44,7 +44,7 @@ html:before, html:after {
     min-height: 100% !important;
   }
   .logo-and-wordmark {
-    display: none !important;   
+    display: none !important;
   }
   .search-handoff-button {
     background: rgba(0, 0, 0, .5) !important;
@@ -54,4 +54,4 @@ html:before, html:after {
 html > body {
   background-color: rgba($background) !important;
 }
-" > ~/.mozilla/firefox/default/chrome/userContent.css
+" | tee ~/.mozilla/firefox/ssb/chrome/userContent.css > ~/.mozilla/firefox/default/chrome/userContent.css

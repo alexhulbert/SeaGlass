@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  spicetify = fetchTarball https://github.com/alexhulbert/spicetify-nix/archive/././master.tar.gz;
+  spicetify = fetchTarball https://github.com/cidkidnix/spicetify-nix/archive/1ff091d9c4736f5890d2885ee32defe7a268b908.tar.gz;
   pinned-firefox = import (builtins.fetchTarball {
    name = "pinned-firefox-nixpkgs";
     url = "https://github.com/nixos/nixpkgs/archive/657b329f83519c9205a0f41f6a266890e291d7a1.tar.gz";
@@ -26,6 +26,7 @@ in {
       ./pkgs/i3-sidebar.nix
       ./emacs
       # ./pkgs/spicetify/module.nix
+      (import "${spicetify}/module.nix")
     ];
     home.file = {
       ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
@@ -57,22 +58,23 @@ in {
         terminal = "konsole";
         keycodebindings = {
           "66" = "workspace back_and_forth";
-          "control+66" = "exec --no-startup-id xdotool key Caps_Lock";
+          "Control+66" = "exec --no-startup-id xdotool key Caps_Lock";
         };
         keybindings = let modifier = config.xsession.windowManager.i3.config.modifier; in lib.mkOptionDefault {
           "${modifier}+q" = "kill";
-          # "${modifier}+Shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
-          "${modifier}+Shift+q" = "nop";
+          "${modifier}+Shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
           "${modifier}+e" = "exec --no-startup-id hud-menu";
           "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner; sleep 0.1; i3-msg [class=krunner] move absolute position 1320 0'\"";
           "${modifier}+Shift+a" = "exec --no-startup-id \"i3-sidebar Todoist left 0.3 'firefox -P ssb --new-window https://todoist.com'\"";
-          "${modifier}+Shift+s" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";
+          "${modifier}+Shift+w" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";
           "${modifier}+Shift+d" = "exec --no-startup-id \"i3-sidebar Messenger right 0.4 'firefox -P ssb --new-window https://messenger.com'\"";
-          "${modifier}+Shift+w" = "exec --no-startup-id \"i3-sidebar Konsole top 0.4 konsole\"";
+          "${modifier}+Shift+s" = "exec --no-startup-id \"i3-sidebar Konsole bottom 0.5 konsole\"";
           "${modifier}+Shift+e" = "exec --no-startup-id \"i3-sidebar Slack top 0.66 'firefox -P ssb --new-window https://radix-labs.slack.com/ssb/redirect'\"";
         };
       };
       extraConfig = ''
+        bindcode --release Shift+122 exec --no-startup-id xdotool key --clearmodifiers XF86AudioPrev
+        bindcode --release Shift+123 exec --no-startup-id xdotool key --clearmodifiers XF86AudioNext
         for_window [class="^.*"] border pixel 0
         for_window [title="Desktop — Plasma"] kill; floating enable; border none
         for_window [title="win0"] floating enable
@@ -86,7 +88,8 @@ in {
         for_window [class="Plasmoidviewer"] floating enable; border none
         for_window [class="plasmashell" window_type="notification"] border none, move right 1400px, move down 900px
         no_focus [class="plasmashell" window_type="notification"]
-	      exec --no-startup-id i3-msg workspace 1
+        exec --no-startup-id i3-msg workspace 2
+        exec --no-startup-id i3-msg workspace 1
       '';
     };
 
@@ -126,7 +129,9 @@ in {
     '';
 
     xdg.configFile."plasma-workspace/env/kde-theme.sh".source = pkgs.writeScript "kde-theme.sh" ''
-      (sleep 10; lookandfeeltool -a nixos) &
+      krunner -d &
+      until pidof krunner; do sleep 0.05; done
+      lookandfeeltool -a nixos
     '';
 
     xdg.configFile."fish/conf.d/hm-session-vars.fish".text = ''
@@ -161,9 +166,9 @@ in {
       blur = true;
       experimentalBackends = true;
       opacityRule = [
-        "92:class_g = 'Code'"
-        "92:class_g = 'jetbrains-idea-ce'"
-        "92:class_g = 'qBittorrent'"
+        "88:class_g = 'Code'"
+        "88:class_g = 'jetbrains-idea-ce'"
+        "88:class_g = 'qBittorrent'"
       ];
       extraOptions = ''
         corner-radius = 20;
@@ -183,14 +188,16 @@ in {
       vSync = true;
     };
 
-    /*programs.spicetify = {
+    programs.spicetify = {
       enable = true;
       theme = "Dribbblish";
       colorScheme = "nord-dark";
-      enabledCustomApps = ["reddit"];
-      enabledExtensions = ["newRelease.js"];
+      # theme = "DribbblishDynamic";
+      # colorScheme = "base";
+      enabledCustomApps = [ "reddit" ];
+      enabledExtensions = [ "newRelease.js" ];
       # spotifyLaunchFlags = " --deviceScaleFactor=2 ";
-    };*/
+    };
 
     programs.vscode = {
       enable = true;
@@ -249,7 +256,7 @@ in {
         uslog = "systemctl status --user";
         ulog = "journalctl --user";
 
-        emacs = "emacsclient -c";
+        emacs = "emacsclient -c -nw";
         vim = "emacs";
         e = "emacs";
         
@@ -272,7 +279,7 @@ in {
         bind \cH backward-kill-word
         bind \e\[3\;5~ kill-word
         bind \e\[5C forward-word
-        bind \e\[5D backward-word 
+        bind \e\[5D backward-word
       '';
       plugins = [{
         name = "nix-env";
@@ -431,10 +438,6 @@ in {
       source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blur.css";
       recursive = true;
     };
-    home.file.".mozilla/firefox/ssb/chrome/userContent.css" = {
-      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/userContent.css";
-      recursive = true;
-    };
 
     programs.kde = {
       enable = true;
@@ -460,7 +463,7 @@ in {
             Theme = "None";
           };
         };
-	    kwalletrc.Wallet.Enabled = "false";
+        kwalletrc.Wallet.Enabled = "false";
       };
     };
   };

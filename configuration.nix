@@ -38,12 +38,16 @@ in
 
   boot.supportedFilesystems = [ "ntfs" ];
   boot.cleanTmpDir = true;
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable = false;
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+    grub.enable = false;
+    timeout = 0;
+  };
   boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=0" ]; # for radix
   boot.kernelModules = [ "kvm-intel" "drm_kms_helper" ];
   boot.extraModprobeConfig = "options drm_kms_helper poll=N";
+  boot.plymouth.enable = true;
 
 
   networking.hostName = "hulbert-nixos";
