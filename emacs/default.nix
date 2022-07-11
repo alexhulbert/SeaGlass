@@ -2,7 +2,7 @@
 
 let
   doom-emacs = pkgs.callPackage (builtins.fetchTarball {
-    url = https://github.com/nix-community/nix-doom-emacs/archive/master.tar.gz;
+    url = https://github.com/nix-community/nix-doom-emacs/archive/6860a32b4bb158db85371efd7df0fe35ebcecb9b.tar.gz;
   }) {
     doomPrivateDir = ./.;
   };

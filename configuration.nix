@@ -19,17 +19,14 @@ in
       ./home.nix
     ];
 
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.sddm.enableGnomeKeyring = true;
+
   nixpkgs.config.packageOverrides = pkgs: {
     nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
       inherit pkgs;
     };
   };
-
-  nixpkgs.overlays = [(final: prev: {
-    nur.repos.crazazy.efm-langserver = prev.nur.repos.crazazy.efm-langserver.overrideAttrs (_: { 
-      vendorSha256 = "1i7gfwcgf21vks6c3hif3wav1xmxivnkb1b4blvzmrskk375w018";
-    });
-  })];
 
   environment.systemPackages = with nix-alien-pkgs; [
     nix-alien
@@ -52,11 +49,9 @@ in
 
   networking.hostName = "hulbert-nixos";
   networking.networkmanager.enable = true;
-  networking.networkmanager.insertNameservers = [ "127.0.0.1" "1.1.1.1" ]; # for radix
-  networking.networkmanager.extraConfig = ''
-    [main]
-    rc-manager=resolvconf
-  '';
+  networking.nameservers = [ "127.0.0.1" "1.1.1.1" ];
+  networking.resolvconf.enable = pkgs.lib.mkForce false;
+  services.resolved.enable = true;
 
   time.timeZone = "America/New_York";
 
@@ -82,7 +77,7 @@ in
 
   users.users.alex = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" ];
+    extraGroups = [ "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" "dialout" ];
     shell = pkgs.fish;
   };
 

@@ -13,6 +13,7 @@ in {
     cron
     sf-font
     tailscale
+    gnome.gnome-keyring
   ];
 
   services.tailscale.enable = true;

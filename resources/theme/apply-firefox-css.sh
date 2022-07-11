@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-background=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1),0.84
+opaque=$(grep -A 1 Background] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1)
+background=$opaque,0.84
 color2=$(grep -A 1 Color2] ~/.cache/wal/colors-konsole.colorscheme | sed -r 's#.*=##' | tail -n 1)
 
 echo "
@@ -18,8 +19,8 @@ html body a {
   scrollbar-width: none !important;
 }
 
-html:before, html:after {
-  content: "";
+html:after {
+  content: \"\";
   display: table;
   clear: both;
 }
@@ -28,13 +29,12 @@ html:before, html:after {
   margin: 0 !important;
   padding: 0 !important;
   height: max-content !important;
-  overflow: hidden !important;
   min-height: 100vh !important;
   width: 100% !important;
   position: relative !important;
 }
 
-@-moz-document url-prefix(about:), url-prefix(chrome:), url-prefix(moz-) {
+@-moz-document url-prefix(chrome:), url-prefix(moz-), url-prefix(about:dev) {
   :root {
     /* allow browser uis to be smallers than viewport size */
     min-height: 100% !important;
@@ -51,7 +51,35 @@ html:before, html:after {
   }
 }
 
-html > body {
+html:not(#main-window):before {
+  content: \" \";
   background-color: rgba($background) !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: fixed !important;
+  display: block !important;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
 }
+
+html > body {
+  background-color: transparent !important;
+}
+
+:root ::selection {
+  background-color:  rgba(255, 255, 255, 0.50) !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
+body > #outerContainer {
+  height: 100vh !important;
+}
+
+*[data-darkreader-inline-bgcolor-opaque=""] {
+  background-color: rgb($opaque) !important;
+}
+
 " | tee ~/.mozilla/firefox/ssb/chrome/userContent.css > ~/.mozilla/firefox/default/chrome/userContent.css

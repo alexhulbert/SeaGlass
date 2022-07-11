@@ -11,6 +11,7 @@ let
   }) {};
 in {
   environment.systemPackages = with pkgs; [
+    unstable.platformio
     steam-run
     bc
     feh
@@ -59,7 +60,7 @@ in {
     bintools-unwrapped
     rnix-lsp
     llvm
-    unstable.bazel_4
+    unstable.bazel_5
     gnumake
     autoconf
     automake
@@ -69,6 +70,8 @@ in {
     m4
     utillinux
     procps
+    vorbis-tools
+    rustup
   ];
 }
 

@@ -47,6 +47,10 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
+    libxslt
+    unstable.kicad-unstable-small
+    remmina
+    freerdp
     mpv
     miraclecast
     i3
