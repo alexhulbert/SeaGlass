@@ -11,6 +11,11 @@ let
   # glass = (pkgs.callPackage ./libs/glass.nix {});
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
   services.xserver = {
     enable = true;
     desktopManager.plasma5.enable = true;
@@ -46,6 +51,8 @@ in {
     MOZ_USE_XINPUT2 = "1";
   };
 
+  programs.wireshark.enable = true;
+
   environment.systemPackages = with pkgs; [
     libxslt
     unstable.kicad-unstable-small
@@ -53,6 +60,7 @@ in {
     freerdp
     mpv
     miraclecast
+    jellyfin-media-player
     i3
     qbittorrent
     jetbrains.idea-community
@@ -69,6 +77,7 @@ in {
     unstable.plasma5Packages.lightly
     plasma5Packages.plasma-applet-virtual-desktop-bar
     unstable.lightly-qt
+    xdg-desktop-portal-kde
     torbrowser
     monero-gui
     kleopatra
@@ -77,6 +86,7 @@ in {
     kdiff3
     obs-studio
     filelight
+    dolphin-emu-beta
     (callPackage ./pkgs/hud-menu {})
   ];
 }

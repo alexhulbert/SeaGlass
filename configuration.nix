@@ -9,7 +9,7 @@ in
   imports =
     [ # Include the results of the hardware scan.
       <nixos-hardware/dell/xps/15-9560/nvidia>
-      <nix-ld/modules/nix-ld.nix>
+      /home/alex/src/nix-ld/modules/nix-ld.nix
       ./syspkgs.nix
       ./cli.nix
       ./radix.nix
@@ -41,17 +41,12 @@ in
     grub.enable = false;
     timeout = 0;
   };
-  boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=0" ]; # for radix
   boot.kernelModules = [ "kvm-intel" "drm_kms_helper" ];
   boot.extraModprobeConfig = "options drm_kms_helper poll=N";
   boot.plymouth.enable = true;
 
-
   networking.hostName = "hulbert-nixos";
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "127.0.0.1" "1.1.1.1" ];
-  networking.resolvconf.enable = pkgs.lib.mkForce false;
-  services.resolved.enable = true;
 
   time.timeZone = "America/New_York";
 
@@ -59,7 +54,6 @@ in
 
   programs.dconf.enable = true;
 
-  services.logind.extraConfig = "RuntimeDirectorySize=4G";
   services.xserver.enable = true;
   services.printing.enable = true;
 
@@ -69,15 +63,16 @@ in
   hardware.bluetooth.enable = true;
 
   services.xserver.libinput.enable = true;
+  services.flatpak.enable = true;
 
-  # for radix
   system.activationScripts.binbash = ''
     ln -s /run/current-system/sw/bin/bash /bin/bash 2> /dev/null || true
   '';
 
+  users.extraGroups = { wireshark = { gid = 500; }; };
   users.users.alex = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" "dialout" ];
+    extraGroups = [ "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" "dialout" "wireshark" ];
     shell = pkgs.fish;
   };
 

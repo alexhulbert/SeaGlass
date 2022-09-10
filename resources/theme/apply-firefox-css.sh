@@ -25,14 +25,14 @@ html:after {
   clear: both;
 }
 
-:root>* {
+/*:root>* {
   margin: 0 !important;
   padding: 0 !important;
   height: max-content !important;
   min-height: 100vh !important;
   width: 100% !important;
   position: relative !important;
-}
+}*/
 
 @-moz-document url-prefix(chrome:), url-prefix(moz-), url-prefix(about:dev) {
   :root {

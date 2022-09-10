@@ -11,6 +11,7 @@ let
   }) {};
 in {
   environment.systemPackages = with pkgs; [
+    fprintd
     unstable.platformio
     steam-run
     bc
@@ -18,6 +19,7 @@ in {
     acpi
     neovim
     wget curl
+    iodine
     tmux
     ripgrep
     gnupg
@@ -35,6 +37,7 @@ in {
     git
     p7zip
     fzf
+    cod
     fish
     sbt
     gcc

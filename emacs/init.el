@@ -7,7 +7,7 @@
 
        :ui
        doom
-       doom-dashboard
+       ;;doom-dashboard
        ;;doom-quit
        ;;(emoji +unicode)
        hl-todo
