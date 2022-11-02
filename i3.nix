@@ -15,6 +15,7 @@
       };
       keybindings = let modifier = config.xsession.windowManager.i3.config.modifier; in lib.mkOptionDefault {
         "${modifier}+q" = "kill";
+        "${modifier}+w" = "exec firefox";
         "${modifier}+Shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
         "${modifier}+e" = "exec --no-startup-id hud-menu";
         "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner & sleep 0.2; i3-msg [class=krunner] move absolute position 1320 0'\"";

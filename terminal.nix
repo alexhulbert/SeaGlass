@@ -77,7 +77,7 @@
         
         ldm = "sudo systemctl restart display-manager";
 
-        radix-up = "sudo docker start radix 2>&1 > /dev/null || sudo docker run -e SKIP_RADIX_BUILDS=1 --privileged --network host -v /home/alex/.cache/radixtool:/home/alex/.cache/radixtool -v /home/alex/.ssh:/home/alex/.ssh -v /root/.docker/config.json:/root/.docker/config.json -v /opt/bazel:/opt/bazel -v /opt/radix:/opt/radix -v /home/alex/monorepo:/home/alex/monorepo -v /home/alex/.cache/bazel:/home/alex/.cache/bazel -td --name radix timberland";
+        radix-up = "sudo docker start radix 2>&1 > /dev/null || sudo docker run -e SKIP_RADIX_BUILDS=1 --privileged --network host -v /etc/resolv.conf:/etc/resolv.conf:ro -v /home/alex/.cache/radixtool:/home/alex/.cache/radixtool -v /home/alex/.ssh:/home/alex/.ssh -v /root/.docker/config.json:/root/.docker/config.json -v /opt/bazel:/opt/bazel -v /opt/radix:/opt/radix -v /home/alex/monorepo:/home/alex/monorepo -v /home/alex/.cache/bazel:/home/alex/.cache/bazel -v /home/alex/src/timberland:/home/alex/src/timberland -td --name radix timberland";
         radix-down = "sudo docker stop radix";
         radix-remove = "radix-down 2>&1 > /dev/null; sudo docker rm radix";
         radix = "rdx sudo -u alex /home/alex/monorepo/scripts/toolchain.sh";

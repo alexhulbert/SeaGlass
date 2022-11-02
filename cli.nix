@@ -11,8 +11,9 @@ let
   }) {};
 in {
   environment.systemPackages = with pkgs; [
+    python39Packages.ipython
+    python39Packages.bootstrapped-pip
     fprintd
-    unstable.platformio
     steam-run
     bc
     feh
@@ -24,6 +25,7 @@ in {
     ripgrep
     gnupg
     nmap
+    sshfs
     bash
     killall
     less

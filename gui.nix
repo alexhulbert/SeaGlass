@@ -52,6 +52,7 @@ in {
   };
 
   programs.wireshark.enable = true;
+  programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
     libxslt
@@ -60,7 +61,7 @@ in {
     freerdp
     mpv
     miraclecast
-    jellyfin-media-player
+    unstable.jellyfin-media-player
     i3
     qbittorrent
     jetbrains.idea-community
@@ -74,11 +75,11 @@ in {
     plasma-nm
     qtcurve
     lxqt.pavucontrol-qt
-    unstable.plasma5Packages.lightly
+    plasma5Packages.lightly
     plasma5Packages.plasma-applet-virtual-desktop-bar
-    unstable.lightly-qt
+    lightly-qt
     xdg-desktop-portal-kde
-    torbrowser
+    tor-browser-bundle-bin
     monero-gui
     kleopatra
     chromium

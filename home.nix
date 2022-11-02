@@ -1,7 +1,7 @@
 { lib, config, pkgs, ... }:
 
 let
-  spicetify = fetchTarball https://github.com/cidkidnix/spicetify-nix/archive/1ff091d9c4736f5890d2885ee32defe7a268b908.tar.gz;
+  spicetify = fetchTarball https://github.com/the-argus/spicetify-nix/archive/master.tar.gz;
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 in {
   imports = [
@@ -61,25 +61,37 @@ in {
       enable = true;
       package = pkgs.picom.overrideAttrs(o: {
         src = pkgs.fetchFromGitHub {
+          repo = "picom";
+          owner = "yshui";
+          rev = "f2970bc697bdf20d398d1be05ff72d50df911e64";
+          sha256 = "1hvpd51aq5fg71a48ln0bd7sm6bh5gi4vrfy8pjgyhi3mhq1gq39";
+        };
+        /*src = pkgs.fetchFromGitHub {
           repo = "picom-jonaburg-fix";
           owner = "Arian8j2";
           rev = "31d25da22b44f37cbb9be49fe5c239ef8d00df12";
           sha256 = "0vkf4azs2xr0j03vkmn4z9ll4lw7j8s2k0rdsfw630hd78l1ngnp";
-        };
+        };*/
         /*src = pkgs.fetchFromGitHub {
           repo = "picom";
           owner = "dccsillag";
           rev = "51b21355696add83f39ccdb8dd82ff5009ba0ae5";
           sha256 = "1prwjdwhg4m4alrx1b0r7zd5g9qfx7m12a9d431d1rvwjx2b1c3j";
         };*/
+        /*src = pkgs.fetchFromGitHub {
+          repo = "picom";
+          owner = "FT-Labs";
+          rev = "a661560bf0c44be1081d448d0fb65e813dbd6d7b";
+          sha256 = "03x71pw2r7pjprwsh6aff7am5l8dy6bvay5rprzy2v8fgvxl86jk";
+        };*/
       });
       shadow = true;
       blur = true;
-      experimentalBackends = true;
       opacityRule = [
         "88:class_g = 'Code'"
         "88:class_g = 'jetbrains-idea-ce'"
         "88:class_g = 'qBittorrent'"
+        "88:class_g = 'spotify'"
       ];
       extraOptions = ''
         corner-radius = 20;
@@ -90,6 +102,16 @@ in {
           "window_type = 'dock'",
           "window_type = 'desktop'"
         ];
+
+        animations = true;
+        #change animation speed of windows in current tag e.g open window in current tag
+        animation-stiffness-in-tag = 125;
+        #change animation speed of windows when tag changes
+        animation-stiffness-tag-change = 90.0;
+
+        animation-window-mass = 0.4;
+        animation-dampening = 15;
+        animation-clamping = false;
       '';
       shadowExclude = [
         "bounding_shaped && !rounded_corners"
@@ -101,13 +123,23 @@ in {
 
     programs.spicetify = {
       enable = true;
-      theme = "Dribbblish";
-      colorScheme = "nord-dark";
+      spotifyPackage = unstable.spotify-unwrapped;
+      spicetifyPackage = unstable.spicetify-cli;
+      # spicetifyPackage = unstable.spicetify-cli.overrideAttrs (oa: rec {
+      #   pname = "spicetify-cli";
+      #   version = "2.9.9";
+      #   src = pkgs.fetchgit {
+      #     url = "https://github.com/spicetify/${pname}";
+      #     rev = "v${version}";
+      #    sha256 = "1a6lqp6md9adxjxj4xpxj0j1b60yv3rpjshs91qx3q7blpsi3z4z";
+      #  };
+      # });
+      theme = "DefaultDynamic";
+      # colorScheme = "nord-dark";
       # theme = "DribbblishDynamic";
       # colorScheme = "base";
-      enabledCustomApps = [ "reddit" ];
-      enabledExtensions = [ "newRelease.js" ];
-      # spotifyLaunchFlags = " --deviceScaleFactor=2 ";
+      # enabledCustomApps = [ "reddit" ];
+      # enabledExtensions = [ "newRelease.js" ];
     };
 
     programs.vscode = {

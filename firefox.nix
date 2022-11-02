@@ -2,8 +2,8 @@
 let 
   pinned-firefox = import (builtins.fetchTarball {
    name = "pinned-firefox-nixpkgs";
-    url = "https://github.com/nixos/nixpkgs/archive/657b329f83519c9205a0f41f6a266890e291d7a1.tar.gz";
-    sha256 = "1gj0mysd6q461ny13cpdclnvqh7f11zrzyr83234mi6vkjw5vdqw";
+    url = "https://github.com/nixos/nixpkgs/archive/04ce3788d37dc3f5ab1b156f2a817c8e7630b3b4.tar.gz";
+    sha256 = "15wz5gnj43997557dp2b7rpmncz22390klbj5ixnwg9zh4hz34s3";
   }) {};
 in {
   config.home.file = {
