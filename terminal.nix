@@ -6,6 +6,8 @@
       FZF_DISABLE_KEYBINDINGS = "1";
       FZF_LEGACY_KEYBINDINGS = "0";
       FZF_TMUX = "1";
+      NIXPKGS_ALLOW_UNFREE = "1";
+      GOPATH = "/home/alex/.go";
     };
 
     packages = [
@@ -38,6 +40,19 @@
     "fish/conf.d/any-nix-shell.fish".text = ''
       any-nix-shell fish --info-right | source
     '';
+    "fish/conf.d/work.fish".text = ''
+      test -d /run/host && begin
+        export GDK_PIXBUF_MODULE_FILE=/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders.cache
+        export QT_PLUGIN_PATH=
+        export QT_XCB_GL_INTEGRATION=none
+      end
+    '';
+    # mount ~/.config/fish
+    # mount ~/.config/git
+    # mount ~/.cache/wal
+    # mount ~/.config/starship.toml
+    # mount ~/.nix-profile
+    # mount ~/.ssh
   };
 
   config.programs = {
@@ -73,18 +88,12 @@
         cat = "bat";
 
         sw = "sudo nixos-rebuild switch";
-        nix-repl = "nix repl '<nixpkgs>' '<nixpkgs/nixos>'";
-        
+        nix-repl = "nix repl --expr 'import <nixpkgs> {}' --expr 'import <nixpkgs/nixos> {}'";
+
         ldm = "sudo systemctl restart display-manager";
 
-        radix-up = "sudo docker start radix 2>&1 > /dev/null || sudo docker run -e SKIP_RADIX_BUILDS=1 --privileged --network host -v /etc/resolv.conf:/etc/resolv.conf:ro -v /home/alex/.cache/radixtool:/home/alex/.cache/radixtool -v /home/alex/.ssh:/home/alex/.ssh -v /root/.docker/config.json:/root/.docker/config.json -v /opt/bazel:/opt/bazel -v /opt/radix:/opt/radix -v /home/alex/monorepo:/home/alex/monorepo -v /home/alex/.cache/bazel:/home/alex/.cache/bazel -v /home/alex/src/timberland:/home/alex/src/timberland -td --name radix timberland";
-        radix-down = "sudo docker stop radix";
-        radix-remove = "radix-down 2>&1 > /dev/null; sudo docker rm radix";
-        radix = "rdx sudo -u alex /home/alex/monorepo/scripts/toolchain.sh";
-        runtime-util = "rdx /home/alex/monorepo/scripts/runtime_util.sh";
-        timberland = "rdx /opt/radix/timberland/exec/timberland";
-        rdx = "sudo docker exec -w (printf / && pwd | grep -Eo \"(home/alex/monorepo|opt/radix).*\\$\") -it radix";
-        razel = "rdx sudo -u alex bazel";
+        work = "distrobox enter -r work --";
+        arch = "distrobox enter -r arch --";
       };
       shellInit = ''
         set fish_greeting
@@ -92,7 +101,9 @@
         bind \e\[3\;5~ kill-word
         bind \e\[5C forward-word
         bind \e\[5D backward-word
-        cod init $fish_pid fish | source
+        test -f /etc/fishrc && source /etc/fishrc
+        # fish_add_path ~/.local/bin
+        # cod init $fish_pid fish | source
       '';
       plugins = [{
         name = "nix-env";
@@ -135,11 +146,12 @@
           success_symbol = "[‍](bold)";
           error_symbol = "[‍](bold)";
         };
-        format = "$character";
+        format = "$custom$character";
         right_format = "$all";
         add_newline = false;
         line_break.disabled = true;
         package.disabled = true;
+        container.disabled = true;
         git_status = {
           untracked = "";
           stashed = "";
@@ -151,6 +163,11 @@
         terraform.symbol = " ";
         git_branch.symbol = " ";
         directory.read_only = " ";
+        custom.env = {
+          command = "cat /etc/prompt";
+          format = "$output ";
+          when = "test -f /etc/prompt";
+        };
         rust = {
           format = "[$symbol]($style)";
           symbol = " ";

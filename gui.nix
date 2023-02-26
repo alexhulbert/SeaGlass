@@ -10,29 +10,32 @@ let
   }];
   # glass = (pkgs.callPackage ./libs/glass.nix {});
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  fxcast = unstable.fx_cast_bridge.overrideAttrs(o: {
+    version = "0.3.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "hensm";
+      repo = "fx_cast";
+      rev = "v0.3.1";
+      hash = "sha256-hB4NVJW2exHoKsMp0CKzHerYgj8aR77rV+ZsCoWA1Dg=";
+    };
+  });
 in {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
+
+
   services.xserver = {
     enable = true;
     desktopManager.plasma5.enable = true;
     displayManager = {
-      defaultSession = "plasma5+i3";
       sddm.enable = true;
       autoLogin = {
         enable = true;
         user = "alex";
       };
-      session = [
-        {
-          manage = "desktop";
-          name = "plasma5+i3";
-          start = ''exec env KDEWM=${pkgs.i3-gaps}/bin/i3 ${pkgs.plasma-workspace}/bin/startplasma-x11'';
-        }
-      ];
     };
     windowManager.i3 = {
       enable = true;
@@ -49,16 +52,19 @@ in {
   environment.variables = {
     QT_QPA_PLATFORMTHEME = "kde";
     MOZ_USE_XINPUT2 = "1";
+    GTK_THEME = "FlatColor:dark";
   };
 
   programs.wireshark.enable = true;
   programs.kdeconnect.enable = true;
 
   environment.systemPackages = with pkgs; [
+    prismlauncher-qt5
+    fxcast
     libxslt
     unstable.kicad-unstable-small
+    spotify
     remmina
-    freerdp
     mpv
     miraclecast
     unstable.jellyfin-media-player
@@ -66,7 +72,6 @@ in {
     qbittorrent
     jetbrains.idea-community
     (vscode-with-extensions.override { vscodeExtensions = extensions; })
-    # (glass.patch_vscode (callPackage ./pkgs/vscode.nix {}) glass.default_theme_vscode)
     spectacle
     gparted
     bibata-cursors

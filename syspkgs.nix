@@ -13,6 +13,7 @@ in {
     cron
     sf-font
     tailscale
+    jdk11
     gnome.gnome-keyring
   ];
 

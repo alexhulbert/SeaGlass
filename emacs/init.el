@@ -65,7 +65,7 @@
        org
        python
        rust
-       scala
+       ;;scala
        sh
        solidity
        web

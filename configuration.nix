@@ -13,7 +13,6 @@ in
       /home/alex/src/nix-ld/modules/nix-ld.nix
       ./syspkgs.nix
       ./cli.nix
-      ./radix.nix
       ./gui.nix
       ./theme.nix
       ./hardware-configuration.nix
@@ -46,8 +45,8 @@ in
     grub.enable = false;
     timeout = 0;
   };
-  boot.kernelPackages = pkgs.linuxPackages_5_19;
-  boot.kernelModules = [ "drm_kms_helper" ];
+  boot.kernelPackages = unstable.linuxPackages_latest;
+  boot.kernelModules = [ "snd-seq" "snd-rawmidi" "drm_kms_helper" ];
   boot.extraModprobeConfig = "options drm_kms_helper poll=N";
   boot.plymouth.enable = true;
 
@@ -62,15 +61,20 @@ in
 
   services.xserver.enable = true;
   services.printing.enable = true;
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = unstable.pulseaudioFull;
   hardware.bluetooth.enable = true;
   hardware.opengl.enable = true;
+  hardware.bumblebee.enable = false;
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = unstable.linuxPackages_latest.nvidiaPackages.stable;
     prime = {
       offload.enable = true;
       nvidiaBusId = "PCI:1:0:0";
@@ -96,7 +100,7 @@ in
   users.extraGroups = { wireshark = { gid = 500; }; };
   users.users.alex = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" "dialout" "wireshark" ];
+    extraGroups = [ "jackaudio" "wheel" "docker" "networkmanager" "video" "audio" "disk" "libvirtd" "dialout" "wireshark" ];
     shell = pkgs.fish;
   };
 
@@ -105,9 +109,12 @@ in
 
   services.openssh.enable = true;
 
+  virtualisation.docker.enable = true;
+
   system.autoUpgrade.enable = true;
 
   networking.firewall.enable = false;
+  networking.nameservers = [ "1.1.1.1" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

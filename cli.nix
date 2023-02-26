@@ -11,6 +11,8 @@ let
   }) {};
 in {
   environment.systemPackages = with pkgs; [
+    distrobox
+    minikube kubectl kubernetes
     python39Packages.ipython
     python39Packages.bootstrapped-pip
     fprintd
@@ -24,6 +26,7 @@ in {
     tmux
     ripgrep
     gnupg
+    pinentry
     nmap
     sshfs
     bash
@@ -39,7 +42,7 @@ in {
     git
     p7zip
     fzf
-    cod
+    # cod
     fish
     sbt
     gcc
@@ -56,6 +59,8 @@ in {
     comma
 
     android-tools
+    ffmpeg
+    spotify-tui
     python310
     qemu
     python39Packages.rpm
@@ -77,6 +82,13 @@ in {
     procps
     vorbis-tools
     rustup
+    wineWowPackages.unstable
+    winetricks
+    wineasio
+    samba4Full
+    mullvad
+    mullvad-vpn
+    texlive.combined.scheme-full
   ];
 }
 

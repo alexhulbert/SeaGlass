@@ -1,10 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let 
   pinned-firefox = import (builtins.fetchTarball {
    name = "pinned-firefox-nixpkgs";
     url = "https://github.com/nixos/nixpkgs/archive/04ce3788d37dc3f5ab1b156f2a817c8e7630b3b4.tar.gz";
     sha256 = "15wz5gnj43997557dp2b7rpmncz22390klbj5ixnwg9zh4hz34s3";
   }) {};
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  fxcast = unstable.fx_cast_bridge.overrideAttrs(o: {
+    version = "0.3.1";
+    src = pkgs.fetchFromGitHub {
+      owner = "hensm";
+      repo = "fx_cast";
+      rev = "v0.3.1";
+      hash = "sha256-hB4NVJW2exHoKsMp0CKzHerYgj8aR77rV+ZsCoWA1Dg=";
+    };
+  });
 in {
   config.home.file = {
     ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
@@ -16,18 +26,37 @@ in {
       type = "stdio";
       allowed_extensions = [ "darkreader@alexhulbert.com" ];
     };
+    ".mozilla/native-messaging-hosts/fx_cast_bridge.json".source =
+      "${fxcast}/lib/mozilla/native-messaging-hosts/fx_cast_bridge.json";
   };
 
-  config.programs.firefox = {
+  config.home.sessionVariables = {
+    MOZ_DISABLE_RDD_SANDBOX = "1";
+  };
+
+  config.programs.firefox = let
+    pkg = pkgs.symlinkJoin {
+      name = "firefox";
+      paths = [ pinned-firefox.firefox-bin-unwrapped ];
+      buildInputs = [ pkgs.makeWrapper ];
+      postBuild = ''
+        wrapProgram $out/bin/firefox \
+          --prefix LD_LIBRARY_PATH ':' "${pinned-firefox.ffmpeg}/lib"
+      '';
+      meta = pinned-firefox.firefox-bin-unwrapped.meta;
+      gtk3 = pinned-firefox.firefox-bin-unwrapped.gtk3;
+    };
+  in {
     enable = true;
-    package = pinned-firefox.firefox-esr-91-unwrapped;
+    package = pkg;
+
     profiles.default = {
       id = 0;
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "layers.acceleration.force-enabled" = true;
         "gfx.webrender.all" = true;
-        "gfx.webrender.enabled" = true;
+        "gfx.webrender.enabled" =  true;
         "svg.context-properties.content.enabled" = true;
         "layout.css.backdrop-filter.enabled" = true;
         "dom.w3c_touch_events.enabled" = 1;

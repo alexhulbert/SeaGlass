@@ -1,4 +1,20 @@
 { config, pkgs, lib, ... }: {
+  config.systemd.user.services.i3 = {
+    Service = {
+      ExecStart = "${pkgs.bash}/bin/bash -c \"${pkgs.i3-gaps}/bin/i3\"";
+      Restart = "on-failure";
+      Slice = "session.slice";
+    };
+    Unit = {
+      Description = "i3 Window Manager";
+      PartOf = [ "graphical-session.target" ];
+      Wants = [ "plasma-kcminit.service" ];
+    };
+  };
+  config.xdg.configFile = {
+    "systemd/user/plasma-kwin_x11.service".source = config.lib.file.mkOutOfStoreSymlink "/dev/null";
+    "systemd/user/plasma-workspace-x11.target.wants/i3.service".source = "${config.xdg.configHome}/systemd/user/i3.service";
+  };
   config.xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -31,6 +47,7 @@
       bindcode --release Shift+123 exec --no-startup-id xdotool key --clearmodifiers XF86AudioNext
       for_window [class="^.*"] border pixel 0
       for_window [title="Desktop — Plasma"] kill; floating enable; border none
+      for_window [title=" " class="jetbrains-idea-ce"] floating enable
       for_window [title="win0"] floating enable
       for_window [title="Picture-in-Picture"] sticky enable
       for_window [window_role="pop-up"] floating enable
