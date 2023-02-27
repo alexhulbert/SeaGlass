@@ -33,7 +33,7 @@
         "${modifier}+q" = "kill";
         "${modifier}+w" = "exec firefox";
         "${modifier}+Shift+q" = "exec --no-startup-id xdotool getwindowfocus windowkill";
-        "${modifier}+e" = "exec --no-startup-id hud-menu";
+        "${modifier}+e" = "exec --no-startup-id \"qdbus com.github.zren.PlasmaHUD /PlasmaHUD toggleHUD\"";
         "${modifier}+d" = "exec --no-startup-id \"sh -c 'SESSION_MANAGER= krunner & sleep 0.2; i3-msg [class=krunner] move absolute position 1320 0'\"";
         "${modifier}+Shift+a" = "exec --no-startup-id \"i3-sidebar Todoist left 0.3 'firefox -P ssb --new-window https://todoist.com'\"";
         "${modifier}+Shift+w" = "exec --no-startup-id \"i3-sidebar Spotify top 0.66 spotify\"";

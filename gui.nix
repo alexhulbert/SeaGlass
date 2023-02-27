@@ -93,7 +93,6 @@ in {
     obs-studio
     filelight
     dolphin-emu-beta
-    (callPackage ./pkgs/hud-menu {})
   ];
 }
 

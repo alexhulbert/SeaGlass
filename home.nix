@@ -31,7 +31,6 @@ in {
       };
     };
     imports = [
-      ./pkgs/hud-menu/service.nix
       ./pkgs/i3-sidebar.nix
       ./i3.nix
       ./terminal.nix
@@ -51,10 +50,11 @@ in {
       userEmail = "alex@alexhulbert.com";
     };
 
+    xdg.configFile."wal/templates/hud.rasi".source = ./resources/theme/hud.rasi;
     xdg.configFile."wal/templates/rofi.rasi".source = ./resources/theme/rofi.rasi;
     programs.rofi = {
       enable = true;
-      theme = "${config.xdg.cacheHome}/wal/rofi.rasi";
+      theme = "${config.xdg.cacheHome}/wal/hud.rasi";
     };
 
     xdg.dataFile."konsole/Pywal.profile".source = ./resources/konsole.profile;
@@ -310,6 +310,33 @@ in {
         };
         kwalletrc.Wallet.Enabled = "false";
         dolphinrc.MainWindow.MenuBar = "Disabled";
+        plasmahudrc = {
+          General = {
+            Matching = "fuzzy";
+            Width = 100;
+          };
+          Icons.Enabled = false;
+          Style = {
+            Title = "Menu";
+            Font = "FiraCode Nerd Font 13";
+          };
+        };
+      };
+    };
+
+    systemd.user.services.plasma-hud = {
+      Service = {
+        ExecStart = "${pkgs.callPackage ./pkgs/plasma-hud.nix {}}/bin/plasma-hud";
+        Restart = "always";
+        RestartSec = 3;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+      Unit = {
+        After = [ "graphical-session-pre.target" ];
+        Description = "Plasma HUD";
+        PartOf = [ "graphical-session.target" ];
       };
     };
 

@@ -1,11 +1,11 @@
 configuration {{
-    font:                                                       "FiraCode Nerd Font 12";
-    fixed-num-lines:                            true;
-    show-icons:                                         false;
-    sidebar-mode:                                       true;
-    scroll-method:                                      1;
-    click-to-exit:                                      true;
-    combi-hide-mode-prefix:             true;
+    font: "FiraCode Nerd Font 13";
+    fixed-num-lines: true;
+    show-icons: false;
+    sidebar-mode: false;
+    scroll-method: 1;
+    click-to-exit: true;
+    combi-hide-mode-prefix: true;
 }}
 
 * {{
@@ -14,24 +14,24 @@ configuration {{
 }}
 
 window {{
-    background-color:                   #{background.strip}EA;
-    border:                                             0px;
-    border-radius:                                      8px;
-    padding:                                            15;
-    width:                                                      40%;
+    background-color: #{background.strip}EA;
+    border: 0px;
+    border-radius: 8px;
+    padding: 30;
+    width: 100%;
 }}
 
 prompt {{
-    spacing:                                            0;
-    border:                                             0;
-    text-color:                                         {foreground};
+    spacing: 0;
+    border: 0;
+    text-color: {foreground};
 }}
 
 textbox-prompt-colon {{
-    expand:                                             false;
-    str:                                                        " ";
-    margin:                                                     0px 4px 0px 0px;
-    text-color:                                         inherit;
+    expand: false;
+    str: " ";
+    margin: 0px 8px 0px 0px;
+    text-color: inherit;
 }}
 
 entry {{
@@ -47,23 +47,23 @@ case-indicator {{
 inputbar {{
     spacing:                                            0px;
     text-color:                                         {foreground};
-    padding:                                            5px;
+    padding:                                            10px;
     children:                                           [ prompt,textbox-prompt-colon,entry,case-indicator ];
 }}
 
 mainbox {{
     border:                                             0px;
-    padding:                                            6;
+    padding:                                            12;
 }}
 
 listview {{
     lines:                                                      15;
     columns:                                            1;
-    fixed-height:                                       0;
+    fixed-height:                                       1;
     border:                                             0px;
-    spacing:                                            4px;
+    spacing:                                            8px;
     scrollbar:                                          false;
-    padding:                                            5px 5px 0px 5px;
+    padding:                                            10px 10px 0px 10px;
 }}
 
 element-text, element-icon {{
@@ -73,8 +73,8 @@ element-text, element-icon {{
 
 element {{
     border:                                             0px;
-    border-radius:                                      4px;
-    padding:                                            5px;
+    border-radius:                                      8px;
+    padding:                                            4px;
 }}
 element normal.normal {{
     background-color:                           #00000000;
@@ -110,25 +110,25 @@ button {{
     horizontal-align:               0.5;
     vertical-align:                 0.5;
     background-color:                   {foreground};
-    margin:                                             5px;
-    padding:                                            5px;
+    margin:                                             10px;
+    padding:                                            10px;
     text-color:                                         {background};
     border:                                             0px;
-    border-radius:                                      5px;
+    border-radius:                                      10px;
     border-color:                                       {foreground};
 }}
 
 scrollbar {{
-    width:                                              4px;
+    width:                                              8px;
     border:                                             0px;
     handle-color:                                       {foreground};
-    handle-width:                                       8px;
+    handle-width:                                       16px;
     padding:                                            0;
 }}
 
 message {{
     border:                                             0px;
-    padding:                                            3px;
+    padding:                                            6px;
 }}
 
 textbox {{
