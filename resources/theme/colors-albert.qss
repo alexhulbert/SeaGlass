@@ -1,0 +1,75 @@
+* {{
+    color: {foreground};
+    background-color: {background};
+    font-family: "SFNS Display";
+    font-weight: 400;
+}}
+#frame {{
+    width: 640px;
+    padding: 12px;
+    border-radius: 5px;
+    background-color: rgba({background.rgb}, 0.8);
+    /* Workaround for Qt to get fixed size button*/
+    min-width: 640px;
+    max-width: 640px
+}}
+#inputLine {{
+    padding: 2px;
+    font-size: 36px;
+    selection-color: {background};
+    selection-background-color: {foreground};
+    border: none;
+    background-color: transparent
+}}
+#settingsButton {{
+    border: none;
+    border-radius: 7px;
+    color: {color6};
+    background-color: transparent;
+    /* Respect the frame border */
+    margin: 6px 6px 0 0;
+    border-top-right-radius: 6px;
+    border-bottom-left-radius: 10px;
+    /* Workaround for Qt to get fixed size button*/
+    min-width: 14px;
+    min-height: 14px;
+    max-width: 14px;
+    max-height: 14px
+}}
+#settingsButton:hover {{
+    background-color: #2d2d2d
+}}
+/********** ListViews ************/
+QListView {{
+    selection-color: {background}
+}}
+QListView QScrollBar:vertical {{
+    width: 5px;
+    background: transparent
+}}
+/********** actionList **********/
+QListView#actionList {{
+    font-family: "SFNS Display";
+    font-weight: 400;
+    font-size: 20px
+}}
+QListView#actionList::item {{
+    height: 28px
+}}
+QListView::item:selected {{
+    background-color: rgba({color6.rgb}, 0.33)
+}}
+/********** resultsList **********/
+QListView#resultsList {{
+    icon-size: 36px;
+    font-size: 26px;
+    font: 20px "SFNS Display";
+    font-weight: 400;
+    background-color: transparent;
+    border: none
+}}
+QListView#resultsList::item {{
+    height: 48px;
+    padding: 4px;
+    border-bottom: 1px dotted #555
+}}

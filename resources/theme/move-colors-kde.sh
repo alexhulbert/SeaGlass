@@ -39,7 +39,7 @@ IntensityAmount=-1
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=$color0,215
+BackgroundAlternate=$color0,204
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -53,7 +53,7 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Selection]
-BackgroundAlternate=$color3,215
+BackgroundAlternate=$color3,204
 BackgroundNormal=$color3,215
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -67,7 +67,7 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Tooltip]
-BackgroundAlternate=$color0,215
+BackgroundAlternate=$color0,204
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -95,7 +95,7 @@ ForegroundPositive=$color5
 ForegroundVisited=$color0
 
 [Colors:Window]
-BackgroundAlternate=$color0,215
+BackgroundAlternate=$color0,204
 BackgroundNormal=$background
 DecorationFocus=$color3
 DecorationHover=$color3
@@ -117,10 +117,10 @@ shadeSortColumn=true
 contrast=5
 
 [WM]
-activeBackground=$color3,215
+activeBackground=$color3,204
 activeBlend=$color3
 activeForeground=$foreground
-inactiveBackground=$color0,215
+inactiveBackground=$color0,204
 inactiveBlend=$color0
 inactiveForeground=$color7" > ~/.local/share/color-schemes/$1.colors
 kwriteconfig5 --file ~/.config/kdeglobals --group WM --key frame $color3 #these lines come from https://github.com/gikari/bismuth/blob/master/TWEAKS.md

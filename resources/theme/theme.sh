@@ -7,5 +7,6 @@ wal -i $1
 wpg -s $1 --alpha 0.84
 # ./intellijPywal/intellijPywalGen.sh ~/.config/JetBrains/$(ls ~/.config/JetBrains | tail -n1)
 # wpg-install.sh -ig
-sed "s/Opacity=1/Opacity=0.84/g" $HOME/.cache/wal/colors-konsole.colorscheme > $HOME/.local/share/konsole/colors-konsole.colorscheme
+sed "s/Opacity=1/Opacity=0.84/g" $HOME/.cache/wal/colors-konsole.colorscheme >$HOME/.local/share/konsole/colors-konsole.colorscheme
 lookandfeeltool -a nixos
+systemctl --user restart picom

@@ -5,6 +5,7 @@ Font=FiraCode Nerd Font Mono,11,-1,5,53,0,0,0,0,0,Retina
 
 [General]
 Name=Pywal
+LocalTabTitleFormat=%w
 Parent=FALLBACK/
 TerminalCenter=true
 TerminalMargin=24

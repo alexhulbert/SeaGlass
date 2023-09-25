@@ -14,7 +14,7 @@ configuration {{
 }}
 
 window {{
-    background-color:             	#{background.strip}EA;
+    background-color:             	#{background.strip}CD;
     border: 						0px;
     border-radius: 					12px;
     padding: 						30;
