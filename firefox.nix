@@ -1,12 +1,11 @@
-{ config, pkgs, lib, ... }:
-let 
-  pinned-firefox = import (builtins.fetchTarball {
-   name = "pinned-firefox-nixpkgs";
-    url = "https://github.com/nixos/nixpkgs/archive/04ce3788d37dc3f5ab1b156f2a817c8e7630b3b4.tar.gz";
-    sha256 = "15wz5gnj43997557dp2b7rpmncz22390klbj5ixnwg9zh4hz34s3";
-  }) {};
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  fxcast = unstable.fx_cast_bridge.overrideAttrs(o: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  unstable = import <nixos-unstable> {config = {allowUnfree = true;};};
+  fxcast = unstable.fx_cast_bridge.overrideAttrs (o: {
     version = "0.3.1";
     src = pkgs.fetchFromGitHub {
       owner = "hensm";
@@ -17,46 +16,30 @@ let
   });
 in {
   config.home.file = {
-    ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source =
-      "${pkgs.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
+    ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source = "${pkgs.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
       name = "darkreader";
       description = "custom darkreader native host for syncing with pywal";
       path = "/etc/nixos/resources/darkreader/index.js";
       type = "stdio";
-      allowed_extensions = [ "darkreader@alexhulbert.com" ];
+      allowed_extensions = ["darkreader@alexhulbert.com"];
     };
-    ".mozilla/native-messaging-hosts/fx_cast_bridge.json".source =
-      "${fxcast}/lib/mozilla/native-messaging-hosts/fx_cast_bridge.json";
+    ".mozilla/native-messaging-hosts/fx_cast_bridge.json".source = "${fxcast}/lib/mozilla/native-messaging-hosts/fx_cast_bridge.json";
   };
 
   config.home.sessionVariables = {
     MOZ_DISABLE_RDD_SANDBOX = "1";
   };
 
-  config.programs.firefox = let
-    pkg = pkgs.symlinkJoin {
-      name = "firefox";
-      paths = [ pinned-firefox.firefox-bin-unwrapped ];
-      buildInputs = [ pkgs.makeWrapper ];
-      postBuild = ''
-        wrapProgram $out/bin/firefox \
-          --prefix LD_LIBRARY_PATH ':' "${pinned-firefox.ffmpeg}/lib"
-      '';
-      meta = pinned-firefox.firefox-bin-unwrapped.meta;
-      gtk3 = pinned-firefox.firefox-bin-unwrapped.gtk3;
-    };
-  in {
+  config.programs.firefox = {
     enable = true;
-    package = pkg;
-
     profiles.default = {
       id = 0;
       settings = {
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "layers.acceleration.force-enabled" = true;
         "gfx.webrender.all" = true;
-        "gfx.webrender.enabled" =  true;
+        "gfx.webrender.enabled" = true;
         "svg.context-properties.content.enabled" = true;
         "layout.css.backdrop-filter.enabled" = true;
         "dom.w3c_touch_events.enabled" = 1;
@@ -71,8 +54,8 @@ in {
     profiles.ssb = {
       id = 1;
       settings = config.programs.firefox.profiles.default.settings;
+      # url('blurredfox/userChrome.css');
       userChrome = ''
-        @import url('blurredfox/userChrome.css');
         @import url('userContent.css');
         @import url('nochrome.css');
       '';
