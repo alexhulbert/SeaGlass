@@ -1,0 +1,48 @@
+O impatient
+O lspconfig # needs theme
+O cmp (use github for plugins)
+O null-ls
+O nvim-web-devicons
+O hop # needs theme
+O comment.nvim
+O luasnip
+O friendly-snippets
+O lspkind
+O telescope # needs theme
+O treesitter # needs theme
+O vim-fugitive
+---
+O airline # special theme integration
+O bufferline # special theme integration
+O diffview
+O vim-better-whitespace
+O telescope-file-browser
+trouble # needs theme
+todo-comments
+guess-indent
+toggleterm
+neoscroll
+treesitter-refactor
+X copilot
+! smoothcursor
+! obsession
+
+LANGS:
+rust
+rust-tools
+crates
+vim-nix
+
+MAYBE:
+plenary/popup/packer?
+surround?
+move?
+indent-blankline?
+markdown-preview?
+telescope-fzf-native?
+autopairs?
+symbols-outline?
+inlayhints?
+treesitter-textobjects?
+treesitter-context?
+treesitter-ssr?
