@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }: {
-
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   config.home = {
     sessionVariables = {
       FZF_COMPLETE = "2";
@@ -15,11 +19,14 @@
         pkgs.writeTextFile {
           name = "hm-session-vars.sh";
           destination = "/etc/profile.d/hm-session-vars-2.sh";
-          text = ''
-            ${config.lib.shell.exportAll config.home.sessionVariables}
-          '' + lib.optionalString (config.home.sessionPath != [ ]) ''
-            export PATH="$PATH''${PATH:+:}${pkgs.builtins.concatStringsSep ":" config.home.sessionPath}"
-          '' + config.home.sessionVariablesExtra;
+          text =
+            ''
+              ${config.lib.shell.exportAll config.home.sessionVariables}
+            ''
+            + lib.optionalString (config.home.sessionPath != []) ''
+              export PATH="$PATH''${PATH:+:}${pkgs.builtins.concatStringsSep ":" config.home.sessionPath}"
+            ''
+            + config.home.sessionVariablesExtra;
         }
       )
     ];
@@ -37,14 +44,15 @@
       source ${config.home.homeDirectory}/.cache/wal/pywal.fish
     '';
     "wal/templates/pywal.fish".source = ./resources/theme/pywal.fish;
-    "fish/conf.d/any-nix-shell.fish".text = ''
-      any-nix-shell fish --info-right | source
-    '';
+    # "fish/conf.d/any-nix-shell.fish".text = ''
+    #   any-nix-shell fish --info-right | source
+    # '';
     "fish/conf.d/work.fish".text = ''
       test -d /run/host && begin
         export GDK_PIXBUF_MODULE_FILE=/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders.cache
         export QT_PLUGIN_PATH=
         export QT_XCB_GL_INTEGRATION=none
+        source ~/.fishrc 2> /dev/null || true
       end
     '';
     # mount ~/.config/fish
@@ -80,17 +88,14 @@
         rsystatus = "rdx systemctl status";
         rlog = "rdx journalctl";
 
-        emacs = "emacsclient -c -nw";
-        vim = "emacs";
-        e = "emacs";
-        
+        e = "vim";
         ls = "exa";
         cat = "bat";
 
         sw = "sudo nixos-rebuild switch";
         nix-repl = "nix repl --expr 'import <nixpkgs> {}' --expr 'import <nixpkgs/nixos> {}'";
 
-        ldm = "sudo systemctl restart display-manager";
+        ldm = "qdbus org.kde.ksmserver /KSMServer logout 0 3 3";
 
         work = "distrobox enter -r work --";
         arch = "distrobox enter -r arch --";
@@ -105,42 +110,48 @@
         # fish_add_path ~/.local/bin
         # cod init $fish_pid fish | source
       '';
-      plugins = [{
-        name = "nix-env";
-        src = pkgs.fetchFromGitHub {
-          owner = "lilyball";
-          repo = "nix-env.fish";
-          rev = "a3c55307dce38c73485eac1f654c8f392341bda2";
-          sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-        };
-      } {
-        name = "fzf";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "fzf";
-          rev = "479fa67d7439b23095e01b64987ae79a91a4e283";
-          sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-        };
-      } {
-        name = "z";
-        src = pkgs.fetchFromGitHub {
-          owner = "jethrokuan";
-          repo = "z";
-          rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
-          sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
-        };
-      } {
-        name = "hydro";
-        src = pkgs.fetchFromGitHub {
-          owner = "jorgebucaran";
-          repo = "hydro";
-          rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-          sha256 = "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww";
-        };
-      }];
+      plugins = [
+        {
+          name = "nix-env";
+          src = pkgs.fetchFromGitHub {
+            owner = "lilyball";
+            repo = "nix-env.fish";
+            rev = "a3c55307dce38c73485eac1f654c8f392341bda2";
+            sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
+          };
+        }
+        {
+          name = "fzf";
+          src = pkgs.fetchFromGitHub {
+            owner = "jethrokuan";
+            repo = "fzf";
+            rev = "479fa67d7439b23095e01b64987ae79a91a4e283";
+            sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
+          };
+        }
+        {
+          name = "z";
+          src = pkgs.fetchFromGitHub {
+            owner = "jethrokuan";
+            repo = "z";
+            rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
+            sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
+          };
+        }
+        {
+          name = "hydro";
+          src = pkgs.fetchFromGitHub {
+            owner = "jorgebucaran";
+            repo = "hydro";
+            rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
+            sha256 = "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww";
+          };
+        }
+      ];
     };
     starship = {
       enable = true;
+      enableNushellIntegration = false;
       settings = {
         character = {
           success_symbol = "[‍](bold)";
@@ -208,6 +219,8 @@
           format = "[$symbol]($style)";
           symbol = " ";
         };
+        gcloud.disabled = true;
+        aws.disabled = true;
       };
     };
   };
