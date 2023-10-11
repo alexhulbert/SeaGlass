@@ -20,13 +20,13 @@ This is a set of declarative Linux configuration files and scripts designed to c
 
  This repository is designed to provide quick and automatic configuration of all these features on a fresh Arch Linux installation, although configuration for NixOS is available on an older branch.
 
- Currently, these configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features works:
+ Currently, this repository works, but is in a very WIP state. These configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features works:
 
  <h3>Color Scheme Engine</h3>
- The color scheme engine is implemented with a combination of [pywal templates]() and [a custom fork of the dark reader addon for firefox](). This fork attaches to a custom firefox native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in [user/resources/darkreader.xpi](user/resources/darkreader.xpi) and the associated native extension is available in [user/resources/darkreader](user/resources/darkreader). Everything else is in [user/firefox.nix](user/firefox.nix).
+ The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a> and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon for firefox</a>. This fork attaches to a custom firefox native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/resources/darkreader.xpi">user/resources/darkreader.xpi</a> and the associated native extension is available in <a href="user/resources/darkreader">user/resources/darkreader</a>. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>. When installing the darkreader addon, make sure to enable preview mode, enable automatic updates of the css from GitHub, and turn on browser theming.
 
 <h3>Global Transparency</h3>
-The OS-wide frosted glass effect is achieved with a combination of [lightly-qt]() and [a glsl compositor shader](user/resources/theme/picom-chromakey.glsl). The shader uses a chromakey algorithm to selectively apply transparency to the system background color and colors close to it.
+The OS-wide frosted glass effect is achieved with a combination of <a href="https://github.com/Luwx/Lightly">lightly-qt</a> and <a href="user/resources/theme/picom-chromakey.glsl">a glsl compositor shader</a>. The shader uses a chromakey algorithm to selectively apply transparency to the system background color and colors close to it.
 
 <h3>Automatic Configuration</h3>
-The reproducible and declarative aspects of this repository come from its use of [aconfmgr]() and [nix home-manager](). The `system` folder contains the contents of my `~/.config/aconfmgr` folder and the `user` folder contains my `~/.config/home-manager` folder.
+The reproducible and declarative aspects of this repository come from its use of <a href="https://github.com/CyberShadow/aconfmgr">aconfmgr</a> and <a href="https://github.com/nix-community/home-manager">nix home-manager</a>. The `system` folder contains the contents of my `~/.config/aconfmgr` folder and the `user` folder contains my `~/.config/home-manager` folder.
