@@ -3,12 +3,14 @@
   lib,
   config,
   ...
-}: {
+}:
+let
+  shim = import ../pkgs/shim.nix { inherit pkgs; };
+in {
   config = {
     # xdg.configFile."nvim".source = ./nvim;
     programs.neovim = {
       enable = true;
-      package = pkgs.neovim-unwrapped;
       vimAlias = true;
       viAlias = true;
       vimdiffAlias = true;
@@ -37,7 +39,7 @@
         nodePackages.jsonlint
         nodePackages.typescript-language-server
         nodePackages.vscode-langservers-extracted
-        nodePackages.yarn
+        # nodePackages.yarn
         nodePackages.bash-language-server
         nodePackages.node2nix
       ];

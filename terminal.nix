@@ -3,7 +3,16 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+let
+  shim = import ./pkgs/shim.nix { inherit pkgs; };
+  sgptInit = builtins.readFile (
+    builtins.fetchurl {
+      url = "https://raw.githubusercontent.com/TheR1D/shell_gpt/shell-integrations/simple_zsh.sh";
+      sha256 = "sha256:0794ly0dsv5c1fpbr63gk0b2pvbhvn3k9ka4h8qnbz05mdqws525";
+    }
+  );
+in {
   config.home = {
     sessionVariables = {
       FZF_COMPLETE = "2";
@@ -13,62 +22,21 @@
       NIXPKGS_ALLOW_UNFREE = "1";
       GOPATH = "/home/alex/.go";
     };
-
-    packages = [
-      (
-        pkgs.writeTextFile {
-          name = "hm-session-vars.sh";
-          destination = "/etc/profile.d/hm-session-vars-2.sh";
-          text =
-            ''
-              ${config.lib.shell.exportAll config.home.sessionVariables}
-            ''
-            + lib.optionalString (config.home.sessionPath != []) ''
-              export PATH="$PATH''${PATH:+:}${pkgs.builtins.concatStringsSep ":" config.home.sessionPath}"
-            ''
-            + config.home.sessionVariablesExtra;
-        }
-      )
-    ];
   };
 
-  config.xdg.configFile = {
-    "fish/conf.d/hm-session-vars.fish".text = ''
-      set --prepend fish_function_path ${pkgs.fishPlugins.foreign-env}/share/fish/vendor_functions.d
-      fenv source ${config.home.profileDirectory}/etc/profile.d/hm-session-vars-2.sh > /dev/null
-      set -e fish_function_path[1]
-    '';
-    "fish/conf.d/theme.fish".text = ''
-      # fenv source ${config.home.homeDirectory}/.cache/wal/colors-tty.sh
-      cat ${config.home.homeDirectory}/.cache/wal/sequences &
-      source ${config.home.homeDirectory}/.cache/wal/pywal.fish
-    '';
-    "wal/templates/pywal.fish".source = ./resources/theme/pywal.fish;
-    # "fish/conf.d/any-nix-shell.fish".text = ''
-    #   any-nix-shell fish --info-right | source
-    # '';
-    "fish/conf.d/work.fish".text = ''
-      test -d /run/host && begin
-        export GDK_PIXBUF_MODULE_FILE=/usr/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders.cache
-        export QT_PLUGIN_PATH=
-        export QT_XCB_GL_INTEGRATION=none
-        source ~/.fishrc 2> /dev/null || true
-      end
-    '';
-    # mount ~/.config/fish
-    # mount ~/.config/git
-    # mount ~/.cache/wal
-    # mount ~/.config/starship.toml
-    # mount ~/.nix-profile
-    # mount ~/.ssh
-  };
+  config.home.file.".zshenv" = lib.mkForce { text =
+    ''
+      ${config.lib.shell.exportAll config.home.sessionVariables}
+    ''
+    + lib.optionalString (config.home.sessionPath != []) ''
+      export PATH="$PATH''${PATH:+:}${pkgs.builtins.concatStringsSep ":" config.home.sessionPath}"
+    ''
+    + config.home.sessionVariablesExtra; };
 
   config.programs = {
-    fish = {
+    zsh = {
       enable = true;
-      functions = {
-        se = "e /sudo:root@localhost:(realpath $argv)";
-      };
+      enableAutosuggestions = true;
       shellAliases = {
         start = "sudo systemctl start";
         stop = "sudo systemctl stop";
@@ -89,68 +57,64 @@
         rlog = "rdx journalctl";
 
         e = "vim";
-        ls = "exa";
+        se = "svim";
+        ls = "eza";
         cat = "bat";
 
-        sw = "sudo nixos-rebuild switch";
-        nix-repl = "nix repl --expr 'import <nixpkgs> {}' --expr 'import <nixpkgs/nixos> {}'";
+        sw = "home-manager switch";
 
         ldm = "qdbus org.kde.ksmserver /KSMServer logout 0 3 3";
-
-        work = "distrobox enter -r work --";
-        arch = "distrobox enter -r arch --";
       };
-      shellInit = ''
-        set fish_greeting
-        bind \cH backward-kill-word
-        bind \e\[3\;5~ kill-word
-        bind \e\[5C forward-word
-        bind \e\[5D backward-word
-        test -f /etc/fishrc && source /etc/fishrc
-        # fish_add_path ~/.local/bin
-        # cod init $fish_pid fish | source
+      initExtra = ''
+        bindkey '^H' backward-kill-word
+        bindkey '5~' kill-word
+        bindkey '^[[1;5C' forward-word
+        bindkey '^[[1;5D' backward-word
+
+        ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+        ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=magenta'
+        WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+
+        . /usr/share/fzf/completion.zsh
+        . /usr/share/fzf/key-bindings.zsh
+
+        . /usr/share/doc/pkgfile/command-not-found.zsh
+
+        source <(cod init $$ zsh)
+
+        zstyle ':completion:*' menu select
+        zstyle ':completion::complete:*' gain-privileges 1
+
+        autoload -U up-line-or-beginning-search
+        autoload -U down-line-or-beginning-search
+        zle -N up-line-or-beginning-search
+        zle -N down-line-or-beginning-search
+        bindkey "^[[A" up-line-or-beginning-search
+        bindkey "^[[B" down-line-or-beginning-search
+
+        PATH=$PATH:~/.local/bin
+        ${builtins.replaceStrings ["^l"] ["^g"] sgptInit}
+
+        # eval "$(register-python-argcomplete pipx)"
+
+        . /opt/asdf-vm/asdf.sh
       '';
-      plugins = [
-        {
-          name = "nix-env";
-          src = pkgs.fetchFromGitHub {
-            owner = "lilyball";
-            repo = "nix-env.fish";
-            rev = "a3c55307dce38c73485eac1f654c8f392341bda2";
-            sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-          };
-        }
-        {
-          name = "fzf";
-          src = pkgs.fetchFromGitHub {
-            owner = "jethrokuan";
-            repo = "fzf";
-            rev = "479fa67d7439b23095e01b64987ae79a91a4e283";
-            sha256 = "0k6l21j192hrhy95092dm8029p52aakvzis7jiw48wnbckyidi6v";
-          };
-        }
-        {
-          name = "z";
-          src = pkgs.fetchFromGitHub {
-            owner = "jethrokuan";
-            repo = "z";
-            rev = "45a9ff6d0932b0e9835cbeb60b9794ba706eef10";
-            sha256 = "1kjyl4gx26q8175wcizvsm0jwhppd00rixdcr1p7gifw6s308sd5";
-          };
-        }
-        {
-          name = "hydro";
-          src = pkgs.fetchFromGitHub {
-            owner = "jorgebucaran";
-            repo = "hydro";
-            rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-            sha256 = "1lgknykah265wxx6wyy5pqc3w3jhkr2nnybwb4954nlklr12g7ww";
-          };
-        }
-      ];
+      zplug = {
+        enable = true;
+        plugins = [
+          { name = "zsh-users/zsh-autosuggestions"; }
+          { name = "chisui/zsh-nix-shell"; }
+          { name = "zsh-users/zsh-syntax-highlighting"; }
+          { name = "zsh-users/zsh-history-substring-search"; }
+        ];
+      };
     };
     starship = {
       enable = true;
+      package = shim {
+        name = "starship";
+        cmds = ["starship"];
+      };
       enableNushellIntegration = false;
       settings = {
         character = {

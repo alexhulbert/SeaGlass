@@ -4,8 +4,8 @@
   lib,
   ...
 }: let
-  unstable = import <nixos-unstable> {config = {allowUnfree = true;};};
-  fxcast = unstable.fx_cast_bridge.overrideAttrs (o: {
+  shim = import ./pkgs/shim.nix { inherit pkgs; };
+  fxcast = pkgs.fx_cast_bridge.overrideAttrs (o: {
     version = "0.3.1";
     src = pkgs.fetchFromGitHub {
       owner = "hensm";
@@ -16,19 +16,13 @@
   });
 in {
   config.home.file = {
-    ".mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json".source = "${pkgs.plasma-browser-integration}/lib/mozilla/native-messaging-hosts/org.kde.plasma.browser_integration.json";
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
       name = "darkreader";
       description = "custom darkreader native host for syncing with pywal";
-      path = "/etc/nixos/resources/darkreader/index.js";
+      path = "/home/alex/cfg/user/resources/darkreader/index.js";
       type = "stdio";
       allowed_extensions = ["darkreader@alexhulbert.com"];
     };
-    ".mozilla/native-messaging-hosts/fx_cast_bridge.json".source = "${fxcast}/lib/mozilla/native-messaging-hosts/fx_cast_bridge.json";
-  };
-
-  config.home.sessionVariables = {
-    MOZ_DISABLE_RDD_SANDBOX = "1";
   };
 
   config.programs.firefox = {
@@ -76,14 +70,14 @@ in {
       sha256 = "0k1h14hpzm25sh7jrrxrgafrhld742gy0ybf74fz1n7s8w0fd1kn";
     };
 
-    ".mozilla/firefox/ssb/chrome/nochrome.css".source = ./resources/theme/nochrome.css;
-    ".mozilla/firefox/ssb/chrome/blurredfox" = {
-      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blurredfox";
-      recursive = true;
-    };
-    ".mozilla/firefox/ssb/chrome/blur.css" = {
-      source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blur.css";
-      recursive = true;
-    };
+    # ".mozilla/firefox/ssb/chrome/nochrome.css".source = ./resources/theme/nochrome.css;
+    # ".mozilla/firefox/ssb/chrome/blurredfox" = {
+    #   source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blurredfox";
+    #   recursive = true;
+    # };
+    # ".mozilla/firefox/ssb/chrome/blur.css" = {
+    #   source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blur.css";
+    #   recursive = true;
+    # };
   };
 }

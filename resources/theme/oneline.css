@@ -33,3 +33,18 @@
   opacity: 1;
 }
 
+.tab-background {
+  margin-block: 0 !important;
+}
+
+.urlbarView {
+  width: 100% !important;
+  margin-top: -2px;
+  margin-inline: 0 !important;
+  border-radius: 0 0 4px 4px;
+  padding: 10px;
+}
+
+.titlebar-spacer, .titlebar-buttonbox-container {
+  display: none;
+}
