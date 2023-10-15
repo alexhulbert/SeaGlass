@@ -12,9 +12,9 @@
   home.file = {
     ".local/share/plasma/look-and-feel/nixos".source = ./resources/theme/kde-theme;
   };
-  
+
   xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh" ''
-      cd ~/cfg/user/resources/theme
+      cd ${./resources/theme}
       ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
   '';
 

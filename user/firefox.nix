@@ -19,11 +19,13 @@ in {
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
       name = "darkreader";
       description = "custom darkreader native host for syncing with pywal";
-      path = "/home/alex/cfg/user/resources/darkreader/index.js";
+      path = ./resources/darkreader/index.js;
       type = "stdio";
       allowed_extensions = ["darkreader@alexhulbert.com"];
     };
   };
+  config.xdg.configFile."vimfx/config.js".source = ./resources/vimfx.js;
+  config.xdg.configFile."vimfx/frame.js".text = "";
 
   config.programs.firefox = {
     enable = true;

@@ -20,7 +20,7 @@ in {
       FZF_LEGACY_KEYBINDINGS = "0";
       FZF_TMUX = "1";
       NIXPKGS_ALLOW_UNFREE = "1";
-      GOPATH = "/home/alex/.go";
+      GOPATH = "${config.home.homeDirectory}/.go";
     };
   };
 
