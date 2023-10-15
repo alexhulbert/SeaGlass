@@ -16,6 +16,6 @@ cp ~/.cache/wal/gtk3.0 ~/.local/share/themes/FlatColor/gtk-3.0/gtk.css
 cp ~/.cache/wal/gtk3.20 ~/.local/share/themes/FlatColor/gtk-3.20/gtk.css
 cp ~/.cache/wal/gtk3.20 ~/.config/gtk-4.0/gtk.css
 feh --bg-fill $1
-lookandfeeltool -a nixos
+lookandfeeltool -a seaglass
 systemctl --user restart picom
 

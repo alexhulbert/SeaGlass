@@ -1,9 +1,9 @@
 [Desktop Entry]
-Comment=NixOS Custom Theme
+Comment=SeaGlass Custom Theme
 
 Encoding=UTF-8
 Keywords=Desktop;Workspace;Appearance;Look and Feel;Logout;Lock;Suspend;Shutdown;Hibernate;
-Name=NixOS
+Name=SeaGlass
 
 Type=Service
 
@@ -13,7 +13,7 @@ X-KDE-PluginInfo-Author=Alex Hulbert
 X-KDE-PluginInfo-Category=
 X-KDE-PluginInfo-Email=
 X-KDE-PluginInfo-License=CCPL:by-sa
-X-KDE-PluginInfo-Name=nixos
+X-KDE-PluginInfo-Name=seaglass
 X-KDE-PluginInfo-Version=
 X-KDE-PluginInfo-Website=
 X-KDE-fallbackPackage=org.kde.breeze.desktop

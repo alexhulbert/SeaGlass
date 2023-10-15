@@ -10,7 +10,7 @@
   '';
 
   home.file = {
-    ".local/share/plasma/look-and-feel/nixos".source = ./resources/theme/kde-theme;
+    ".local/share/plasma/look-and-feel/seaglass".source = ./resources/theme/kde-theme;
   };
 
   xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh" ''
