@@ -9,11 +9,14 @@
     systemdBoot=false
   '';
 
-  home.file = {
-    ".local/share/plasma/look-and-feel/seaglass".source = ./resources/theme/kde-theme;
+  xdg.dataFile = {
+    "plasma/look-and-feel/seaglass/metadata.desktop".source = ./resources/theme/kde-theme/metadata.desktop;
+    "plasma/look-and-feel/seaglass/contents/defaults".source = ./resources/theme/kde-theme/defaults;
+    "plasma/look-and-feel/seaglass/contents/splash".source = config.lib.file.mkOutOfStoreSymlink
+      "/usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/splash";
   };
 
-  xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh" ''
+  xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh"   ''
       cd ${./resources/theme}
       ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
   '';
