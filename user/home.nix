@@ -21,6 +21,7 @@ in {
       ./plasma.nix
       ./vscode.nix
       ./vim
+      ./personal.nix
       plasma-manager.homeManagerModules.plasma-manager
     ];
 
@@ -35,31 +36,9 @@ in {
       pkgs.comma
     ]);
 
-    home.username = "alex";
-    home.homeDirectory = "/home/alex";
-
     home.stateVersion = "22.11";
 
     programs.home-manager.enable = true;
-
-    programs.git = {
-      enable = true;
-      package = shim {
-        name = "git";
-        cmds = ["git"];
-      };
-      userName = "alexhulbert";
-      userEmail = "alex@alexhulbert.com";
-    };
-
-    xdg.userDirs = {
-      desktop = "${config.home.homeDirectory}/tmp";
-      download = "${config.home.homeDirectory}/tmp";
-      documents = "${config.home.homeDirectory}/files";
-      music = "${config.home.homeDirectory}/files/media";
-      pictures = "${config.home.homeDirectory}/files/media";
-      videos = "${config. home.homeDirectory}/files/media";
-    };
 
     # Albert config
     programs.plasma.configFile."albert.conf" = {
@@ -119,17 +98,4 @@ in {
         ''}/bin/clean-nix-store";
       };
     };
-
-    /*systemd.user.services.rdp = {
-      Service = {
-        ExecStart = "${pkgs.distrobox}/bin/distrobox enter -r arch -- cassowary -bc";
-        Restart = "on-failure";
-        Slice = "session.slice";
-      };
-      Unit = {
-        Description = "Cassowary Background Client";
-        # PartOf = [ "graphical-session.target" ];
-        Wants = ["plasma-kcminit.service"];
-      };
-    };*/
 }
