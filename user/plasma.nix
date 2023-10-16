@@ -9,18 +9,6 @@
     systemdBoot=false
   '';
 
-  xdg.dataFile = {
-    "plasma/look-and-feel/seaglass/metadata.desktop".source = ./resources/theme/kde-theme/metadata.desktop;
-    "plasma/look-and-feel/seaglass/contents/defaults".source = ./resources/theme/kde-theme/defaults;
-    "plasma/look-and-feel/seaglass/contents/splash".source = config.lib.file.mkOutOfStoreSymlink
-      "/usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/splash";
-  };
-
-  xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh"   ''
-      cd ${./resources/theme}
-      ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
-  '';
-
   programs.plasma = {
     shortcuts = {
       "org.kde.dolphin.desktop"."_launch" = [];
@@ -42,23 +30,7 @@
       kdeglobals = {
         General.BrowserApplication = "firefox.desktop";
       };
-      konsolerc = {
-        "Desktop Entry" = {
-          DefaultProfile = "Pywal.profile";
-        };
-        MainWindow = {
-          MenuBar = "Disabled";
-          StatusBar = "Disabled";
-          ToolBarsMovable = "Disabled";
-          State = "AAAA/wAAAAD9AAAAAAAAB1MAAAjMAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAHABzAGUAcwBzAGkAbwBuAFQAbwBvAGwAYgBhAHIAAAAAAP////8AAAAAAAAAAA==";
-        };
-      };
-      ksplashrc = {
-        KSplash = {
-          Engine = "None";
-          Theme = "None";
-        };
-      };
+
       # startkderc.General.systemdBoot = false;
       kdeglobals.General = {
         fixed = "FiraCode Nerd Font,11,-1,5,50,0,0,0,0,0";

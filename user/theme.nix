@@ -6,6 +6,28 @@
 }: let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
 in {
+  # plasma theme
+  xdg.dataFile = {
+    "plasma/look-and-feel/seaglass/metadata.desktop".source = ./resources/theme/kde-theme/metadata.desktop;
+    "plasma/look-and-feel/seaglass/contents/defaults".source = ./resources/theme/kde-theme/defaults;
+    "plasma/look-and-feel/seaglass/contents/splash".source = config.lib.file.mkOutOfStoreSymlink
+      "/usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/splash";
+  };
+
+  # disable splash screen
+  programs.plasma.configFile.ksplashrc = {
+    KSplash = {
+      Engine = "None";
+      Theme = "None";
+    };
+  };
+
+  # theme randomizer autostart script
+  xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh"   ''
+      cd ${./resources/theme}
+      ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
+  '';
+
   # albert config
   programs.plasma.configFile."albert.conf" = {
     General = {
@@ -52,4 +74,19 @@ in {
   # konsole
   xdg.dataFile."konsole/Pywal.profile".source = ./resources/konsole.profile;
   xdg.dataFile."kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
+  programs.plasma.configFile.konsolerc = {
+    "Desktop Entry" = {
+      DefaultProfile = "Pywal.profile";
+    };
+    MainWindow = {
+      MenuBar = "Disabled";
+      StatusBar = "Disabled";
+      ToolBarsMovable = "Disabled";
+      State =
+        "AAAA/wAAAAD9AAAAAAAAB1MAAAjMAAAABAAAAAQAAAAIAAAACPw" +
+        "AAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcg" +
+        "AAAAAA/////wAAAAAAAAAAAAAAHABzAGUAcwBzAGkAbwBuAFQAb" +
+        "wBvAGwAYgBhAHIAAAAAAP////8AAAAAAAAAAA==";
+    };
+  };
 }
