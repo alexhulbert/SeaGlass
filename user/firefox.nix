@@ -19,7 +19,7 @@ in {
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
       name = "darkreader";
       description = "custom darkreader native host for syncing with pywal";
-      path = ./resources/darkreader/index.js;
+      path = "${./resources/darkreader}/index.js";
       type = "stdio";
       allowed_extensions = ["darkreader@alexhulbert.com"];
     };
