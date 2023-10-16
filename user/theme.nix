@@ -8,19 +8,15 @@
 in {
   # plasma theme
   xdg.dataFile = {
-    "plasma/look-and-feel/seaglass/metadata.desktop".source = ./resources/theme/kde-theme/metadata.desktop;
-    "plasma/look-and-feel/seaglass/contents/defaults".source = ./resources/theme/kde-theme/defaults;
-    "plasma/look-and-feel/seaglass/contents/splash".source = config.lib.file.mkOutOfStoreSymlink
-      "/usr/share/plasma/look-and-feel/org.kde.breeze.desktop/contents/splash";
+    "plasma/look-and-feel/seaglass".source = ./resources/theme/kde-theme;
   };
 
-  # disable splash screen
-  programs.plasma.configFile.ksplashrc = {
-    KSplash = {
-      Engine = "None";
-      Theme = "None";
-    };
-  };
+  # force disable splash screen
+  xdg.configFile.ksplashrc.text = ''
+    [KSplash]
+    Engine = "None";
+    Theme = "None";
+  '';
 
   # theme randomizer autostart script
   xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh"   ''
