@@ -94,10 +94,6 @@ in {
 
         PATH=$PATH:~/.local/bin
         ${builtins.replaceStrings ["^l"] ["^g"] sgptInit}
-
-        # eval "$(register-python-argcomplete pipx)"
-
-        . /opt/asdf-vm/asdf.sh
       '';
       zplug = {
         enable = true;
