@@ -7,6 +7,13 @@ ${USER} ALL=(ALL:ALL) NOPASSWD: ALL
 @includedir /etc/sudoers.d
 EOF
 
+# windows dual boot system clock compat config
+cat <<EOF >| "$(CreateFile '/etc/adjtime')"
+0.0 0 0
+0
+LOCAL
+EOF
+
 CreateLink '/etc/os-release' '../usr/lib/os-release'
 
 # base systemd services

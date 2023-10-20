@@ -6,6 +6,7 @@ IgnorePath '/usr/lib/modules/*'
 IgnorePath '/boot/*.img'
 IgnorePath '/boot/EFI/*'
 IgnorePath '/boot/grub/*'
+IgnorePath '/boot/System Volume Information'
 
 # pacman
 IgnorePath '/etc/pacman.d/gnupg'
