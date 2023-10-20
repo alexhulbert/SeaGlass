@@ -1,6 +1,6 @@
 [Appearance]
 BoldIntense=true
-ColorScheme=colors-konsole
+ColorScheme=MaterialYou
 Font=FiraCode Nerd Font Mono,11,-1,5,53,0,0,0,0,0,Retina
 
 [General]

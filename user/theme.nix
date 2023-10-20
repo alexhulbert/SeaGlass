@@ -18,12 +18,6 @@ in {
     Theme = "None";
   '';
 
-  # theme randomizer autostart script
-  xdg.configFile."plasma-workspace/env/set-theme.sh".source = pkgs.writeScript "set-wallpaper.sh"   ''
-      cd ${./resources/theme}
-      ./theme.sh ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)
-  '';
-
   # albert config
   programs.plasma.configFile."albert.conf" = {
     General = {
@@ -67,8 +61,9 @@ in {
     };
   };
 
-  # konsole
-  xdg.dataFile."konsole/Pywal.profile".source = ./resources/konsole.profile;
+  # konsole (make profile file mutable)
+  xdg.dataFile."konsole/Pywal.profile".source = config.lib.file.mkOutOfStoreSymlink
+    "${builtins.toString ./.}/resources/konsole.profile";
   xdg.dataFile."kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
   programs.plasma.configFile.konsolerc = {
     "Desktop Entry" = {

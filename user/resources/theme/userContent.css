@@ -1,0 +1,18 @@
+html[data-darkreader-mode] body a {{
+  color: rgb({color2.rgb}) !important;
+}}
+
+@-moz-document regexp('^(?!http).*') {{
+  :root>* {{
+    background: rgb({background.rgb}) !important;
+  }}
+}}
+
+#urlbar-input-container, .urlbarView {{
+  background-color: color-mix(in srgb, rgb({background.rgb}) 87%, black);
+}}
+
+#navigator-toolbox, #urlbar-background {{
+  background: rgb({background.rgb}) !important;
+}}
+

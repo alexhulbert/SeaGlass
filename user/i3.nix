@@ -50,6 +50,7 @@
       exec --no-startup-id i3-msg workspace 1
       exec --no-startup-id xsettingsd
       exec --no-startup-id alternating_layouts.py
+      exec --no-startup-id bash -c "seaglass-theme ~/wallpaper/$(ls ~/wallpaper | shuf -n 1)"
     '';
   };
 }
