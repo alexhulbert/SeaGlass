@@ -6,7 +6,6 @@ AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
 AddPackage --foreign moonlight-qt-bin # moonlight-qt bin from appimage
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage dolphin # KDE File Manager
-AddPackage code # The Open Source build of Visual Studio Code (vscode) editor
 AddPackage firefox # Standalone web browser from mozilla.org
 AddPackage starship # The cross-shell prompt for astronauts
 AddPackage python-i3ipc # An improved Python library to control i3wm
@@ -25,4 +24,8 @@ AddPackage --foreign plasma5-applets-eventcalendar # An extended calendar plasmo
 AddPackage --foreign plasma5-applets-virtual-desktop-bar-git # KDE Plasma panel applet for managing virtual desktops
 AddPackage --foreign spicetify-cli # Command-line tool to customize Spotify client
 AddPackage --foreign spotify # A proprietary music streaming service
-
+AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
+AddPackage filelight # View disk usage information
+AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
+AddPackage spectacle # KDE screenshot capture utility
+AddPackage --foreign legacyfox # Legacy bootstrapped extensions for Firefox 65 and beyond

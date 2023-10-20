@@ -16,6 +16,7 @@ AddPackage httpie # human-friendly CLI HTTP client for the API era
 AddPackage less # A terminal based program for viewing text files
 AddPackage neovim # Fork of Vim aiming to improve user experience, plugins, and GUIs
 AddPackage p7zip # Command-line file archiver with high compression ratio
+AddPackage python-pywal # Generate and change colorschemes on the fly
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage rsync # A fast and versatile file copying tool for remote and local files
 AddPackage snapper # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
@@ -26,3 +27,9 @@ AddPackage xclip # Command line interface to the X11 clipboard
 AddPackage xdotool # Command-line X11 automation tool
 AddPackage xorg-xrandr # Primitive command line interface to RandR extension
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
+AddPackage inotify-tools # inotify-tools is a C library and a set of command-line programs for Linux providing a simple interface to inotify.
+
+AddPackage --foreign kde-material-you-colors # A script to generate Material You color schemes for KDE Plasma.
+AddPackage --foreign platformio # A cross-platform code builder and library manager
+AddPackage --foreign python-colr # Easy terminal colors, with chainable methods.
+AddPackage --foreign shellgpt-git # A command-line productivity tool powered by OpenAI's ChatGPT (GPT-3.5)

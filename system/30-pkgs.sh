@@ -13,6 +13,13 @@ AddPackage linux-firmware # Firmware files for Linux
 AddPackage rustup # The Rust toolchain installer
 AddPackage nix # A purely functional package manager
 AddPackage git # the fast distributed version control system
+AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
+AddPackage sof-firmware # Sound Open Firmware
+AddPackage fuse2 # A library that makes it possible to implement a filesystem in a userspace program.
+AddPackage nodejs # Evented I/O for V8 javascript
+AddPackage pkgfile # a pacman .files metadata explorer
+AddPackage pulseaudio # A featureful, general-purpose sound server
+AddPackage python-pipx # Install and Run Python Applications in Isolated Environments
 
 # base aur pkgs
 
