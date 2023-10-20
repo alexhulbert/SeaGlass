@@ -63,7 +63,8 @@ in {
 
         sw = "home-manager switch";
 
-        ldm = "qdbus org.kde.ksmserver /KSMServer logout 0 3 3";
+        logout = "qdbus org.kde.ksmserver /KSMServer logout 0 3 3";
+        ldm = "restart sddm";
       };
       initExtra = ''
         bindkey '^H' backward-kill-word
