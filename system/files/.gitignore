@@ -1,0 +1,7 @@
+.snapshots/
+boot/
+etc/
+lost+found/
+opt/
+usr/
+var/
