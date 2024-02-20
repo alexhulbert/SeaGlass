@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ]; then
-  wallpaper=$(find ~/.config/wallpaper -type f | shuf -n 1)
+  wallpaper=$(find ~/.config/wallpaper/ -type f | shuf -n 1)
 else
   wallpaper=$1
 fi
