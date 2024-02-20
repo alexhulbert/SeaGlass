@@ -12,22 +12,20 @@
     .defaultNix;
 in {
     imports = [
-      # ./pkgs/i3-sidebar.nix
-      ./i3.nix
+      ./hyprland.nix
       ./terminal.nix
       ./firefox.nix
-      ./picom.nix
       ./plasma.nix
-      ./theme.nix
+      ./startup.nix
+      ./waybar.nix
       ./vscode.nix
+      ./ulauncher.nix
       ./vim
       ./personal.nix
       plasma-manager.homeManagerModules.plasma-manager
     ];
 
     news.display = "silent";
-
-    services.unclutter.enable = true;
 
     home.packages = lib.mkForce (with config.programs; [
       neovim.finalPackage
@@ -39,7 +37,6 @@ in {
     home.stateVersion = "22.11";
 
     programs.home-manager.enable = true;
-
 
     systemd.user.services.cleanup = {
       Unit.Description = "Clean and optimize Nix store on boot";

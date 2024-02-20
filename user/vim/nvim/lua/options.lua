@@ -4,7 +4,7 @@ local g = vim.g
 vim.g.mapleader = ","
 
 o.lazyredraw = true
-o.shell = "fish"
+o.shell = "zsh"
 o.shadafile = "NONE"
 
 -- Colors

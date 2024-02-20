@@ -20,6 +20,8 @@ in {
     userSettings = {
       "workbench.colorTheme" = "Wal";
       "breadcrumbs.enabled" = false;
+      "window.menuBarVisibility" = "toggle";
+      "window.titleBarStyle" = "custom";
       "editor.minimap.enabled" = false;
       "editor.scrollbar.horizontal" = "hidden";
       "editor.scrollbar.vertical" = "hidden";
@@ -89,5 +91,29 @@ in {
         };
       })
     ];
+  };
+
+  # make settings.json mutable
+  config.home = let
+    configFilePath = "${config.xdg.configHome}/Code/User/settings.json";
+    userSettings = config.programs.vscode.userSettings;
+    jsonFormat = pkgs.formats.json {};
+  in {
+    file."${configFilePath}".enable = lib.mkForce false;
+    activation.injectVscodeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      tmp="$(mktemp)"
+      touch "${configFilePath}"
+      if [[ -v DRY_RUN ]]; then
+        echo tmp="\$(mktemp)"
+        echo ${pkgs.jq}/bin/jq -s "'reduce .[] as \$x ({}; . * \$x)'" "${
+          jsonFormat.generate "vscode-user-settings" userSettings
+        }" "${configFilePath}" ">" "$tmp"
+      else
+        ${pkgs.jq}/bin/jq -s 'reduce .[] as $x ({}; . * $x)' "${
+          jsonFormat.generate "vscode-user-settings" userSettings
+        }" "${configFilePath}" > "$tmp"
+      fi
+      $DRY_RUN_CMD mv "$tmp" "${configFilePath}"
+    '';
   };
 }

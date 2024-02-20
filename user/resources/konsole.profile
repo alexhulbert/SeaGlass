@@ -13,3 +13,4 @@ TerminalMargin=24
 [Scrolling]
 HistoryMode=2
 ScrollBarPosition=2
+

@@ -17,16 +17,18 @@ IgnorePath '/etc/printcap'
 IgnorePath '/etc/machine-id'
 IgnorePath '/etc/skel/.bashrc'
 IgnorePath '/etc/*-'
+IgnorePath '/etc/cni/net.d'
 
 IgnorePath '/etc/.updated'
 IgnorePath '/var/.updated'
 
 IgnorePath '/usr/lib/locale/locale-archive'
 IgnorePath '/usr/lib/os-release'
+IgnorePath '/usr/lib/jvm'
 
 IgnorePath '/.snap*'
 IgnorePath '/lost+found'
 IgnorePath '/etc/arch-release'
 
-IgnorePath '/nix'
-IgnorePath '/opt'
+IgnorePath '/nix/*'
+IgnorePath '/opt/*'

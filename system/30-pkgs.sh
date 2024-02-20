@@ -17,9 +17,18 @@ AddPackage zsh # A very advanced and programmable command interpreter (shell) fo
 AddPackage sof-firmware # Sound Open Firmware
 AddPackage fuse2 # A library that makes it possible to implement a filesystem in a userspace program.
 AddPackage nodejs # Evented I/O for V8 javascript
+AddPackage npm # A package manager for JavaScript
 AddPackage pkgfile # a pacman .files metadata explorer
 AddPackage pulseaudio # A featureful, general-purpose sound server
 AddPackage python-pipx # Install and Run Python Applications in Isolated Environments
+AddPackage python-fuzzywuzzy # Fuzzy string matching like a boss
+AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wherever they are.
+AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
+
+# latex
+AddPackage texlive-fontsextra # TeX Live - Additional fonts
+AddPackage texlive-latexextra # TeX Live - LaTeX additional packages
+AddPackage texlive-latexrecommended # TeX Live - LaTeX recommended packages
 
 # base aur pkgs
 

@@ -1,0 +1,13 @@
+:root .tabbrowser-tab[fadein]:not([pinned]) {
+  max-width: 225px !important;
+  max-height: 52px !important;
+}
+
+.tab-background {
+  margin: 0 !important;
+}
+
+.tab-background[selected] {
+  outline: 1px solid var(--tab-selected-textcolor);
+  outline-offset: -1px;
+}

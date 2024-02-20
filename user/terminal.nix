@@ -22,6 +22,7 @@ in {
       NIXPKGS_ALLOW_UNFREE = "1";
       GOPATH = "${config.home.homeDirectory}/.go";
     };
+    sessionPath = ["${config.home.homeDirectory}/.local/bin"];
   };
 
   config.home.file.".zshenv" = lib.mkForce { text =
@@ -29,9 +30,16 @@ in {
       ${config.lib.shell.exportAll config.home.sessionVariables}
     ''
     + lib.optionalString (config.home.sessionPath != []) ''
-      export PATH="$PATH''${PATH:+:}${pkgs.builtins.concatStringsSep ":" config.home.sessionPath}"
+      export PATH="$PATH''${PATH:+:}${builtins.concatStringsSep ":" config.home.sessionPath}"
     ''
     + config.home.sessionVariablesExtra; };
+
+  config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml {}).generate "cod.toml" {
+    rule = [{
+      executable = "**";
+      policy = "trust";
+    }];
+  };
 
   config.programs = {
     zsh = {
@@ -50,21 +58,15 @@ in {
         usystatus = "systemctl status --user";
         ulog = "journalctl --user";
 
-        rstart = "rdx systemctl start";
-        rstop = "rdx systemctl stop";
-        rrestart = "rdx systemctl restart";
-        rsystatus = "rdx systemctl status";
-        rlog = "rdx journalctl";
-
         e = "vim";
         se = "svim";
         ls = "eza";
         cat = "bat";
+        cd = "z";
 
         sw = "home-manager switch";
 
-        logout = "qdbus org.kde.ksmserver /KSMServer logout 0 3 3";
-        ldm = "restart sddm";
+        ldm = "hyprctl dispatch exit";
       };
       initExtra = ''
         bindkey '^H' backward-kill-word
@@ -93,7 +95,7 @@ in {
         bindkey "^[[A" up-line-or-beginning-search
         bindkey "^[[B" down-line-or-beginning-search
 
-        PATH=$PATH:~/.local/bin
+        eval "$(zoxide init zsh)"
         ${builtins.replaceStrings ["^l"] ["^g"] sgptInit}
       '';
       zplug = {

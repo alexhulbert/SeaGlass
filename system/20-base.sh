@@ -19,6 +19,7 @@ CreateLink '/etc/os-release' '../usr/lib/os-release'
 # base systemd services
 SystemdEnable --name getty@tty1.service systemd /usr/lib/systemd/system/getty@.service
 SystemdEnable systemd /usr/lib/systemd/system/remote-fs.target
+SystemdEnable systemd /usr/lib/systemd/system/systemd-timesyncd.service
 SystemdEnable --type user p11-kit /usr/lib/systemd/user/p11-kit-server.socket
 SystemdEnable nix /usr/lib/systemd/system/nix-daemon.service
 
@@ -28,8 +29,15 @@ cat >| "$(CreateFile '/etc/locale.conf')" <<< "LANG=en_US.UTF-8"
 cat >| "$(CreateFile '/etc/vconsole.conf')" <<< "KEYMAP=us"
 CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
 
-# disable caps key for i3 workspace back-and-forth
-CopyFileTo /xorg-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
+# terminal autologin
+cat <<EOF >| "$(CreateFile '/etc/systemd/system/getty@tty1.service.d/autologin.conf')"
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin ${USER} --skip-login --nonewline --noissue %I \$TERM
+EOF
+
+# disable lid close and power button suspend
+CopyFileTo /logind.conf /etc/systemd/logind.conf
 
 # bootloader configuration
 CopyFileTo /grub.cfg /etc/default/grub

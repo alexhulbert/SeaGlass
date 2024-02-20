@@ -1,0 +1,60 @@
+* {
+    font-family: "SFNS Display";
+    font-size: 18px;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+window#waybar > box {
+    background: alpha(@theme_bg_color_breeze, 0.84);
+    color: @theme_fg_color_breeze;
+    margin-bottom: 6px;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.5);
+}
+
+#workspaces .flat {
+    opacity: 0.5;
+}
+
+#workspaces .flat.visible {
+    opacity: 1;
+}
+
+#workspaces {
+    font-weight: bold;
+}
+
+.modules-left {
+    margin-left: 4;
+}
+
+.modules-right {
+    margin-right: 9;
+}
+
+#clock {
+    font-weight: bold;
+}
+
+#battery.warning, #battery.critical, #battery.error {
+    background-color: transparent;
+}
+
+#battery.warning {
+    color: @warning_color_breeze;
+}
+
+#battery.critical, #battery.error {
+    color: @error_color_breeze;
+}
+
+
+#pulseaudio, #custom-notification {
+    margin-right: -7;
+}
+
+#network {
+    margin-right: -4;
+}

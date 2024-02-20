@@ -36,11 +36,13 @@ IgnorePath '*.lock'
 IgnorePath '*.pyc'
 IgnorePath '*.bak'
 IgnorePath '*.OLD'
+IgnorePath '*.pacnew'
 IgnorePath '__pycache__'
 
 # files with dynamically set permissions
 IgnorePath '/usr/bin/groupmems'
 IgnorePath '/usr/lib/utempter/*'
+IgnorePath '/usr/share/polkit-1/rules.d'
 
 # mime
 IgnorePath '/usr/share/mime/*.xml' # Localizations
@@ -68,3 +70,11 @@ IgnorePath '/etc/docker/key.json'
 IgnorePath '/etc/X11/xorg.conf'
 IgnorePath '/etc/X11/xorg.conf.nvidia-xconfig-original'
 IgnorePath '/etc/X11/xorg.conf.d/20-nvidia.conf'
+
+# ruby
+IgnorePath '/usr/lib/ruby/gems/*'
+
+# latex
+IgnorePath '/etc/texmf/*'
+IgnorePath '/usr/share/texmf-dist/*'
+
