@@ -1,0 +1,48 @@
+@define-color text-color-disabled alpha(@insensitive_fg_color_breeze, 0.7);
+@define-color cc-bg alpha(@theme_base_color_breeze,0.84);
+@define-color noti-border-color @borders_breeze;
+
+@define-color noti-bg alpha(@theme_base_color_breeze,0.84);
+@define-color noti-bg-darker alpha(@theme_base_color_breeze,1);
+@define-color noti-bg-hover @theme_selected_bg_color_breeze;
+@define-color noti-bg-focus @theme_button_foreground_active_backdrop_breeze;
+@define-color noti-close-bg  @theme_selected_fg_color_breeze;
+@define-color noti-close-bg-hover @theme_selected_bg_color_breeze;
+@define-color text-color @theme_text_color_breeze;
+@define-color bg-selected  @theme_selected_bg_color_breeze;
+
+window > box {
+  box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+}
+
+.notification-action:hover, .notification-default-action:hover {
+  background: @theme_selected_bg_color_breeze;
+}
+
+.close-button:hover {
+  color: @theme_selected_fg_color_breeze
+}
+
+.notification-action:hover label, .notification-default-action:hover label {
+  color: @theme_selected_fg_color_breeze;
+}
+
+.control-center-clear-all:hover {
+  color: @theme_selected_fg_color_breeze;
+}
+
+.notification-content .image {
+  padding-right: 8px;
+}
+
+.notification-row, .notification-group {
+  background: transparent;
+}
+
+.time {
+  margin-right: 36px;
+}
+
+.widget-buttons-grid > flowbox {
+  padding-left: 86px;
+}

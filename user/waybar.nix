@@ -6,6 +6,50 @@
 }: let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
   plasma-waybar = ./resources/plasma-waybar.py;
+  plasmoids = {
+    eventcal = {
+      title = "Event Calendar";
+      width = 900;
+      height = 600;
+      margin_right = 0;
+      plasmoid = "org.kde.plasma.eventcalendar";
+    };
+    battery = {
+      title = "Power Management";
+      width = 500;
+      height = 270;
+      margin_right = 60;
+      plasmoid = "org.kde.plasma.battery";
+    };
+    network = {
+      title = "Networks";
+      width = 500;
+      height = 500;
+      margin_right = 80;
+      plasmoid = "org.kde.plasma.networkmanagement";
+    };
+    bluetooth = {
+      title = "Bluetooth";
+      width = 500;
+      height = 500;
+      margin_right = 105;
+      plasmoid = "org.kde.plasma.bluetooth";
+    };
+    audio = {
+      title = "Audio Volume";
+      width = 600;
+      height = 270;
+      margin_right = 125;
+      plasmoid = "org.kde.plasma.volume";
+    };
+    kde-connect = {
+      title = "KDE Connect";
+      width = 500;
+      height = 500;
+      margin_right = 150;
+      plasmoid = "org.kde.kdeconnect";
+    };
+  };
 in {
   programs.waybar = {
     enable = true;
@@ -37,14 +81,17 @@ in {
       };
       "custom/notification" = {
         tooltip = false;
-        format = "󰂚 ";
+        format = "{icon} ";
         format-icons = {
           notification = "󱅫";
           none = "󰂚";
           dnd-notification = "󱏧";
           dnd-none = "󱏧";
         };
-        on-click = "${plasma-waybar} toggle notifications";
+        return-type = "json";
+        exec-if = "which swaync-client";
+        exec = "swaync-client -swb";
+        on-click = "sleep 0.1 && swaync-client -t -sw";
       };
       pulseaudio = {
         format = "{icon}";
@@ -92,55 +139,15 @@ in {
   };
 
   home.file.".local/bin/plasma-waybar".source = plasma-waybar;
-  xdg.configFile."hypr/plasmoids.json".text = builtins.toJSON {
-    eventcal = {
-      title = "Event Calendar";
-      width = 900;
-      height = 600;
-      margin_right = 0;
-      plasmoid = "org.kde.plasma.eventcalendar";
-    };
-    battery = {
-      title = "Power Management";
-      width = 500;
-      height = 200;
-      margin_right = 100;
-      plasmoid = "org.kde.plasma.battery";
-    };
-    network = {
-      title = "Networks";
-      width = 500;
-      height = 500;
-      margin_right = 120;
-      plasmoid = "org.kde.plasma.networkmanagement";
-    };
-    bluetooth = {
-      title = "Bluetooth";
-      width = 500;
-      height = 500;
-      margin_right = 145;
-      plasmoid = "org.kde.plasma.bluetooth";
-    };
-    audio = {
-      title = "Audio Volume";
-      width = 600;
-      height = 270;
-      margin_right = 165;
-      plasmoid = "org.kde.plasma.volume";
-    };
-    kde-connect = {
-      title = "KDE Connect";
-      width = 500;
-      height = 500;
-      margin_right = 190;
-      plasmoid = "org.kde.kdeconnect";
-    };
-    notifications = {
-      title = "Notifications";
-      width = 500;
-      height = 500;
-      margin_right = 215;
-      plasmoid = "org.kde.plasma.notifications";
-    };
+
+  xdg.configFile = {
+    "hypr/plasmoids.json".text = builtins.toJSON plasmoids;
+    "hypr/plasmoids.conf".text = builtins.concatStringsSep "\n" (
+      lib.attrsets.mapAttrsToList (plasmoid_name: plasmoid: ''
+        windowrulev2 = move 0 -200%,title:^(${plasmoid.title})$
+        windowrulev2 = workspace special:scratch_${plasmoid_name} silent,title:^(${plasmoid.title})$
+        windowrulev2 = size ${toString plasmoid.width} ${toString plasmoid.height}, title:^(${plasmoid.title})$
+      '') plasmoids
+    );
   };
 }

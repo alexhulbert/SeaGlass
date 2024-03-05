@@ -1,0 +1,26 @@
+{
+  "control-center-margin-right": 8,
+  "control-center-margin-bottom": 8,
+  "widgets": ["title", "dnd", "buttons-grid", "mpris", "notifications"],
+  "widget-config": {
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "Settings",
+          "type": "normal",
+          "command": "zsh -c 'systemsettings & swaync-client -cp'"
+        },
+        {
+          "label": "App Store",
+          "type": "normal",
+          "command": "zsh -c 'pamac-manager & swaync-client -cp'"
+        },
+	{
+          "label": "Displays",
+          "type": "normal",
+          "command": "zsh -c 'wdisplays & swaync-client -cp'"
+        }
+      ]
+    }
+  }
+}

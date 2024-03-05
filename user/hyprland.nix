@@ -20,6 +20,9 @@ in {
 
     wallpaper.source = config.lib.file.mkOutOfStoreSymlink
       "${builtins.toString ./..}/wallpaper";
+
+    swaync.source = config.lib.file.mkOutOfStoreSymlink
+      "${builtins.toString ./.}/resources/theme/swaync";
   };
 
   home.file = {

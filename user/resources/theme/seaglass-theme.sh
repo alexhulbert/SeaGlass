@@ -25,7 +25,7 @@ kde-material-you-colors -col "$background" -ccl "$color1 $color2 $color3 $color4
 source ~/.cache/wal/colors.sh
 wpg -i ~/.cache/wallpaper ~/.cache/wal/colors.json
 wpg -s ~/.cache/wallpaper
-systemctl --user restart ulauncher
+systemctl --user restart ulauncher swaync &
 sed -i 's/BackgroundNormal=#/BackgroundNormal=#D6/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i 's/BackgroundAlternate=#/BackgroundAlternate=#D6/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i '/\[Colors:View\]/,+2 s/#../#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
