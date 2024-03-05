@@ -12,18 +12,24 @@ in {
   programs.plasma = {
     configFile = {
       kdeglobals = {
-        General.BrowserApplication = "firefox.desktop";
-      };
-
-      kdeglobals.General = {
-        fixed = "FiraCode Nerd Font,11,-1,5,50,0,0,0,0,0";
-        font = "SFNS Display,11,-1,5,50,0,0,0,0,0";
-        menuFont = "SFNS Display,11,-1,5,50,0,0,0,0,0";
-        smallestReadableFont = "SFNS Display,9,-1,5,50,0,0,0,0,0";
-        toolBarFont = "SFNS Display,11,-1,5,50,0,0,0,0,0";
+        General = {
+          fixed = "FiraCode Nerd Font,11,-1,5,50,0,0,0,0,0";
+          font = "SFNS Display,11,-1,5,50,0,0,0,0,0";
+          menuFont = "SFNS Display,11,-1,5,50,0,0,0,0,0";
+          smallestReadableFont = "SFNS Display,9,-1,5,50,0,0,0,0,0";
+          toolBarFont = "SFNS Display,11,-1,5,50,0,0,0,0,0";
+          BrowserApplication = "firefox.desktop";
+        };
+        KDE = {
+          LookAndFeelPackage = "seaglass";
+          widgetStyle = "Lightly";
+        };
       };
       dolphinrc.MainWindow.MenuBar = "Disabled";
-      lightlyrc.Style.DolphinSidebarOpacity = 80;
+      lightlyrc.Style = {
+        DolphinSidebarOpacity = 80;
+        MenuOpacity = 80;
+      };
 
       powermanagementprofilesrc = let
         events = {
