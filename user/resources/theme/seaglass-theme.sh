@@ -28,6 +28,7 @@ wpg -s ~/.cache/wallpaper
 systemctl --user restart ulauncher
 sed -i 's/BackgroundNormal=#/BackgroundNormal=#D6/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i 's/BackgroundAlternate=#/BackgroundAlternate=#D6/g' ~/.local/share/color-schemes/MaterialYouDark.colors
+sed -i '/\[Colors:View\]/,+2 s/#../#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 plasma-apply-colorscheme MaterialYouDark2
 plasma-apply-colorscheme MaterialYouDark
 
