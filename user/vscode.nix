@@ -93,6 +93,17 @@ in {
     ];
   };
 
+  config.xdg.configFile = let
+    electronOptions = ''
+      --enable-features=UseOzonePlatform
+      --ozone-platform=wayland
+    '';
+  in {
+    "code-flags.conf".text = electronOptions;
+    "electron-flags.conf".text = electronOptions;
+    "electron12-flags.conf".text = electronOptions;
+  };
+
   # make settings.json mutable
   config.home = let
     configFilePath = "${config.xdg.configHome}/Code/User/settings.json";
