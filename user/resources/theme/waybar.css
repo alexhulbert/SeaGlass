@@ -15,14 +15,15 @@ window#waybar > box {
 }
 
 #workspaces .flat {
-    opacity: 0.5;
+    opacity: 0.4;
 }
 
 #workspaces .flat.visible {
-    opacity: 1;
+    opacity: 0.8;
 }
 
-#workspaces {
+#workspaces .flat.visible.active {
+    opacity: 1;
     font-weight: bold;
 }
 
