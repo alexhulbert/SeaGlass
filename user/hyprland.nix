@@ -31,6 +31,7 @@ in {
         #!/usr/bin/env zsh
         refresh_wallpaper() {
           sleep 1
+          swww init
           swww img $(readlink ~/.cache/wallpaper) --transition-step=255
         }
         handle() {
