@@ -20,6 +20,8 @@ AddPackage ark # Archiving Tool
 AddPackage plymouth # Graphical boot splash screen
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage godot # Advanced cross-platform 2D and 3D game engine
+AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to manage multiple instances.
+AddPackage --foreign beeper-latest-bin # all your chats in one app
 
 # audio / bluetooth
 AddPackage pavucontrol-qt # A Pulseaudio mixer in Qt (port of pavucontrol)
@@ -31,7 +33,9 @@ AddPackage bluez-utils # Development and debugging utilities for the bluetooth p
 AddPackage kdeconnect # Adds communication between KDE and your smartphone
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage konsole # KDE terminal emulator
+AddPackage ksysguard # Track and control the processes running in your system
 AddPackage dolphin # KDE File Manager
+AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file formats
 AddPackage --foreign plasma5-applets-eventcalendar # An extended calendar plasmoid with daily weather forecasts and events from Google Calendar. Also includes a timer and 24 hour forecast graph.
 
 # theming
@@ -56,3 +60,16 @@ AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard sh
 AddPackage --foreign swww # Efficient animated wallpaper daemon for wayland, controlled at runtime.
 AddPackage --foreign aylurs-gtk-shell # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage --foreign wdisplays # GUI display configurator for wlroots compositors
+AddPackage --foreign swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs
+
+# hyprland deps
+AddPackage cmake # A cross-platform open-source make system
+AddPackage cpio # A tool to copy files into or out of a cpio or tar archive
+AddPackage meson # High productivity build system
+AddPackage glm # C++ mathematics library for 3D software based on the OpenGL Shading Language (GLSL) specification
+
+# etc
+AddPackage kleopatra # Certificate Manager and Unified Crypto GUI
+AddPackage torbrowser-launcher # Securely and easily download, verify, install, and launch Tor Browser in Linux
+AddPackage --foreign mycrypto-bin # Open-source, client-side tool for generating Ether Wallets
+AddPackage --foreign mullvad-vpn-bin # The Mullvad VPN client app for desktop

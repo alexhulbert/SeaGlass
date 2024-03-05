@@ -14,6 +14,7 @@ CopyFileTo /pamac.conf /etc/pamac.conf
 
 # patched to fix transparency issues
 CopyFileTo /plasmawindowed /usr/bin/plasmawindowed
+CopyFileTo /hyprland-share-picker /usr/local/bin/hyprland-share-picker 755
 
 # remap laptop caps lock key to XF86Calculator for use in hyprland
 CopyFileTo /caps.hwdb /etc/udev/hwdb.d/10-caps.hwdb

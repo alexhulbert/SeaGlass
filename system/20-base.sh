@@ -22,6 +22,7 @@ SystemdEnable systemd /usr/lib/systemd/system/remote-fs.target
 SystemdEnable systemd /usr/lib/systemd/system/systemd-timesyncd.service
 SystemdEnable --type user p11-kit /usr/lib/systemd/user/p11-kit-server.socket
 SystemdEnable nix /usr/lib/systemd/system/nix-daemon.service
+SystemdEnable tailscale /usr/lib/systemd/system/tailscaled.service
 
 # locale and timezone config
 cat >| "$(CreateFile '/etc/locale.gen')" <<< "en_US.UTF-8 UTF-8"

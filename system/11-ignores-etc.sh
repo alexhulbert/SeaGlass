@@ -18,6 +18,7 @@ IgnorePath '/etc/machine-id'
 IgnorePath '/etc/skel/.bashrc'
 IgnorePath '/etc/*-'
 IgnorePath '/etc/cni/net.d'
+IgnorePath '/etc/hostname'
 
 IgnorePath '/etc/.updated'
 IgnorePath '/var/.updated'
