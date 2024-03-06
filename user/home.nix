@@ -3,14 +3,7 @@
   config,
   pkgs,
   ...
-}: let
-  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
-  plasma-manager =
-    (import flake-compat {
-      src = builtins.fetchTarball "https://github.com/pjones/plasma-manager/archive/master.tar.gz";
-    })
-    .defaultNix;
-in {
+}: {
     imports = [
       ./hyprland.nix
       ./terminal.nix
@@ -22,7 +15,6 @@ in {
       ./ulauncher.nix
       ./vim
       ./personal.nix
-      plasma-manager.homeManagerModules.plasma-manager
     ];
 
     news.display = "silent";

@@ -5,11 +5,22 @@
   ...
 }: let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
+  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
+  plasma-manager =
+    (import flake-compat {
+      src = builtins.fetchTarball "https://github.com/pjones/plasma-manager/archive/9bac5925cf7716979535eed9c88e307fa9744169.tar.gz";
+    })
+    .defaultNix;
 in {
+  imports = [
+    plasma-manager.homeManagerModules.plasma-manager
+  ];
+
   home.file.".local/bin/seaglass-theme".source = config.lib.file.mkOutOfStoreSymlink
     "${builtins.toString ./.}/resources/theme/seaglass-theme.sh";
 
   programs.plasma = {
+    enable = true;
     configFile = {
       kdeglobals = {
         General = {
@@ -32,14 +43,15 @@ in {
       };
 
       powermanagementprofilesrc = let
-        events = {
+        events = grp: {
           lidAction = "null";
           powerButtonAction = "null";
+          configGroupNesting = [ grp "HandleButtonEvents" ];
         };
       in {
-        AC.HandleButtonEvents = events;
-        Battery.HandleButtonEvents = events;
-        LowBattery.HandleButtonEvents = events;
+        AC = events "AC";
+        Battery = events "Battery";
+        LowBattery = events "LowBattery";
       };
     };
   };
