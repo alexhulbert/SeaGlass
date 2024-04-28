@@ -14,6 +14,8 @@ cat <<EOF >| "$(CreateFile '/etc/adjtime')"
 LOCAL
 EOF
 
+CopyFileTo /hosts /etc/hosts
+
 CreateLink '/etc/os-release' '../usr/lib/os-release'
 
 # base systemd services
@@ -23,6 +25,14 @@ SystemdEnable systemd /usr/lib/systemd/system/systemd-timesyncd.service
 SystemdEnable --type user p11-kit /usr/lib/systemd/user/p11-kit-server.socket
 SystemdEnable nix /usr/lib/systemd/system/nix-daemon.service
 SystemdEnable tailscale /usr/lib/systemd/system/tailscaled.service
+SystemdEnable openssh /usr/lib/systemd/system/sshd.service
+SystemdEnable pcsclite /usr/lib/systemd/system/pcscd.socket
+
+# for copilot key remapping
+SystemdEnable interception-tools /usr/lib/systemd/system/udevmon.service
+CopyFileTo /udevmon.yaml /etc/interception/udevmon.yaml
+CopyFileTo /copilot.hwdb /etc/udev/hwdb.d/20-copilot.hwdb
+CopyFileTo /copilot2ctrl /usr/local/bin/copilot2ctrl 755
 
 # locale and timezone config
 cat >| "$(CreateFile '/etc/locale.gen')" <<< "en_US.UTF-8 UTF-8"
@@ -37,10 +47,21 @@ ExecStart=
 ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin ${USER} --skip-login --nonewline --noissue %I \$TERM
 EOF
 
+# allow 1password unlock, etc. with fingerprint
+CopyFileTo /kde-fingerprint.pam.conf /etc/pam.d/kde-fingerprint
+CopyFileTo /polkit-1.pam.conf /etc/pam.d/polkit-1
+
+# serial device permissions
+cat <<EOF >| "$(CreateFile '/etc/udev/rules.d/40-serial.rules')"
+KERNEL=="ttyUSB[0-9]*",MODE="0666"
+KERNEL=="ttyACM[0-9]*",MODE="0666"
+EOF
+
 # disable lid close and power button suspend
 CopyFileTo /logind.conf /etc/systemd/logind.conf
 
-# bootloader configuration
+# bootloader/initramfs configuration
+CopyFileTo /mkinitcpio.conf /etc/mkinitcpio.conf
 CopyFileTo /grub.cfg /etc/default/grub
 SystemdEnable grub-btrfs /usr/lib/systemd/system/grub-btrfsd.service
 

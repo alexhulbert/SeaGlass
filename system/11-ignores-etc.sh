@@ -25,7 +25,9 @@ IgnorePath '/var/.updated'
 
 IgnorePath '/usr/lib/locale/locale-archive'
 IgnorePath '/usr/lib/os-release'
-IgnorePath '/usr/lib/jvm'
+IgnorePath '/usr/lib/jvm/*'
+IgnorePath '/usr/lib/node_modules/*'
+IgnorePath '/usr/lib/vlc/plugins/plugins.dat'
 
 IgnorePath '/.snap*'
 IgnorePath '/lost+found'

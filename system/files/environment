@@ -10,6 +10,8 @@ MOZ_USE_XINPUT2=1
 XCURSOR_SIZE=32
 XCURSOR_THEME=Bibata-Modern-Ice
 XDG_SESSION_TYPE=wayland
+NIX_CONFIG="extra-experimental-features = nix-command flakes"
+MAKEFLAGS="-j21"
 # LIBVA_DRIVER_NAME=nvidia
 # GBM_BACKEND=nvidia-drm
 # __GLX_VENDOR_LIBRARY_NAME=nvidia

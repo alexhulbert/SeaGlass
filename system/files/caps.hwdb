@@ -1,2 +1,5 @@
 evdev:atkbd:dmi:bvn*:bvr*:bd*:svn*:pn*:pvr*
  KEYBOARD_KEY_3a=calc
+
+evdev:input:*
+ KEYBOARD_KEY_70039=calc

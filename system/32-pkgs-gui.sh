@@ -1,14 +1,11 @@
 AddPackage ttf-firacode-nerd # Patched font Fira (Fura) Code from nerd fonts library
 AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly from Apple official source
 AddPackage firefox # Standalone web browser from mozilla.org
-AddPackage starship # The cross-shell prompt for astronauts
-AddPackage nvidia # NVIDIA drivers for linux
+AddPackage nvidia-dkms # NVIDIA drivers for linux
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
 AddPackage --foreign cassowary # Run Windows Applications inside a VM on Linux as if they are native.
 AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
 AddPackage --foreign fx_cast-bin # Implementation of the Google Cast Chrome Sender SDK within Firefox
-AddPackage --foreign spicetify-cli # Command-line tool to customize Spotify client
-AddPackage --foreign spotify # A proprietary music streaming service
 AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
 AddPackage filelight # View disk usage information
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
@@ -18,10 +15,22 @@ AddPackage --foreign pamac-aur # A Gtk3 frontend, Package Manager based on libal
 AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
 AddPackage plymouth # Graphical boot splash screen
+AddPackage kleopatra # Certificate Manager and Unified Crypto GUI
+AddPackage gimp # GNU Image Manipulation Program
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage godot # Advanced cross-platform 2D and 3D game engine
 AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to manage multiple instances.
+AddPackage --foreign glfw-wayland-minecraft # A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
 AddPackage --foreign beeper-latest-bin # all your chats in one app
+AddPackage obs-studio # Free, open source software for live streaming and recording
+AddPackage wezterm # A GPU-accelerated cross-platform terminal emulator and multiplexer
+AddPackage --foreign 1password # Password manager and secure wallet
+
+# spotify
+AddPackage --foreign spicetify-cli # Command-line tool to customize Spotify client
+AddPackage --foreign spicetify-marketplace-bin # Spicetify app that integrates a marketplace for extensions, themes and snippets
+AddPackage --foreign spicetify-themes-git # A community-driven collection of themes for spicetify
+AddPackage --foreign spotify # A proprietary music streaming service
 
 # audio / bluetooth
 AddPackage pavucontrol-qt # A Pulseaudio mixer in Qt (port of pavucontrol)
@@ -30,17 +39,17 @@ AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
 AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
 
 # kde
+AddPackage plasma5-integration # Qt5 Platform Theme integration plugins for the Plasma workspaces
+AddPackage qt5-tools # A cross-platform application and UI framework (Development Tools, QtHelp)
 AddPackage kdeconnect # Adds communication between KDE and your smartphone
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage konsole # KDE terminal emulator
-AddPackage ksysguard # Track and control the processes running in your system
 AddPackage dolphin # KDE File Manager
 AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file formats
-AddPackage --foreign plasma5-applets-eventcalendar # An extended calendar plasmoid with daily weather forecasts and events from Google Calendar. Also includes a timer and 24 hour forecast graph.
 
 # theming
 AddPackage python-pywal # Generate and change colorschemes on the fly
-AddPackage --foreign lightly-qt # A modern style for Qt applications (updated fork)
+AddPackage --foreign lightly-qt6-git # A modern style for qt applications. (qt6 branch)
 AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
 AddPackage --foreign wpgtk # A gui wallpaper chooser that changes your WM theme, GTK theme and more
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
@@ -68,8 +77,3 @@ AddPackage cpio # A tool to copy files into or out of a cpio or tar archive
 AddPackage meson # High productivity build system
 AddPackage glm # C++ mathematics library for 3D software based on the OpenGL Shading Language (GLSL) specification
 
-# etc
-AddPackage kleopatra # Certificate Manager and Unified Crypto GUI
-AddPackage torbrowser-launcher # Securely and easily download, verify, install, and launch Tor Browser in Linux
-AddPackage --foreign mycrypto-bin # Open-source, client-side tool for generating Ether Wallets
-AddPackage --foreign mullvad-vpn-bin # The Mullvad VPN client app for desktop

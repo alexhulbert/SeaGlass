@@ -74,6 +74,9 @@ IgnorePath '/etc/X11/xorg.conf.d/20-nvidia.conf'
 # ruby
 IgnorePath '/usr/lib/ruby/gems/*'
 
+# spotify pywal
+IgnorePath '/usr/share/spicetify-cli/Themes/Ziro/color.ini'
+
 # latex
 IgnorePath '/etc/texmf/*'
 IgnorePath '/usr/share/texmf-dist/*'
