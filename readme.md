@@ -1,7 +1,7 @@
 SeaGlass
 ========
 
-http://alexhulbert.com/demo.mp4
+https://github.com/alexhulbert/SeaGlass/assets/2229212/1d0752a5-ae23-4b3b-adb6-9b72af87d5e7
 
 What is this repository?
 ------------------------
