@@ -1,23 +1,25 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
   flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
   plasma-manager =
     (import flake-compat {
       src = builtins.fetchTarball "https://github.com/pjones/plasma-manager/archive/9bac5925cf7716979535eed9c88e307fa9744169.tar.gz";
-    })
-    .defaultNix;
-in {
+    }).defaultNix;
+in
+{
   imports = [
     plasma-manager.homeManagerModules.plasma-manager
   ];
 
-  home.file.".local/bin/seaglass-theme".source = config.lib.file.mkOutOfStoreSymlink
-    "${builtins.toString ./.}/resources/theme/seaglass-theme.sh";
+  outOfStoreSymlinks.home = {
+    ".local/bin/seaglass-spicetify" = "${builtins.toString ./.}/resources/theme/seaglass-spicetify.py";
+    ".local/bin/seaglass-theme" = "${builtins.toString ./.}/resources/theme/seaglass-theme.sh";
+  };
 
   programs.plasma = {
     enable = true;
@@ -42,28 +44,46 @@ in {
         MenuOpacity = 80;
       };
 
-      powermanagementprofilesrc = let
-        events = grp: {
-          lidAction = "null";
-          powerButtonAction = "null";
-          configGroupNesting = [ grp "HandleButtonEvents" ];
+      powermanagementprofilesrc =
+        let
+          events = grp: {
+            lidAction = "null";
+            powerButtonAction = "null";
+            configGroupNesting = [ grp "HandleButtonEvents" ];
+          };
+        in
+        {
+          AC = events "AC";
+          Battery = events "Battery";
+          LowBattery = events "LowBattery";
         };
-      in {
-        AC = events "AC";
-        Battery = events "Battery";
-        LowBattery = events "LowBattery";
+
+
+      "spicetify/config-xpui.ini" = {
+        Setting = {
+          spotify_launch_flags = "--enable-features=UseOzonePlatform|--ozone-platform=wayland";
+          inject_css = 1;
+          inject_theme_js = 1;
+          color_scheme = "pywal";
+          current_theme = "Ziro";
+          replace_colors = 1;
+          overwrite_assets = 1;
+        };
+        AdditionalOptions = {
+          custom_apps = "marketplace|stats";
+          sidebar_config = 1;
+          home_config = 1;
+          experimental_fesatures = 1;
+        };
       };
     };
   };
 
-  # plasma theme
-  xdg.dataFile = {
-    "plasma/look-and-feel/seaglass".source = ./resources/theme/kde-theme;
-  };
+  # Plasma theme
+  outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/resources/theme/kde-theme";
 
-  # konsole (make profile file mutable)
-  xdg.dataFile."konsole/Pywal.profile".source = config.lib.file.mkOutOfStoreSymlink
-    "${builtins.toString ./.}/resources/konsole.profile";
+  # konsole
+  outOfStoreSymlinks.xdgData."konsole/Pywal.profile" = "${builtins.toString ./.}/resources/konsole.profile";
   xdg.dataFile."kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
   programs.plasma.configFile.konsolerc = {
     "Desktop Entry" = {

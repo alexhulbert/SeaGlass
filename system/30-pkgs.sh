@@ -28,7 +28,6 @@ AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wh
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage jdk11-openjdk # OpenJDK Java 11 development kit
 AddPackage jdk17-openjdk # OpenJDK Java 17 development kit
-AddPackage jre11-openjdk-headless # OpenJDK Java 11 headless runtime environment
 AddPackage alsa-firmware # Firmware binaries for loader programs in alsa-tools and hotplug firmware loader
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage interception-tools # A minimal composable infrastructure on top of libudev and libevdev

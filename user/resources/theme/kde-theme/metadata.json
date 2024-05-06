@@ -1,0 +1,18 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "alex@alexhulbert.com",
+                "Name": "Alex Hulbert"
+            }
+        ],
+        "Category": "",
+        "Description": "Seaglass",
+        "Id": "seaglass",
+        "License": "GPLv2+",
+        "Name": "Seaglass",
+        "Website": "https://github.com/alexhulbert/seaglass"
+    },
+    "X-Plasma-APIVersion": "2"
+}

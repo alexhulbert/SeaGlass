@@ -69,7 +69,7 @@ AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard sh
 AddPackage --foreign swww # Efficient animated wallpaper daemon for wayland, controlled at runtime.
 AddPackage --foreign aylurs-gtk-shell # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage --foreign wdisplays # GUI display configurator for wlroots compositors
-AddPackage --foreign swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs
+AddPackage swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs
 
 # hyprland deps
 AddPackage cmake # A cross-platform open-source make system

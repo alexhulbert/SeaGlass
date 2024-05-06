@@ -1,18 +1,26 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
+{ config
+, pkgs
+, lib
+, ...
 }:
 let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
-  sgptInit = builtins.readFile (
-    builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/TheR1D/shell_gpt/shell-integrations/simple_zsh.sh";
-      sha256 = "sha256:0794ly0dsv5c1fpbr63gk0b2pvbhvn3k9ka4h8qnbz05mdqws525";
+  sgptInit = ''
+    # Shell-GPT integration ZSH v0.2
+    _sgpt_zsh() {
+      if [[ -n "$BUFFER" ]]; then
+          _sgpt_prev_cmd=$BUFFER
+          BUFFER+="⌛"
+          zle -I && zle redisplay
+          BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
+          zle end-of-line
+      fi
     }
-  );
-in {
+    zle -N _sgpt_zsh
+    bindkey ^g _sgpt_zsh
+  '';
+in
+{
   config.home = {
     sessionVariables = {
       FZF_COMPLETE = "2";
@@ -22,19 +30,24 @@ in {
       NIXPKGS_ALLOW_UNFREE = "1";
       GOPATH = "${config.home.homeDirectory}/.go";
     };
-    sessionPath = ["${config.home.homeDirectory}/.local/bin"];
+    sessionPath = [
+      "${config.home.homeDirectory}/.local/bin"
+      "/opt/google-cloud-cli/bin"
+    ];
   };
 
-  config.home.file.".zshenv" = lib.mkForce { text =
-    ''
-      ${config.lib.shell.exportAll config.home.sessionVariables}
-    ''
-    + lib.optionalString (config.home.sessionPath != []) ''
-      export PATH="$PATH''${PATH:+:}${builtins.concatStringsSep ":" config.home.sessionPath}"
-    ''
-    + config.home.sessionVariablesExtra; };
+  config.home.file.".zshenv" = lib.mkForce {
+    text =
+      ''
+        ${config.lib.shell.exportAll config.home.sessionVariables}
+      ''
+      + lib.optionalString (config.home.sessionPath != [ ]) ''
+        export PATH="$PATH''${PATH:+:}${builtins.concatStringsSep ":" config.home.sessionPath}"
+      ''
+      + config.home.sessionVariablesExtra;
+  };
 
-  config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml {}).generate "cod.toml" {
+  config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml { }).generate "cod.toml" {
     rule = [{
       executable = "**";
       policy = "trust";
@@ -44,19 +57,23 @@ in {
   config.programs = {
     zsh = {
       enable = true;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       shellAliases = {
         start = "sudo systemctl start";
         stop = "sudo systemctl stop";
+        enable = "sudo systemctl enable";
+        disable = "sudo systemctl disable";
         restart = "sudo systemctl restart";
         systatus = "sudo systemctl status";
-        log = "sudo journalctl";
+        log = "sudo journalctl -xeu";
 
         ustart = "systemctl start --user";
         ustop = "systemctl stop --user";
+        uenable = "systemctl enable --user";
+        udisable = "systemctl disable --user";
         urestart = "systemctl restart --user";
         usystatus = "systemctl status --user";
-        ulog = "journalctl --user";
+        ulog = "journalctl --user -xeu";
 
         e = "vim";
         se = "svim";
@@ -64,6 +81,8 @@ in {
         cat = "bat";
         cd = "z";
 
+        install = "paru -S";
+        ii = "paru -S";
         sw = "home-manager switch";
 
         ldm = "hyprctl dispatch exit";
@@ -96,7 +115,7 @@ in {
         bindkey "^[[B" down-line-or-beginning-search
 
         eval "$(zoxide init zsh)"
-        ${builtins.replaceStrings ["^l"] ["^g"] sgptInit}
+        ${sgptInit}
       '';
       zplug = {
         enable = true;
@@ -110,15 +129,11 @@ in {
     };
     starship = {
       enable = true;
-      package = shim {
-        name = "starship";
-        cmds = ["starship"];
-      };
       enableNushellIntegration = false;
       settings = {
         character = {
-          success_symbol = "[‍](bold)";
-          error_symbol = "[‍](bold)";
+          success_symbol = "[](bold)";
+          error_symbol = "[](bold)";
         };
         format = "$custom$character";
         right_format = "$all";

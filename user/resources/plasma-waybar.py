@@ -28,7 +28,7 @@ async def restore_focus_props():
     await ipc.hyprctl([
         'input:follow_mouse 1',
         'input:float_switch_override_focus 1'
-    ], 'keyword')
+    ], 'keyword', logger=None)
 
 async def keep_plasma_running(first_plasmoid_id):
     cmd = f'{PLASMA_WINDOWED} {first_plasmoid_id}'
@@ -73,7 +73,7 @@ async def handle_event(data):
     if event_type == 'workspace':
         # Hide all plasmoids when switching workspace
         monitor = await ipc.get_focused_monitor_props()
-        windows = await ipc.hyprctlJSON('clients')
+        windows = await ipc.hyprctlJSON('clients', logger=None)
         for plasmoid_name in config:
             if await is_visible(plasmoid_name, monitor, windows):
                 await hide(plasmoid_name)
@@ -90,7 +90,7 @@ async def handle_event(data):
             is_plasmoid_active = False
             await restore_focus_props()
             monitor = await ipc.get_focused_monitor_props()
-            windows = await ipc.hyprctlJSON('clients')
+            windows = await ipc.hyprctlJSON('clients', logger=None)
             for plasmoid_name in config:
                 if await is_visible(plasmoid_name, monitor, windows):
                     await hide(plasmoid_name)
@@ -100,7 +100,7 @@ async def is_visible(plasmoid_name, monitor=None, windows=None):
     if monitor is None:
         monitor = await ipc.get_focused_monitor_props()
     if windows is None:
-        windows = await ipc.hyprctlJSON('clients')
+        windows = await ipc.hyprctlJSON('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
     for window in windows:
         if window['title'] == config[plasmoid_name]['title'] and window['workspace']['id'] == workspace:
@@ -120,15 +120,15 @@ async def hide(plasmoid_name):
     title = build_title(cfg['title'])
     offset = floor(cfg['height'] * 1.3 + monitor['reserved'][1] + GAP)
 
-    await ipc.hyprctl(f'movewindowpixel 0 -{offset},title:{title}')
+    await ipc.hyprctl(f'movewindowpixel 0 -{offset},title:{title}', logger=None)
     await asyncio.sleep(0.2)
-    await ipc.hyprctl(f'movetoworkspacesilent special:scratch_{plasmoid_name},title:{title}')
+    await ipc.hyprctl(f'movetoworkspacesilent special:scratch_{plasmoid_name},title:{title}', logger=None)
     await restore_focus_props()
 
 async def show(plasmoid_name):
     cfg = config[plasmoid_name]
     monitor = await ipc.get_focused_monitor_props()
-    windows = await ipc.hyprctlJSON('clients')
+    windows = await ipc.hyprctlJSON('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
 
     title = build_title(cfg['title'])
@@ -147,19 +147,19 @@ async def show(plasmoid_name):
         'animations:enabled 0',
         'input:float_switch_override_focus 0',
         'input:follow_mouse 2'
-    ], 'keyword')
+    ], 'keyword', logger=None)
     await ipc.hyprctl([
         f'moveworkspacetomonitor special:scratch_{plasmoid_name} {monitor["name"]}',
         f'movetoworkspacesilent {workspace},title:{title}',
         f'movewindowpixel exact {x_pos} -100%,title:{title}',
         f'focuswindow title:{title}'
-    ])
+    ], logger=None)
     await asyncio.sleep(0.017)
     await ipc.hyprctl([
         'general:no_cursor_warps 0',
         'animations:enabled 1'
-    ], 'keyword')
-    await ipc.hyprctl(f'movewindowpixel exact {x_pos} {y_pos},title:{title}')
+    ], 'keyword', logger=None)
+    await ipc.hyprctl(f'movewindowpixel exact {x_pos} {y_pos},title:{title}', logger=None)
     if not await is_visible(plasmoid_name, monitor): # fallback
         await asyncio.create_subprocess_shell(f'{PLASMA_WINDOWED} {cfg["plasmoid"]}', env=os.environ)
         await asyncio.sleep(1.5)

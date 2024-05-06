@@ -15,7 +15,7 @@
           "type": "normal",
           "command": "zsh -c 'pamac-manager & swaync-client -cp'"
         },
-	{
+	      {
           "label": "Displays",
           "type": "normal",
           "command": "zsh -c 'wdisplays & swaync-client -cp'"

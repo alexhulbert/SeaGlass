@@ -1,9 +1,9 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
   fxcast = pkgs.fx_cast_bridge.overrideAttrs (o: {
     version = "0.3.1";
@@ -14,14 +14,15 @@
       hash = "sha256-hB4NVJW2exHoKsMp0CKzHerYgj8aR77rV+ZsCoWA1Dg=";
     };
   });
-in {
+in
+{
   config.home.file = {
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
       name = "darkreader";
       description = "custom darkreader native host for syncing with pywal";
       path = "${./resources/darkreader}/index.js";
       type = "stdio";
-      allowed_extensions = ["darkreader@alexhulbert.com"];
+      allowed_extensions = [ "darkreader@alexhulbert.com" ];
     };
   };
 
@@ -57,6 +58,10 @@ in {
     };
   };
 
+  config.outOfStoreSymlinks.home = {
+    ".mozilla/firefox/default/chrome/userContent.css" = "${config.xdg.cacheHome}/wal/userContent.css";
+  };
+
   config.home.file = {
     ".mozilla/firefox/default/chrome/blurredfox".source = pkgs.fetchFromGitHub {
       owner = "manilarome";
@@ -70,19 +75,5 @@ in {
       url = "https://raw.githubusercontent.com/pavlukivan/dotfiles/6dfa74974cb25d9730a37bf4895a0f8421092b9e/firefox-transparency.css";
       sha256 = "0k1h14hpzm25sh7jrrxrgafrhld742gy0ybf74fz1n7s8w0fd1kn";
     };
-    ".mozilla/firefox/default/chrome/userContent.css".source = config.lib.file.mkOutOfStoreSymlink
-     "${config.xdg.cacheHome}/wal/userContent.css";
-
-    # ".mozilla/firefox/ssb/chrome/nochrome.css".source = ./resources/theme/firefox/nochrome.css;
-    # ".mozilla/firefox/ssb/chrome/blurredfox" = {
-    #   source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blurredfox";
-    #   recursive = true;
-    # };
-    # ".mozilla/firefox/ssb/chrome/blur.css" = {
-    #   source = "${config.home.homeDirectory}/.mozilla/firefox/default/chrome/blur.css";
-    #   recursive = true;
-    # };
-    # ".mozilla/firefox/ssb/chrome/userContent.css".source = config.lib.file.mkOutOfStoreSymlink
-    #   "${config.xdg.cacheHome}/wal/userContent.css";
   };
 }

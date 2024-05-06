@@ -1,13 +1,13 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
+{ config
+, pkgs
+, lib
+, ...
+}:
+let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
 
   generateServiceWith = serviceName: command: extra:
-    lib.mkMerge [(generateService serviceName command) extra];
+    lib.mkMerge [ (generateService serviceName command) extra ];
 
   generateService = serviceName: command: {
     Unit = {
@@ -24,13 +24,14 @@
       RestartSec = "1";
     };
   };
-in {
+in
+{
 
   home.file.".hushlogin".text = "";
 
   programs.zsh.profileExtra = ''
     if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-      exec zsh -c "Hyprland | logger -t hyprland; echo STOPPING > ~/stopping.txt; systemctl --user stop hyprland.target"
+      exec zsh -c "Hyprland | logger -t hyprland; sleep 10; systemctl --user stop hyprland.target"
     fi
   '';
 
@@ -53,14 +54,14 @@ in {
       kded = (generateService "kded" "kded5");
       pyprland = (generateService "pyprland" "pypr");
       swaync = (generateServiceWith "swaync" "swaync" { Unit.After = [ "seaglass-theme.service" ]; });
-      hyprwalld = (generateService "hyprwalld" "hyprwalld");
+      hyprwatchd = (generateService "hyprwatchd" "hyprwatchd");
       xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
     };
   };
 
   systemd.user.services.user-path-import = {
     Unit.Description = "Import PATH from zsh";
-    Install.WantedBy = ["hyprland.target"];
+    Install.WantedBy = [ "hyprland.target" ];
     Service = {
       Type = "oneshot";
       ExecStart = "/usr/bin/zsh -lc 'systemctl --user import-environment PATH'";

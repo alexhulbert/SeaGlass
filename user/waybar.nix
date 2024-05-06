@@ -8,11 +8,11 @@
   plasma-waybar = ./resources/plasma-waybar.py;
   plasmoids = {
     eventcal = {
-      title = "Event Calendar";
-      width = 900;
-      height = 600;
+      title = "Calendar";
+      width = 500;
+      height = 500;
       margin_right = 0;
-      plasmoid = "org.kde.plasma.eventcalendar";
+      plasmoid = "org.kde.plasma.calendar";
     };
     battery = {
       title = "Power Management";
@@ -76,7 +76,7 @@ in {
       "hyprland/workspaces".all-outputs = true;
       tray.spacing = 10;
       "custom/kde-connect" = {
-          format = "";
+          format = "󰄜";
           on-click = "${plasma-waybar} toggle kde-connect";
       };
       "custom/notification" = {
@@ -126,7 +126,6 @@ in {
         };
         format = "{icon} ";
         format-charging = " ";
-        format-plugged = " ";
         format-full = " ";
         format-icons = ["" "" "" "" ""];
         on-click = "${plasma-waybar} toggle battery";

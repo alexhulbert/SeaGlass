@@ -19,6 +19,10 @@ IgnorePath '/var/db'
 IgnorePath '/var/spool'
 IgnorePath '/var/lib'
 
+# Haskell GHC
+IgnorePath '/usr/lib/ghc-9.2.8'
+IgnorePath '/usr/lib/ghc-9.2.8/*'
+
 # certificates
 IgnorePath '/etc/ca-certificates/extracted'
 IgnorePath '/etc/ssl/certs'

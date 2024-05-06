@@ -10,6 +10,18 @@
   box-shadow: none !important;
 }
 
+
+.tabbrowser-tab.identity-color-yellow {
+  border: 1px solid color-mix(in srgb, AccentColor, transparent 30%) !important;
+  box-sizing: border-box;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+}
+
+.identity-color-yellow.tabbrowser-tab + .identity-color-yellow.tabbrowser-tab {
+  margin-left: 0px !important;
+}
+
 #navigator-toolbox {
   height: 52px;
   display: flex;
@@ -47,4 +59,8 @@
 
 .titlebar-spacer, .titlebar-buttonbox-container {
   display: none;
+}
+
+.tabbrowser-tab[visuallyselected] {
+  background-color: var(--button-active-bgcolor) !important;
 }

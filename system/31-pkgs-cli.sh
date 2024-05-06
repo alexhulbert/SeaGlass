@@ -8,6 +8,8 @@ AddPackage snapper # A tool for managing BTRFS and LVM snapshots. It can create,
 
 AddPackage --foreign platformio # A cross-platform code builder and library manager
 AddPackage --foreign shellgpt-git # A command-line productivity tool powered by OpenAI's ChatGPT (GPT-3.5)
+AddPackage --foreign aider-chat # AI pair programming in your terminal
+AddPackage --foreign litellm # Call all LLM APIs using the OpenAI format
 
 
 # cli tools
