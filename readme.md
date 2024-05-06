@@ -1,7 +1,7 @@
 SeaGlass
 ========
 
-<video src="docs/demo.mp4"></video>
+<video controls src="http://alexhulbert.com/demo.mp4"></video>
 
 What is this repository?
 ------------------------
