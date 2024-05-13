@@ -54,6 +54,10 @@ in
     }];
   };
 
+  config.xdg.configFile."direnv/direnv.toml".source = (pkgs.formats.toml { }).generate "direnv.toml" {
+    global.hide_env_diff = true;
+  };
+
   config.programs = {
     zsh = {
       enable = true;
@@ -124,6 +128,7 @@ in
           { name = "chisui/zsh-nix-shell"; }
           { name = "zsh-users/zsh-syntax-highlighting"; }
           { name = "zsh-users/zsh-history-substring-search"; }
+          { name = "ptavares/zsh-direnv"; }
         ];
       };
     };
