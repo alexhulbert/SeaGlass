@@ -59,6 +59,8 @@ in {
       "merge.tool" = "code";
       "merge.conflictstyle" = "merge";
       "diffEditor.codeLens" = true;
+
+      "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.terminal.goToRecentDirectory" ];
     };
     keybindings = [
       {
