@@ -8,11 +8,6 @@ html[data-darkreader-mode] body a {{
   }}
 }}
 
-#urlbar-input-container, .urlbarView {{
-  background-color: color-mix(in srgb, rgb({background.rgb}) 87%, black);
+#urlbar-input-container:-moz-lwtheme, .urlbarView:-moz-lwtheme {{
+  background-color: color-mix(in srgb, var(--lwt-accent-color) 87%, black);
 }}
-
-#navigator-toolbox, #urlbar-background {{
-  background: rgb({background.rgb}) !important;
-}}
-

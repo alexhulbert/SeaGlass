@@ -49,5 +49,7 @@ for file in "$HOME/.config/gtk-3.0/colors.css" "$HOME/.config/gtk-4.0/colors.css
 @define-color selected_fg_color @theme_selected_fg_color_breeze;" >> "$file"
 done
 
+pywalfox update
+
 systemctl --user restart ulauncher swaync ags waybar &
 seaglass-spicetify

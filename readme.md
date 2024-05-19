@@ -56,19 +56,21 @@ The following steps should be sufficient to apply the firefox customization to a
 ```
 2. Put <a href="user/resources/darkreader">these files</a> a new folder called `/opt/darkreader-pywal`
 3. Open firefox and navigate to `about:config` in the URL bar. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
-4. Download <a href="user/resources/theme/firefox/userContent.css">user/resources/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
-5. Symlink `~/.cache/wal/userContent.css` (create an empty file if it doesn't exist) to `~/.mozilla/Firefox/default/chrome/userContent.css`
-6. Put the following content in `~/.mozilla/Firefox/default/chrome/userChrome.css`:
+> At this point, you can skip steps 4-9 if you have your own userChrome/userContent files that you want to keep.
+4. Install pywalfox
+5. Download <a href="user/resources/theme/firefox/userContent.css">user/resources/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
+6. Symlink `~/.cache/wal/userContent.css` (create an empty file if it doesn't exist) to `~/.mozilla/Firefox/default/chrome/userContent.css`
+7. Put the following content in `~/.mozilla/Firefox/default/chrome/userChrome.css`:
 ```
 @import url('blurredfox/userChrome.css');
 @import url('userContent.css');
 @import url('layout.css');
 ```
-7. Download <a href="https://github.com/eromatiya/blurredfox">this repo</a> and place the `blurredfox` folder in `~/.mozilla/Firefox/default/chrome`
-8. Download <a href="user/resources/theme/firefox/twoline.css">user/resources/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
-9. Download <a href="user/resources/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
-10. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
-11. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
+8. Download <a href="https://github.com/eromatiya/blurredfox">this repo</a> and place the `blurredfox` folder in `~/.mozilla/Firefox/default/chrome`
+9. Download <a href="user/resources/theme/firefox/twoline.css">user/resources/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
+10. Download <a href="user/resources/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
+11. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
+12. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
 
 Close and reopen firefox and the theme should be applied. Right now the browser chrome doesn't update automatically when the theme changes, but I have a fix for that in the works.
 

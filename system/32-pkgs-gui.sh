@@ -57,6 +57,7 @@ AddPackage --foreign colorz # A k-means color scheme generator.
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.
 AddPackage --foreign kde-material-you-colors # A script to generate Material You color schemes for KDE Plasma.
 AddPackage --foreign python-colr # Easy terminal colors, with chainable methods.
+AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox browser extension
 
 # wayland / hyprland specific
 AddPackage hyprland # a highly customizable dynamic tiling Wayland compositor

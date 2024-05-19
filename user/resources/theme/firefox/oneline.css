@@ -10,12 +10,15 @@
   box-shadow: none !important;
 }
 
-
 .tabbrowser-tab.identity-color-yellow {
-  border: 1px solid color-mix(in srgb, AccentColor, transparent 30%) !important;
-  box-sizing: border-box;
   margin-left: 4px !important;
   margin-right: 4px !important;
+  outline: 2px solid color-mix(in srgb, var(--tab-selected-textcolor), transparent 50%) !important;
+  outline-offset: -2px;
+}
+
+.tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
+  background-color: transparent !important;
 }
 
 .identity-color-yellow.tabbrowser-tab + .identity-color-yellow.tabbrowser-tab {
@@ -47,6 +50,8 @@
 
 .tab-background {
   margin-block: 0 !important;
+  background: transparent !important;
+  outline: none !important;
 }
 
 .urlbarView {
@@ -55,6 +60,7 @@
   margin-inline: 0 !important;
   border-radius: 0 0 4px 4px;
   padding: 10px;
+  background: var(--newtab-background-color) !important;
 }
 
 .titlebar-spacer, .titlebar-buttonbox-container {
@@ -63,4 +69,8 @@
 
 .tabbrowser-tab[visuallyselected] {
   background-color: var(--button-active-bgcolor) !important;
+}
+
+#urlbar-input-container {
+  height: 100% !important;
 }
