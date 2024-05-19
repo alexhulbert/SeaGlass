@@ -30,6 +30,7 @@ AddPackage jdk17-openjdk # OpenJDK Java 17 development kit
 AddPackage alsa-firmware # Firmware binaries for loader programs in alsa-tools and hotplug firmware loader
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage interception-tools # A minimal composable infrastructure on top of libudev and libevdev
+AddPackage wtype # xdotool type for wayland
 AddPackage kdialog # A utility for displaying dialog boxes from shell scripts
 AddPackage --foreign python-fuzzywuzzy # Fuzzy string matching like a boss
 
