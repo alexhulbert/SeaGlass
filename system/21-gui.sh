@@ -7,6 +7,7 @@ SystemdEnable bluez /usr/lib/systemd/system/bluetooth.service
 SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-dispatcher.service
 SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager.service
 SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-wait-online.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-powerd.service
 
 # pamac
 SystemdEnable libpamac-aur /usr/lib/systemd/system/pamac-cleancache.timer

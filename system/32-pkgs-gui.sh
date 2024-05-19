@@ -1,7 +1,7 @@
 AddPackage ttf-firacode-nerd # Patched font Fira (Fura) Code from nerd fonts library
 AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly from Apple official source
 AddPackage firefox # Standalone web browser from mozilla.org
-AddPackage nvidia-dkms # NVIDIA drivers for linux
+AddPackage nvidia # NVIDIA drivers for linux
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
 AddPackage --foreign cassowary # Run Windows Applications inside a VM on Linux as if they are native.
 AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
@@ -41,6 +41,7 @@ AddPackage bluez-utils # Development and debugging utilities for the bluetooth p
 # kde
 AddPackage plasma5-integration # Qt5 Platform Theme integration plugins for the Plasma workspaces
 AddPackage qt5-tools # A cross-platform application and UI framework (Development Tools, QtHelp)
+AddPackage plasma-sdk # Applications useful for Plasma development
 AddPackage kdeconnect # Adds communication between KDE and your smartphone
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage konsole # KDE terminal emulator
@@ -61,6 +62,7 @@ AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox br
 
 # wayland / hyprland specific
 AddPackage hyprland # a highly customizable dynamic tiling Wayland compositor
+AddPackage hyprwayland-scanner # A Hyprland implementation of wayland-scanner, in and for C++
 AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse

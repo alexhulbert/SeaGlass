@@ -1,26 +1,28 @@
-Other Issues:
-* Hyprctl reload on wake from suspend
+Issues:
+* kded6
+* hyprctl reload on wake from suspend
+* freeze on wake
+* waybar delay
+* wallpaper upscale
+* dont refresh on external monitor
+* downloads/go folders
+* hyperlink color / background autorefresh firefox
 - critical battery indicator?
+- pypr remove socket
 . restart plasma-waybar on display change
 . Plasma EventCalendar
 
 Install Fixes:
-* firefox profile
+- firefox profile
 - autoinstall firefox extensions
 - publish copilot2ctrl with pkgbuild
 
 Etc:
-* Wallpaper upscale
-* Firefox container tab color
-* dont refresh on external monitor
-* downloads/go folders
-* firefox userChrome auto refresh
 - Shortcut for sticky floating notes scratchpad (notion?)
 - google meet key shortcut
 - hyprchrome opacity issues
 - hyprchrome toggle
 - vimfx google
-- pypr remove socket
 - hide notifications during screen sharing
 - sidebars with pyprland (no border-radius)
 - vim theme
@@ -28,4 +30,3 @@ Etc:
 - plasma-hud
 - better symlink activation script
 - migrate resources to files
-

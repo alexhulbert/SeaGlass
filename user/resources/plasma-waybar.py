@@ -73,7 +73,7 @@ async def handle_event(data):
     if event_type == 'workspace':
         # Hide all plasmoids when switching workspace
         monitor = await ipc.get_focused_monitor_props()
-        windows = await ipc.hyprctlJSON('clients', logger=None)
+        windows = await ipc.hyprctl_json('clients', logger=None)
         for plasmoid_name in config:
             if await is_visible(plasmoid_name, monitor, windows):
                 await hide(plasmoid_name)
@@ -90,7 +90,7 @@ async def handle_event(data):
             is_plasmoid_active = False
             await restore_focus_props()
             monitor = await ipc.get_focused_monitor_props()
-            windows = await ipc.hyprctlJSON('clients', logger=None)
+            windows = await ipc.hyprctl_json('clients', logger=None)
             for plasmoid_name in config:
                 if await is_visible(plasmoid_name, monitor, windows):
                     await hide(plasmoid_name)
@@ -100,7 +100,7 @@ async def is_visible(plasmoid_name, monitor=None, windows=None):
     if monitor is None:
         monitor = await ipc.get_focused_monitor_props()
     if windows is None:
-        windows = await ipc.hyprctlJSON('clients', logger=None)
+        windows = await ipc.hyprctl_json('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
     for window in windows:
         if window['title'] == config[plasmoid_name]['title'] and window['workspace']['id'] == workspace:
@@ -128,7 +128,7 @@ async def hide(plasmoid_name):
 async def show(plasmoid_name):
     cfg = config[plasmoid_name]
     monitor = await ipc.get_focused_monitor_props()
-    windows = await ipc.hyprctlJSON('clients', logger=None)
+    windows = await ipc.hyprctl_json('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
 
     title = build_title(cfg['title'])

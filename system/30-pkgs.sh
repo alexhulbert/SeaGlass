@@ -23,7 +23,6 @@ AddPackage libvips # A fast image processing library with low memory needs
 AddPackage pkgfile # a pacman .files metadata explorer
 AddPackage pulseaudio # A featureful, general-purpose sound server
 AddPackage python-pipx # Install and Run Python Applications in Isolated Environments
-AddPackage python-fuzzywuzzy # Fuzzy string matching like a boss
 AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wherever they are.
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage jdk11-openjdk # OpenJDK Java 11 development kit
@@ -32,6 +31,7 @@ AddPackage alsa-firmware # Firmware binaries for loader programs in alsa-tools a
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage interception-tools # A minimal composable infrastructure on top of libudev and libevdev
 AddPackage kdialog # A utility for displaying dialog boxes from shell scripts
+AddPackage --foreign python-fuzzywuzzy # Fuzzy string matching like a boss
 
 # latex
 AddPackage texlive-fontsextra # TeX Live - Additional fonts
