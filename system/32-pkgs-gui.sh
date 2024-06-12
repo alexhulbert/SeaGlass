@@ -16,8 +16,10 @@ AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
 AddPackage plymouth # Graphical boot splash screen
 AddPackage kleopatra # Certificate Manager and Unified Crypto GUI
+AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
+AddPackage --foreign mullvad-vpn-bin # The Mullvad VPN client app for desktop
 AddPackage gimp # GNU Image Manipulation Program
-AddPackage chromium # A web browser built for speed, simplicity, and security
+AddPackage --foreign google-chrome # The popular web browser by Google (Stable Channel)
 AddPackage godot # Advanced cross-platform 2D and 3D game engine
 AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to manage multiple instances.
 AddPackage --foreign glfw-wayland-minecraft # A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
@@ -25,6 +27,7 @@ AddPackage --foreign beeper-latest-bin # all your chats in one app
 AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage wezterm # A GPU-accelerated cross-platform terminal emulator and multiplexer
 AddPackage --foreign 1password # Password manager and secure wallet
+AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
 # spotify
 AddPackage --foreign spicetify-cli # Command-line tool to customize Spotify client
@@ -44,15 +47,14 @@ AddPackage qt5-tools # A cross-platform application and UI framework (Developmen
 AddPackage plasma-sdk # Applications useful for Plasma development
 AddPackage kdeconnect # Adds communication between KDE and your smartphone
 AddPackage plasma-meta # Meta package to install KDE Plasma
-AddPackage konsole # KDE terminal emulator
 AddPackage dolphin # KDE File Manager
 AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file formats
 
 # theming
 AddPackage python-pywal # Generate and change colorschemes on the fly
+AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage --foreign lightly-qt6-git # A modern style for qt applications. (qt6 branch)
 AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
-AddPackage --foreign wpgtk # A gui wallpaper chooser that changes your WM theme, GTK theme and more
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
 AddPackage --foreign colorz # A k-means color scheme generator.
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.

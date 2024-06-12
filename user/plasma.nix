@@ -4,7 +4,7 @@
 , ...
 }:
 let
-  shim = import ./pkgs/shim.nix { inherit pkgs; };
+  papirus-icons = import ./pkgs/papirus-icons.nix { inherit pkgs; };
   flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
   plasma-manager =
     (import flake-compat {
@@ -76,28 +76,15 @@ in
           experimental_fesatures = 1;
         };
       };
+
+      "zoomus.conf".General.xwayland = false;
     };
   };
 
   # Plasma theme
   outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/resources/theme/kde-theme";
 
-  # konsole
-  outOfStoreSymlinks.xdgData."konsole/Pywal.profile" = "${builtins.toString ./.}/resources/konsole.profile";
-  xdg.dataFile."kxmlgui5/konsole/sessionui.rc".source = ./resources/konsole.xml;
-  programs.plasma.configFile.konsolerc = {
-    "Desktop Entry" = {
-      DefaultProfile = "Pywal.profile";
-    };
-    MainWindow = {
-      MenuBar = "Disabled";
-      StatusBar = "Disabled";
-      ToolBarsMovable = "Disabled";
-      State =
-        "AAAA/wAAAAD9AAAAAAAAB1MAAAjMAAAABAAAAAQAAAAIAAAACPw" +
-        "AAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcg" +
-        "AAAAAA/////wAAAAAAAAAAAAAAHABzAGUAcwBzAGkAbwBuAFQAb" +
-        "wBvAGwAYgBhAHIAAAAAAP////8AAAAAAAAAAA==";
-    };
-  };
+  # Icons
+  xdg.dataFile."icons/Papirus-Colors".source = "${papirus-icons}/Papirus-Colors";
+  xdg.dataFile."icons/Papirus-Colors-Dark".source = "${papirus-icons}/Papirus-Colors-Dark";
 }

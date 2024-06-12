@@ -4,7 +4,6 @@
 , ...
 }:
 let
-  shim = import ./pkgs/shim.nix { inherit pkgs; };
   fxcast = pkgs.fx_cast_bridge.overrideAttrs (o: {
     version = "0.3.1";
     src = pkgs.fetchFromGitHub {
@@ -14,16 +13,21 @@ let
       hash = "sha256-hB4NVJW2exHoKsMp0CKzHerYgj8aR77rV+ZsCoWA1Dg=";
     };
   });
+
+  darkreaderManifest = {
+    name = "darkreader";
+    description = "custom darkreader native host for syncing with pywal";
+    path = "${./resources/darkreader}/index.js";
+    type = "stdio";
+  };
 in
 {
+  config.xdg.configFile."google-chrome/NativeMessagingHosts/darkreader.json".text = builtins.toJSON
+    (darkreaderManifest // { allowed_origins = [ "chrome-extension://gidgehhdgebooieidpcckaphjbfcghpe/" ]; });
+
   config.home.file = {
-    ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON {
-      name = "darkreader";
-      description = "custom darkreader native host for syncing with pywal";
-      path = "${./resources/darkreader}/index.js";
-      type = "stdio";
-      allowed_extensions = [ "darkreader@alexhulbert.com" ];
-    };
+    ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON
+      (darkreaderManifest // { allowed_extensions = [ "darkreader@alexhulbert.com" ]; });
   };
 
   config.xdg.configFile."vimfx/config.js".source = ./resources/vimfx.js;
@@ -45,15 +49,6 @@ in
         @import url('blurredfox/userChrome.css');
         @import url('userContent.css');
         @import url('layout.css');
-      '';
-    };
-    profiles.ssb = {
-      id = 1;
-      settings = config.programs.firefox.profiles.default.settings;
-      # url('blurredfox/userChrome.css');
-      userChrome = ''
-        @import url('userContent.css');
-        @import url('nochrome.css');
       '';
     };
   };

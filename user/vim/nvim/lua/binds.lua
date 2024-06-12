@@ -22,3 +22,20 @@ map("n", "<C-k>", "<C-w>k", opts)
 map("n", "<C-l>", "<C-w>l", opts)
 map("n", "<C-s>", ":HopWord <CR>", opts)
 map("n", "<space>fb", ":Telescope file_browser", opts)
+
+vim.cmd [[
+  command! Wq wq
+  command! WQ wq
+  command! Wq! wq!
+  command! WQ! wq!
+  command! W w
+  command! W! w!
+  command! Q q
+  command! Q! q!
+]]
+
+vim.cmd [[
+  command! ws w !sudo tee %
+  command! Ws ws
+  command! WS wa
+]]

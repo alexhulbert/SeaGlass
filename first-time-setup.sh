@@ -1,5 +1,4 @@
 #!/bin/bash
-wpg-install.sh -ig
 hyprpm add https://github.com/alexhulbert/HyprChroma
 hyprpm add https://github.com/DreamMaoMao/hycov
 hyprpm add https://github.com/hyprwm/hyprland-plugins

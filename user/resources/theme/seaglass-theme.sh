@@ -12,26 +12,21 @@ if [ -e "$wallpaper.scheme" ]; then
 else
   rm ~/.cache/wallpaper
   ln -s "$wallpaper" ~/.cache/wallpaper
+  echo "$wallpaper" > ~/.cache/wallpaper-path
   if ! pgrep -x "swww-daemon" > /dev/null; then
     export SWWW_TRANSITION_STEP=255
   fi
   swww init --no-cache
   swww img "$wallpaper"
-  wal --backend haishoku -i "$wallpaper"
 fi
 
+kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 --on-change-hook "kde-material-you-colors --stop"
 source ~/.cache/wal/colors.sh
-kde-material-you-colors -col "$background" -ccl "$color1 $color2 $color3 $color4 $color5 $color6 $color7" -dbm 1.5 -wal -ko 84 --on-change-hook "kde-material-you-colors --stop"
-# echo "$wallpaper" > ~/.cache/wallpaper-path
-# kde-material-you-colors -f ~/.cache/wallpaper-path -dbm 1.5 -wal -ko 84 --on-change-hook "kde-material-you-colors --stop"
-source ~/.cache/wal/colors.sh
-wpg -i ~/.cache/wallpaper ~/.cache/wal/colors.json
-wpg -s ~/.cache/wallpaper
 sed -i "/\[Colors:Window]/,+2 s/=#....../=$background/g" ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -Ei '/\[Colors:(Header|Tooltip|Complementary)\]/,+2 s/=#/=#D4/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i '/\[Colors:View\]/,+2 s/=#/=#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 
-lookandfeeltool -a "$HOME/.local/share/plasma/look-and-feel/seaglass"
+lookandfeeltool -a "$HOME/.local/share/plasma/look-and-feel/sealass"
 plasma-apply-colorscheme MaterialYouDark2
 plasma-apply-colorscheme MaterialYouDark
 

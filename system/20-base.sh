@@ -34,6 +34,9 @@ CopyFileTo /udevmon.yaml /etc/interception/udevmon.yaml
 CopyFileTo /copilot.hwdb /etc/udev/hwdb.d/20-copilot.hwdb
 CopyFileTo /copilot2ctrl /usr/local/bin/copilot2ctrl 755
 
+# refresh display configuration on wake from suspend
+CopyFileTo /system-sleep.sh /usr/lib/systemd/system-sleep/reload.sh 755
+
 # locale and timezone config
 cat >| "$(CreateFile '/etc/locale.gen')" <<< "en_US.UTF-8 UTF-8"
 cat >| "$(CreateFile '/etc/locale.conf')" <<< "LANG=en_US.UTF-8"

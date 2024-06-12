@@ -1,0 +1,51 @@
+[pyprland]
+plugins = ["workspaces_follow_focus", "scratchpads"]
+
+[scratchpads.todoist]
+command = "google-chrome-stable --profile-directory=Default --app=https://todoist.com"
+class = "chrome-todoist.com__-Default"
+animation = "fromLeft"
+process_tracking = false
+size = "480px 1160px"
+position = "0px 40px"
+offset = "200%"
+multi = false
+smart_focus = false
+excludes = ["slack", "terminal"]
+
+[scratchpads.messages]
+command = "google-chrome-stable --profile-directory=Default --app=https://chat.beeper.com"
+class = "chrome-chat.beeper.com__-Default"
+animation = "fromRight"
+process_tracking = false
+size = "850px 1160px"
+position = "1070px 40px"
+offset = "200%"
+multi = false
+smart_focus = false
+excludes = ["slack", "terminal"]
+
+[scratchpads.slack]
+command = "google-chrome-stable --profile-directory=Default --app=https://slack.com"
+class = "chrome-slack.com__-Default"
+animation = "fromTop"
+process_tracking = false
+margin = 40
+size = "100% 60%"
+position = "0px 40px"
+offset = "200%"
+multi = false
+smart_focus = false
+excludes = ["todoist", "messages"]
+
+[scratchpads.terminal]
+command = "wezterm start --class chrome-WEZTERM__-Default"
+class = "chrome-WEZTERM__-Default"
+animation = "fromBottom"
+size = "100% 33%"
+margin = 0
+offset = "200%"
+multi = false
+smart_focus = false
+lazy = true
+excludes = ["todoist", "messages"]

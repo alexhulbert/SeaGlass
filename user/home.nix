@@ -45,7 +45,7 @@ in
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeShellScriptBin "clean-nix-store" ''
-          # nix-store --gc
+          nix-store --gc
           nix-store --optimize
         ''}/bin/clean-nix-store";
     };

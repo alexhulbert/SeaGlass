@@ -35,3 +35,5 @@ IgnorePath '/etc/arch-release'
 
 IgnorePath '/nix/*'
 IgnorePath '/opt/*'
+
+IgnorePath '*mullvad*'

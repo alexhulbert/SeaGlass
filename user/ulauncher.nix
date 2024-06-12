@@ -8,8 +8,8 @@ let
   ulauncher-pywal-theme = pkgs.fetchFromGitHub {
     owner = "alexhulbert";
     repo = "pywal-ulauncher-theme";
-    rev = "a340a9410ac4910df59f1e8b853a1d2c6da4de8d";
-    sha256 = "sha256-qamiD37Uiq0XXEzu8suCY1lg337T1Pca7jFTJxA2mFs=";
+    rev = "5d3c02354b0e468e9712dea283cfd10096486dba";
+    sha256 = "sha256-DDaAnYnQAkJCJjYDCDrEds6NS62+h9cf5POLfxSvSBE=";
   };
 in
 {
@@ -41,6 +41,7 @@ in
       "render_on_screen" = "mouse-pointer-monitor";
       "show_indicator_icon" = false;
       "show_recent_apps" = "0";
+      "close_on_focus_out" = false;
       "theme_name" = "Pywal-Ulauncher-Theme";
     };
 

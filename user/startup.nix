@@ -4,8 +4,6 @@
 , ...
 }:
 let
-  shim = import ./pkgs/shim.nix { inherit pkgs; };
-
   generateServiceWith = serviceName: command: extra:
     lib.mkMerge [ (generateService serviceName command) extra ];
 
@@ -51,11 +49,13 @@ in
       powerdevil = (generateService "powerdevil" "/usr/lib/org_kde_powerdevil");
       xdg-desktop-portal-hyprland = (generateService "xdg-desktop-portal-hyprland" "/usr/lib/xdg-desktop-portal-hyprland");
       kde-connect = (generateService "kde-connect" "/usr/lib/kdeconnectd");
-      kded = (generateService "kded" "kded5");
+      kded = (generateService "kded" "kded6");
       pyprland = (generateService "pyprland" "pypr");
       swaync = (generateServiceWith "swaync" "swaync" { Unit.After = [ "seaglass-theme.service" ]; });
       hyprwatchd = (generateService "hyprwatchd" "hyprwatchd");
+      dndwatchd = (generateService "dndwatchd" "dndwatchd");
       xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
+      xdg-home-cleaner = (generateService "xdg-home-cleaner" ./resources/xdg-home-cleaner.sh);
     };
   };
 
@@ -65,6 +65,7 @@ in
     Service = {
       Type = "oneshot";
       ExecStart = "/usr/bin/zsh -lc 'systemctl --user import-environment PATH'";
+      RemainAfterExit = true;
     };
   };
 
@@ -104,7 +105,7 @@ in
         )
 
         for module in $moduleNames; do
-          qdbus org.kde.kded5 /kded org.kde.kded5.loadModule $module
+          qdbus org.kde.kded6 /kded org.kde.kded6.loadModule $module
         done
       ''}";
       RemainAfterExit = true;

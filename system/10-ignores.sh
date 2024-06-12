@@ -1,6 +1,7 @@
 # kernel
 IgnorePath '/boot/vmlinuz-*'
 IgnorePath '/boot/lost+found'
+IgnorePath '/boot/loader/*'
 IgnorePath '/etc/mkinitcpio.d/linux.preset'
 IgnorePath '/usr/lib/modules/*'
 IgnorePath '/boot/*.img'
