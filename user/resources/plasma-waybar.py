@@ -143,7 +143,7 @@ async def show(plasmoid_name):
             await hide(other_plasmoid)
 
     await ipc.hyprctl([
-        'general:no_cursor_warps 1',
+        'cursor:no_warps 1',
         'animations:enabled 0',
         'input:float_switch_override_focus 0',
         'input:follow_mouse 2'
@@ -156,7 +156,7 @@ async def show(plasmoid_name):
     ], logger=None)
     await asyncio.sleep(0.017)
     await ipc.hyprctl([
-        'general:no_cursor_warps 0',
+        'cursor:no_warps 0',
         'animations:enabled 1'
     ], 'keyword', logger=None)
     await ipc.hyprctl(f'movewindowpixel exact {x_pos} {y_pos},title:{title}', logger=None)
