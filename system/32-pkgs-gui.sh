@@ -53,8 +53,8 @@ AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file for
 # theming
 AddPackage python-pywal # Generate and change colorschemes on the fly
 AddPackage papirus-icon-theme # Papirus icon theme
-AddPackage --foreign lightly-qt6-git # A modern style for qt applications. (qt6 branch)
-AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
+AddPackage --foreign lightly-kf5-git # A modern style for qt applications.
+AddPackage --foreign lightly-kf6-git # A modern style for qt applications. (qt6 branch)
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
 AddPackage --foreign colorz # A k-means color scheme generator.
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.

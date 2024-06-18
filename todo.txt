@@ -1,7 +1,6 @@
 Issues:
 * wallpaper upscale
 * dont refresh on external monitor
-* set wallpaper on external monitor
 . screen sharing
 . freeze on wake
 . Plasma EventCalendar
@@ -12,6 +11,7 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
+- hide notifications on plasmoid + vice versa
 - replace logout command + ldm shortcut
 - vim theme/tabs/commands
 - migrate resources to files

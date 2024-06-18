@@ -11,3 +11,16 @@
   outline: 1px solid var(--tab-selected-textcolor);
   outline-offset: -1px;
 }
+
+.urlbarView {
+  width: 100% !important;
+  margin-top: -2px;
+  margin-inline: 0 !important;
+  border-radius: 0 0 4px 4px;
+  padding: 10px;
+  background: var(--newtab-background-color) !important;
+}
+
+.titlebar-spacer, .titlebar-buttonbox-container {
+  display: none;
+}
