@@ -15,7 +15,7 @@
       plasmoid = "org.kde.plasma.calendar";
     };
     battery = {
-      title = "Power Management";
+      title = "Power and Battery";
       width = 500;
       height = 270;
       margin_right = 60;

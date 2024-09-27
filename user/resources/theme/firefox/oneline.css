@@ -71,6 +71,10 @@
   background-color: var(--button-active-bgcolor) !important;
 }
 
-#urlbar-input-container {
+.urlbar-input-container {
   height: 100% !important;
+}
+
+.urlbar-input {
+  height: 2em !important;
 }
