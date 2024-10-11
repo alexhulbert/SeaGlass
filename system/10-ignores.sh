@@ -87,3 +87,6 @@ IgnorePath '/usr/share/spicetify-cli/Themes/Ziro/color.ini'
 IgnorePath '/etc/texmf/*'
 IgnorePath '/usr/share/texmf-dist/*'
 
+# argcomplete
+IgnorePath /etc/bash_completion.d/python-argcomplete
+IgnorePath /usr/local/share/zsh/site-functions/_python-argcomplete

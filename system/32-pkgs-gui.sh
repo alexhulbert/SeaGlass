@@ -25,7 +25,7 @@ AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to 
 AddPackage --foreign glfw-wayland-minecraft # A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
 AddPackage --foreign beeper-latest-bin # all your chats in one app
 AddPackage obs-studio # Free, open source software for live streaming and recording
-AddPackage wezterm # A GPU-accelerated cross-platform terminal emulator and multiplexer
+AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
 AddPackage --foreign 1password # Password manager and secure wallet
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
