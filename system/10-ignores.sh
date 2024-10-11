@@ -30,6 +30,7 @@ IgnorePath '/etc/ssl/certs'
 
 # info
 IgnorePath '/usr/share/info/dir'
+IgnorePath '/usr/share/terminfo/w/wezterm'
 
 # udev
 IgnorePath '/etc/udev/hwdb.bin'

@@ -1,3 +1,4 @@
+IgnorePath '/etc/hosts'
 IgnorePath '/etc/fstab'
 IgnorePath '/etc/group'
 IgnorePath '/etc/gshadow'
@@ -28,6 +29,7 @@ IgnorePath '/usr/lib/os-release'
 IgnorePath '/usr/lib/jvm/*'
 IgnorePath '/usr/lib/node_modules/*'
 IgnorePath '/usr/lib/vlc/plugins/plugins.dat'
+IgnorePath '/usr/lib/graphviz/config6'
 
 IgnorePath '/.snap*'
 IgnorePath '/lost+found'

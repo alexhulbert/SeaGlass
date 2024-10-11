@@ -56,7 +56,6 @@ AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage --foreign lightly-kf5-git # A modern style for qt applications.
 AddPackage --foreign lightly-kf6-git # A modern style for qt applications. (qt6 branch)
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
-AddPackage --foreign colorz # A k-means color scheme generator.
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.
 AddPackage --foreign kde-material-you-colors # A script to generate Material You color schemes for KDE Plasma.
 AddPackage --foreign python-colr # Easy terminal colors, with chainable methods.
@@ -66,12 +65,12 @@ AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox br
 AddPackage hyprland # a highly customizable dynamic tiling Wayland compositor
 AddPackage hyprwayland-scanner # A Hyprland implementation of wayland-scanner, in and for C++
 AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
+AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign hyprpicker # A wlroots-compatible Wayland color picker that does not suck.
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume
-AddPackage --foreign swww # Efficient animated wallpaper daemon for wayland, controlled at runtime.
 AddPackage --foreign aylurs-gtk-shell # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage --foreign wdisplays # GUI display configurator for wlroots compositors
 AddPackage swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs

@@ -14,8 +14,6 @@ cat <<EOF >| "$(CreateFile '/etc/adjtime')"
 LOCAL
 EOF
 
-CopyFileTo /hosts /etc/hosts
-
 CreateLink '/etc/os-release' '../usr/lib/os-release'
 
 # base systemd services
