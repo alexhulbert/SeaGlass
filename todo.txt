@@ -19,3 +19,4 @@ Etc:
 - plasma-hud
 - vimfx google
 - better symlink activation script
+- clean up xdg portal vars

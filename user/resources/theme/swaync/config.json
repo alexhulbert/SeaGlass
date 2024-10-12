@@ -2,6 +2,13 @@
   "control-center-margin-right": 8,
   "control-center-margin-bottom": 8,
   "widgets": ["title", "dnd", "buttons-grid", "mpris", "notifications"],
+  "timeout-critical": 15,
+  "notification-visibility": {
+    "wifi": {
+      "state": "ignored",
+      "app-name": "Network Management"
+    }
+  },
   "widget-config": {
     "buttons-grid": {
       "actions": [
