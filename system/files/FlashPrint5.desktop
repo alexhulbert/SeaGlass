@@ -1,0 +1,11 @@
+[Desktop Entry]
+GenericName=FlashPrint5
+Name=FlashForge 3D Printer Control Software v5
+MimeType=text/plain;
+Exec=env QT_QPA_PLATFORM=xcb /usr/bin/flashprint
+X-KDE-StartupNotify=true
+X-KDE-HasTempFileOption=true
+Icon=flashforge5
+Type=Application
+Terminal=false
+Categories=Qt;Utility;

@@ -1,8 +1,6 @@
 SeaGlass
 ========
 
-https://github.com/alexhulbert/SeaGlass/assets/2229212/1d0752a5-ae23-4b3b-adb6-9b72af87d5e7
-
 What is this repository?
 ------------------------
 
@@ -14,9 +12,9 @@ This is a set of declarative Linux configuration files and scripts designed to c
  - Custom monitor configuration and power widgets 
  - A modern zsh config with all of the shortcuts and autocomplete features from the fish shell
 
- This repository is designed to provide quick and automatic configuration of all these features on a fresh Arch Linux installation, although configuration for NixOS is available on an older branch.
+ This repository is designed to provide quick and automatic configuration of all these features on a fresh Arch Linux installation, although configuration for i3 and NixOS is available at an older commit.
 
- Currently, this repository works, but is in a very WIP state. Useful features such as the ones mentioned above are intermingled with various personal configuration changes. These configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features works:
+ Currently, this repository works well, but useful features such as the ones mentioned above are intermingled with various personal configuration changes. These configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features works:
 
  <h3>Color Scheme Engine</h3>
  The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a>, <a href="https://github.com/luisbocanegra/kde-material-you-colors">kde-material-you-colors</a>, and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon</a>. This fork attaches to a custom native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/resources/darkreader.xpi">user/resources/darkreader.xpi</a> for firefox and <a href="user/resources/darkreader-chrome.zip">user/resources/darkreader-chrome.zip</a> for Chrome. The associated native extension is available in <a href="user/resources/darkreader">user/resources/darkreader</a>. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>.
@@ -154,13 +152,28 @@ If you'd like to start your linux installation from scratch and use my entire co
 
 1. Install `paru`, `nix`, and `aconfmgr`
 2. Clone this repo to somewhere on your computer
-3. Symlink the `system` directory of this repo to `~/.config/aconfmgr` and the `user` directory to `~/.config/home-manager`
-4. Run `aconfmgr apply`
-5. Add nix home-manager channel and the nixpkgs channel
-6. Install nix home-manager via nix profile flakes
-7. Run `chown -R $USER:$USER /nix` to make the nix store editable by your user
-8. Run `home-manager switch` to apply the home-manager configuration
-9. Run `first-time-setup.sh`
-10. Reboot your computer
+3. Remove configuration that does not apply to you. More information on this can be found below.
+4. Symlink the `system` directory of this repo to `~/.config/aconfmgr` and the `user` directory to `~/.config/home-manager`
+5. Run `aconfmgr apply`
+6. Add nix home-manager channel and the nixpkgs channel
+7. Install nix home-manager via nix profile flakes
+8. Run `chown -R $USER:$USER /nix` to make the nix store editable by your user
+9. Set your name and git information in `user/personal.nix`
+9. Run `home-manager switch` to apply the home-manager configuration
+10. Run `first-time-setup.sh`
+11. Reboot your computer
 
 When I did this most recently, I ran into issues with firefox profiles. The changes to the firefox profile itself are fairly minimal outside of the user chrome stuff, though, so they can easily be applied manually. If you happen to go through this route and encounter any trouble, let me know.
+
+<h3>Removing Irrelevant Configuration</h3>
+
+As stated above, this repository contains my personal dotfiles, including everything from the packages I have installed to laptop-specific adjustments. Below is a non-exhaustive list of sections of this repo which you may want to delete before installing it in totality.
+
+- __xdg-home-cleaner service in `user/startup.nix`__: This makes sure various subfolders of the home directory (including Downloads!) stay deleted
+- __`system/33-pkgs-personal.sh`__: This contains software I've installed that most people probably don't also want
+- __xdg.userDirs in `user/personal.nix`__: This changes the home directories to be shorter names like "tmp" instead of "Downloads"
+- __layout.css override in `user/personal.nix`__: This override hides the firefox url bar unless you focus it by pressing ctrl+L
+- __caps.hwdb file in `system/21-gui.sh`__: This remaps the caps lock key to switch back and forth between the last visited workspace
+- __copilot key remapping lines in `system/21-gui.sh`__: This remaps the "Copilot Key" on windows laptops to right control
+- __localtime symlink in `system/20-base.sh`__: If you don't live in the EST time zone, this should be changed
+- __bootloader/initramfs configuration in `system/20-base.sh`__: My grub configuration is specific to my laptop and filesystem type

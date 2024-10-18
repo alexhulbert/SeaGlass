@@ -3,9 +3,6 @@ AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly
 AddPackage firefox # Standalone web browser from mozilla.org
 AddPackage nvidia # NVIDIA drivers for linux
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
-AddPackage --foreign cassowary # Run Windows Applications inside a VM on Linux as if they are native.
-AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
-AddPackage --foreign fx_cast-bin # Implementation of the Google Cast Chrome Sender SDK within Firefox
 AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
 AddPackage filelight # View disk usage information
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
@@ -15,16 +12,9 @@ AddPackage --foreign pamac-aur # A Gtk3 frontend, Package Manager based on libal
 AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
 AddPackage plymouth # Graphical boot splash screen
-AddPackage kleopatra # Certificate Manager and Unified Crypto GUI
-AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based on Qt toolkit and libtorrent-rasterbar
-AddPackage --foreign mullvad-vpn-bin # The Mullvad VPN client app for desktop
 AddPackage gimp # GNU Image Manipulation Program
 AddPackage --foreign google-chrome # The popular web browser by Google (Stable Channel)
-AddPackage godot # Advanced cross-platform 2D and 3D game engine
-AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to manage multiple instances.
-AddPackage --foreign glfw-wayland-minecraft # A free, open source, portable framework for graphical application development (wayland, patched for Minecraft)
 AddPackage --foreign beeper-latest-bin # all your chats in one app
-AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
 AddPackage --foreign 1password # Password manager and secure wallet
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
@@ -49,6 +39,8 @@ AddPackage kdeconnect # Adds communication between KDE and your smartphone
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage dolphin # KDE File Manager
 AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file formats
+AddPackage gwenview # A fast and easy to use image viewer
+AddPackage power-profiles-daemon # Makes power profiles handling available over D-Bus
 
 # theming
 AddPackage python-pywal # Generate and change colorschemes on the fly

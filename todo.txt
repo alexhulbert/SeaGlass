@@ -1,8 +1,9 @@
 Issues:
 * wallpaper upscale
 * dont refresh on external monitor
-. screen sharing
 . Plasma EventCalendar
+. camera
+- fix spotify ziro theme
 
 Install Fixes:
 - firefox profile
@@ -10,6 +11,7 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
+- switch to windows button
 - hide notifications on plasmoid + vice versa
 - replace logout command + ldm shortcut
 - vim theme/tabs/commands
@@ -17,6 +19,5 @@ Etc:
 - hyprchroma opacity issues
 - hyperlink color / background autorefresh firefox
 - plasma-hud
-- vimfx google
 - better symlink activation script
 - clean up xdg portal vars
