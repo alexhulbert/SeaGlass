@@ -34,22 +34,22 @@ let
 in {
 
   outOfStoreSymlinks.xdgConfig = {
-    "hypr/hyprland.conf" = "${builtins.toString ./.}/resources/hyprland.conf";
-    ags = "${builtins.toString ./.}/resources/ags";
+    "hypr/hyprland.conf" = "${builtins.toString ./.}/files/hyprland.conf";
+    ags = "${builtins.toString ./.}/files/ags";
     wallpaper = "${builtins.toString ./..}/wallpaper";
-    swaync = "${builtins.toString ./.}/resources/theme/swaync";
+    swaync = "${builtins.toString ./.}/files/theme/swaync";
   };
 
   xdg.configFile = {
-    "hypr/pyprland.toml".source = ./resources/pyprland.toml;
-    "wal/templates/colors-hyprland.conf".source = ./resources/theme/colors-hyprland.conf;
+    "hypr/pyprland.toml".source = ./files/pyprland.toml;
+    "wal/templates/colors-hyprland.conf".source = ./files/theme/colors-hyprland.conf;
 
-    "wal/templates/wezterm-wal.toml".source = ./resources/theme/wezterm-wal.toml;
-    "wezterm/wezterm.lua".source = ./resources/wezterm.lua;
+    "wal/templates/wezterm-wal.toml".source = ./files/theme/wezterm-wal.toml;
+    "wezterm/wezterm.lua".source = ./files/wezterm.lua;
   };
 
   home.file = {
-    ".local/bin/lidhandler".source = ./resources/lidhandler.sh;
+    ".local/bin/lidhandler".source = ./files/lidhandler.sh;
     ".local/bin/hyprwatchd".source = pkgs.writeScript "hyprwatchd" hyprwatchd;
     ".local/bin/dndwatchd".source = pkgs.writeScript "dndwatchd" dndwatchd;
   };

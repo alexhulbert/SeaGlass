@@ -55,7 +55,7 @@ in
       hyprwatchd = (generateService "hyprwatchd" "hyprwatchd");
       dndwatchd = (generateService "dndwatchd" "dndwatchd");
       xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
-      xdg-home-cleaner = (generateService "xdg-home-cleaner" ./resources/xdg-home-cleaner.sh);
+      xdg-home-cleaner = (generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh);
     };
   };
 

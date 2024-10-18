@@ -15,7 +15,6 @@ Etc:
 - hide notifications on plasmoid + vice versa
 - replace logout command + ldm shortcut
 - vim theme/tabs/commands
-- migrate resources to files
 - hyprchroma opacity issues
 - hyperlink color / background autorefresh firefox
 - plasma-hud

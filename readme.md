@@ -20,7 +20,7 @@ This is a set of declarative Linux configuration files and scripts designed to c
  Currently, this repository works well, but useful features such as the ones mentioned above are intermingled with various personal configuration changes. These configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features works:
 
  <h3>Color Scheme Engine</h3>
- The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a>, <a href="https://github.com/luisbocanegra/kde-material-you-colors">kde-material-you-colors</a>, and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon</a>. This fork attaches to a custom native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/resources/darkreader.xpi">user/resources/darkreader.xpi</a> for firefox and <a href="user/resources/darkreader-chrome.zip">user/resources/darkreader-chrome.zip</a> for Chrome. The associated native extension is available in <a href="user/resources/darkreader">user/resources/darkreader</a>. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>.
+ The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a>, <a href="https://github.com/luisbocanegra/kde-material-you-colors">kde-material-you-colors</a>, and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon</a>. This fork attaches to a custom native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/files/darkreader.xpi">user/files/darkreader.xpi</a> for firefox and <a href="user/files/darkreader-chrome.zip">user/files/darkreader-chrome.zip</a> for Chrome. The associated native extension is available in <a href="user/files/darkreader">user/files/darkreader</a>. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>.
 
 <h3>Global Transparency</h3>
 The OS-wide frosted glass effect is achieved with a combination of <a href="https://github.com/Luwx/Lightly">lightly-qt</a> and <a href="https://github.com/alexhulbert/hyprchroma">a custom Hyprland plugin</a>. This plugin applies a GLSL shader to each window which uses the chromakey algorithm to selectively apply transparency to the system background color and colors close to it. An older commit of this repository contains the necessary configuration to apply a similar effect in i3.
@@ -55,12 +55,12 @@ The following steps should be sufficient to apply the firefox customization to a
   "allowed_extensions": ["darkreader@alexhulbert.com"]
 }
 ```
-2. Put <a href="user/resources/darkreader">these files</a> a new folder called `/opt/darkreader-pywal`. This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
+2. Put <a href="user/files/darkreader">these files</a> a new folder called `/opt/darkreader-pywal`. This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
 3. Set the executable bit on `/opt/darkreader-pywal/index.js` by running `chmod +x /opt/darkreader-pywal/index.js` in a terminal
 4. Open firefox and navigate to `about:config` in the URL bar. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
 > At this point, you can skip steps 5-10 if you have your own userChrome/userContent files that you want to keep.
 5. Install pywalfox
-6. Download <a href="user/resources/theme/firefox/userContent.css">user/resources/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
+6. Download <a href="user/files/theme/firefox/userContent.css">user/files/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
 7. Symlink `~/.cache/wal/userContent.css` (create an empty file if it doesn't exist) to `~/.mozilla/Firefox/default/chrome/userContent.css`
 8. Put the following content in `~/.mozilla/Firefox/default/chrome/userChrome.css`:
 ```
@@ -69,8 +69,8 @@ The following steps should be sufficient to apply the firefox customization to a
 @import url('layout.css');
 ```
 9. Download <a href="https://github.com/eromatiya/blurredfox">this repo</a> and place the `blurredfox` folder in `~/.mozilla/Firefox/default/chrome`
-10. Download <a href="user/resources/theme/firefox/twoline.css">user/resources/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
-11. Download <a href="user/resources/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
+10. Download <a href="user/files/theme/firefox/twoline.css">user/files/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
+11. Download <a href="user/files/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
 12. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
 13. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
 
@@ -93,9 +93,9 @@ The fork also works on Chrome/Chromium/Brave/etc. The steps are slightly differe
   "allowed_origins": ["chrome-extension://gidgehhdgebooieidpcckaphjbfcghpe/"]
 }
 ```
-2. Put <a href="user/resources/darkreader">these files</a> a new folder called `/opt/darkreader-pywal` This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
+2. Put <a href="user/files/darkreader">these files</a> a new folder called `/opt/darkreader-pywal` This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
 3. Set the executable bit on `/opt/darkreader-pywal/index.js` by running `chmod +x /opt/darkreader-pywal/index.js` in a terminal
-4. Download <a href="user/resources/darkreader-chrome.zip">this modified version of the Darkreader addon</a> and unzip it into a folder anywhere on your computer
+4. Download <a href="user/files/darkreader-chrome.zip">this modified version of the Darkreader addon</a> and unzip it into a folder anywhere on your computer
 5. Open chrome and navigate to `chrome://extensions` in the URL bar. Enable "Developer mode" and click "Load unpacked"
 6. Select the directory you unzipped the contents of darkreader-chrome.zip into. You can safely delete the folder after doing this.
 7. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
@@ -115,13 +115,13 @@ To disable chromakey on fullscreen applications, add the following line to your 
 Sometimes, videos may be a bit washed out. To set a shortcut key to toggle the chromakey effect, add a line like the following to your `hyprland.conf`:
 ```bind = $mainMod, O, togglechromakey```
 
-To make the chromakey sync up with your pywal configuration, copy <a href="user/resources/theme/colors-hyprland.conf">colors-hyprland.conf</a> to `~/.config/wal/templates` and add the following line to your `hyprland.conf`:
+To make the chromakey sync up with your pywal configuration, copy <a href="user/files/theme/colors-hyprland.conf">colors-hyprland.conf</a> to `~/.config/wal/templates` and add the following line to your `hyprland.conf`:
 ```source = ~/.cache/wal/colors-hyprland.conf```
 
 Running KDE Applets and Services on Hyprland
 --------------------------------------------
 
-The KDE support in hyprland is achieved via a python-based daemon in <a href="user/resources/plasma-waybar.py">user/resources/plasma-waybar.py</a>. It depends on pyprland, so make sure you've installed that. This daemon should be started with hyprland and will automatically launch any KDE applets specified in `~/.config/hypr/plasmoids.json`. Check <a href="https://github.com/alexhulbert/SeaGlass/blob/41f4feb6c6464ff0a01f3120d92fd5f1f3a4b34e/user/waybar.nix#L9-L52">waybar.nix</a> for an example of how the plasmoids.json file should be formatted (make sure to convert it from nix to json). the `title` property must match the window title of the plasmoid and the `plasmoid` property must match its identifier, which can be found by running `ls /usr/share/plasma/plasmoids`. The `margin_right` property controls how far the applet is from the right edge of the screen.
+The KDE support in hyprland is achieved via a python-based daemon in <a href="user/files/plasma-waybar.py">user/files/plasma-waybar.py</a>. It depends on pyprland, so make sure you've installed that. This daemon should be started with hyprland and will automatically launch any KDE applets specified in `~/.config/hypr/plasmoids.json`. Check <a href="https://github.com/alexhulbert/SeaGlass/blob/41f4feb6c6464ff0a01f3120d92fd5f1f3a4b34e/user/waybar.nix#L9-L52">waybar.nix</a> for an example of how the plasmoids.json file should be formatted (make sure to convert it from nix to json). the `title` property must match the window title of the plasmoid and the `plasmoid` property must match its identifier, which can be found by running `ls /usr/share/plasma/plasmoids`. The `margin_right` property controls how far the applet is from the right edge of the screen.
 
 For each plasmoid added to the plasmoids.json file, three corresponding window rules must be added to your `hyprland.conf` file:
 ```
@@ -142,11 +142,11 @@ Theming Applications
 
 This repository also has a custom script that themes gtk and qt applications, as well as spotify and kde plasma.
  - If you're running nix home-manager, you can use <a href="user/plasma.nix">theme.nix</a> as a starting point to see how this is done.
- - The two main files you'll want to be concerned with are <a href="user/resources/theme/seaglass-theme.sh">seaglass-theme.sh</a> and <a href="user/resources/theme/seaglass-spicetify.py">seaglass-spicetify.py</a> (for spotify).
+ - The two main files you'll want to be concerned with are <a href="user/files/theme/seaglass-theme.sh">seaglass-theme.sh</a> and <a href="user/files/theme/seaglass-spicetify.py">seaglass-spicetify.py</a> (for spotify).
  - Regardless of whether you're using home-manager, you'll need to install at least `kde-material-you-colors`, `wpgtk`, `lightly-qt`, `python-haishoku`, and `python-pywal`
  - If you run into missing dependency issues, you can see the full list of packages I have installed on my laptop by looking at <a href="system/30-pkgs.sh">system/30-pkgs.sh</a>, <a href="system/31-pkgs-cli.sh">system/31-pkgs-cli.sh</a> and <a href="system/32-pkgs-gui.sh">system/32-pkgs-gui.sh</a>.
  - You'll also need to make sure the `seaglass-theme` and `seaglass-spicetify` commands are available in your path, and run `seaglass-theme` when your desktop environment loads.
- - To use the seaglass kde global theme, put <a href="user/resources/theme/kde-theme">the kde-theme folder</a> in `~/.local/share/plasma/look-and-feel` and rename it to "seaglass". This global theme also sets the cursor theme to Bibata, so you might need to install that in order for it to work.
+ - To use the seaglass kde global theme, put <a href="user/files/theme/kde-theme">the kde-theme folder</a> in `~/.local/share/plasma/look-and-feel` and rename it to "seaglass". This global theme also sets the cursor theme to Bibata, so you might need to install that in order for it to work.
 
 Fully Installing This Entire Repo
 ---------------------------------

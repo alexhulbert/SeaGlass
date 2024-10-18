@@ -17,7 +17,7 @@ let
   darkreaderManifest = {
     name = "darkreader";
     description = "custom darkreader native host for syncing with pywal";
-    path = "${./resources/darkreader}/index.js";
+    path = "${./files/darkreader}/index.js";
     type = "stdio";
   };
 in
@@ -30,10 +30,10 @@ in
       (darkreaderManifest // { allowed_extensions = [ "darkreader@alexhulbert.com" ]; });
   };
 
-  config.xdg.configFile."vimfx/config.js".source = ./resources/vimfx.js;
+  config.xdg.configFile."vimfx/config.js".source = ./files/vimfx.js;
   config.xdg.configFile."vimfx/frame.js".text = "";
 
-  config.xdg.configFile."wal/templates/userContent.css".source = ./resources/theme/firefox/userContent.css;
+  config.xdg.configFile."wal/templates/userContent.css".source = ./files/theme/firefox/userContent.css;
 
   config.programs.firefox = {
     enable = true;
@@ -65,7 +65,7 @@ in
       sha256 = "0mj47pv27dv2bk4hsdjl3c81kw6bz9kk7gkdz30l4z88ckj31j0j";
     };
 
-    ".mozilla/firefox/default/chrome/layout.css".source = ./resources/theme/firefox/twoline.css;
+    ".mozilla/firefox/default/chrome/layout.css".source = ./files/theme/firefox/twoline.css;
     ".mozilla/firefox/default/chrome/blur.css".source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/pavlukivan/dotfiles/6dfa74974cb25d9730a37bf4895a0f8421092b9e/firefox-transparency.css";
       sha256 = "0k1h14hpzm25sh7jrrxrgafrhld742gy0ybf74fz1n7s8w0fd1kn";

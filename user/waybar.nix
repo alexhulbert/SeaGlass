@@ -5,7 +5,7 @@
   ...
 }: let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
-  plasma-waybar = ./resources/plasma-waybar.py;
+  plasma-waybar = ./files/plasma-waybar.py;
   plasmoids = {
     eventcal = {
       title = "Calendar";
@@ -57,7 +57,7 @@ in {
       name = "waybar";
       cmds = ["waybar"];
     };
-    style = ./resources/theme/waybar.css;
+    style = ./files/theme/waybar.css;
     settings = [{
       layer = "top";
       spacing = 8;

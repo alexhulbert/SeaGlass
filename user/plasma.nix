@@ -17,8 +17,8 @@ in
   ];
 
   outOfStoreSymlinks.home = {
-    ".local/bin/seaglass-spicetify" = "${builtins.toString ./.}/resources/theme/seaglass-spicetify.py";
-    ".local/bin/seaglass-theme" = "${builtins.toString ./.}/resources/theme/seaglass-theme.sh";
+    ".local/bin/seaglass-spicetify" = "${builtins.toString ./.}/files/theme/seaglass-spicetify.py";
+    ".local/bin/seaglass-theme" = "${builtins.toString ./.}/files/theme/seaglass-theme.sh";
   };
 
   programs.plasma = {
@@ -82,7 +82,7 @@ in
   };
 
   # Plasma theme
-  outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/resources/theme/kde-theme";
+  outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/files/theme/kde-theme";
 
   # Icons
   xdg.dataFile."icons/Papirus-Colors".source = "${papirus-icons}/Papirus-Colors";

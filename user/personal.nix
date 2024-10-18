@@ -30,6 +30,6 @@ in {
   };
 
   home.file.".mozilla/firefox/default/chrome/layout.css".source =
-    lib.mkForce ./resources/theme/firefox/oneline.css;
+    lib.mkForce ./files/theme/firefox/oneline.css;
 
 }
