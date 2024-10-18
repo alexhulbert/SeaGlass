@@ -106,8 +106,8 @@ Background Transparency
 -----------------------
 
 Chromakey-based background transparency in hyprland can be achieved by running the following commands:
-- `hyprpm add https://github.com/alexhulbert/HyprChroma`
-- `hyprpm enable Hypr-Chroma`
+- `hyprpm add https://github.com/alexhulbert/Hyprchroma`
+- `hyprpm enable Hyprchroma`
 
 To disable chromakey on fullscreen applications, add the following line to your `hyprland.conf`:
 ```chromakey_enable = fullscreen:0```
