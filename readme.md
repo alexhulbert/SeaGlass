@@ -1,5 +1,8 @@
-SeaGlass
-========
+
+![Seaglass](https://github.com/user-attachments/assets/73b648ac-fc2d-476d-857f-8ed86da79c96)
+
+![Seaglass2_med](https://github.com/user-attachments/assets/1b25d378-4192-40f8-be32-119d32a715f3)
+
 
 What is this repository?
 ------------------------
