@@ -71,7 +71,7 @@ in
         };
         AdditionalOptions = {
           custom_apps = "marketplace|stats";
-          sidebar_config = 1;
+          sidebar_config = 0;
           home_config = 1;
           experimental_fesatures = 1;
         };
@@ -80,6 +80,8 @@ in
       "zoomus.conf".General.xwayland = false;
     };
   };
+
+  outOfStoreSymlinks.xdgConfig."spicetify/Themes/Ziro" = "/usr/share/spicetify-cli/Themes/Ziro";
 
   # Plasma theme
   outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/files/theme/kde-theme";

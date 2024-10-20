@@ -12,8 +12,8 @@ let
         dest = builtins.getAttr src symlinks;
       in
       ''
-        rm "${baseDir}/${src}" || true 2> /dev/null
-        touch "${dest}"
+        rm "${baseDir}/${src}" 2> /dev/null || true
+        touch "${dest}" 2> /dev/null || true
         ln -s "${dest}" "${baseDir}/${src}"
       ''
     ))
