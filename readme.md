@@ -51,7 +51,7 @@ The following steps should be sufficient to apply the firefox customization to a
   "name": "darkreader",
   "description": "custom darkreader native host for syncing with pywal",
   "path": "/opt/darkreader-pywal/index.js",
-  "type": "studio",
+  "type": "stdio",
   "allowed_extensions": ["darkreader@alexhulbert.com"]
 }
 ```
@@ -89,7 +89,7 @@ The fork also works on Chrome/Chromium/Brave/etc. The steps are slightly differe
   "name": "darkreader",
   "description": "custom darkreader native host for syncing with pywal",
   "path": "/opt/darkreader-pywal/index.js",
-  "type": "studio",
+  "type": "stdio",
   "allowed_origins": ["chrome-extension://gidgehhdgebooieidpcckaphjbfcghpe/"]
 }
 ```
