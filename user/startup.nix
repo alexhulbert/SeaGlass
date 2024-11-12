@@ -48,7 +48,6 @@ in
       polkit-kde-auth = (generateService "polkit-kde-auth" "/usr/lib/polkit-kde-authentication-agent-1");
       powerdevil = (generateService "powerdevil" "/usr/lib/org_kde_powerdevil");
       xdg-desktop-portal-hyprland = (generateService "xdg-desktop-portal-hyprland" "/usr/lib/xdg-desktop-portal-hyprland");
-      kde-connect = (generateService "kde-connect" "/usr/lib/kdeconnectd");
       kded = (generateService "kded" "kded6");
       pyprland = (generateService "pyprland" "pypr");
       swaync = (generateServiceWith "swaync" "swaync" { Unit.After = [ "seaglass-theme.service" ]; });

@@ -24,6 +24,7 @@ AddPackage pkgfile # a pacman .files metadata explorer
 AddPackage pulseaudio # A featureful, general-purpose sound server
 AddPackage python-pipx # Install and Run Python Applications in Isolated Environments
 AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wherever they are.
+AddPackage ntfs-3g # NTFS filesystem driver and utilities
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage jdk17-openjdk # OpenJDK Java 17 development kit
 AddPackage alsa-firmware # Firmware binaries for loader programs in alsa-tools and hotplug firmware loader

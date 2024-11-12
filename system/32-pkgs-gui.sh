@@ -65,7 +65,6 @@ AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based c
 AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
-AddPackage --foreign hyprpicker # A wlroots-compatible Wayland color picker that does not suck.
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume
 AddPackage --foreign aylurs-gtk-shell # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.

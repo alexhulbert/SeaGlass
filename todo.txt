@@ -1,5 +1,6 @@
 Issues:
 * wallpaper upscale
+* blank screen issue
 * dont refresh on external monitor
 . Plasma EventCalendar
 . camera
@@ -10,11 +11,13 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
+- battery screen on load
+- rustfmt vscode
 - switch to windows button
 - replace logout command + ldm shortcut
 - vim theme/tabs/commands
-- hyprchroma opacity issues
 - hyperlink color / background autorefresh firefox
-- plasma-hud
 - better symlink activation script
 - clean up xdg portal vars
+. hyprchroma opacity issues
+. plasma-hud
