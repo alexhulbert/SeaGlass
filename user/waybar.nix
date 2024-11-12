@@ -91,7 +91,7 @@ in {
         return-type = "json";
         exec-if = "which swaync-client";
         exec = "swaync-client -swb";
-        on-click = "sleep 0.1 && swaync-client -t -sw";
+        on-click = "sleep 0.1 && ${plasma-waybar} hide-all && swaync-client -t -sw";
       };
       pulseaudio = {
         format = "{icon}";

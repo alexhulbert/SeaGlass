@@ -113,6 +113,17 @@ async def toggle(plasmoid_name):
     else:
         await show(plasmoid_name)
 
+async def hide_all(except_plasmoid=None, monitor=None, windows=None):
+    if monitor is None:
+        monitor = await ipc.get_focused_monitor_props()
+    if windows is None:
+        windows = await ipc.hyprctl_json('clients', logger=None)
+    for other_plasmoid in config:
+        if other_plasmoid == except_plasmoid:
+            continue
+        if await is_visible(other_plasmoid, monitor, windows):
+            await hide(other_plasmoid)
+
 async def hide(plasmoid_name):
     cfg = config[plasmoid_name]
     monitor = await ipc.get_focused_monitor_props()
@@ -128,7 +139,6 @@ async def hide(plasmoid_name):
 async def show(plasmoid_name):
     cfg = config[plasmoid_name]
     monitor = await ipc.get_focused_monitor_props()
-    windows = await ipc.hyprctl_json('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
 
     title = build_title(cfg['title'])
@@ -136,11 +146,7 @@ async def show(plasmoid_name):
     x_pos = monitor['x'] + x_relative
     y_pos = monitor['y'] + monitor['reserved'][1] + GAP
 
-    for other_plasmoid in config:
-        if other_plasmoid == plasmoid_name:
-            continue
-        if await is_visible(other_plasmoid, monitor, windows):
-            await hide(other_plasmoid)
+    await hide_all(plasmoid_name, monitor)
 
     await ipc.hyprctl([
         'cursor:no_warps 1',
@@ -148,6 +154,10 @@ async def show(plasmoid_name):
         'input:float_switch_override_focus 0',
         'input:follow_mouse 2'
     ], 'keyword', logger=None)
+
+    if subprocess.run(['which', 'swaync-client'], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0:
+        subprocess.Popen(['swaync-client', '-cp'])
+
     await ipc.hyprctl([
         f'moveworkspacetomonitor special:scratch_{plasmoid_name} {monitor["name"]}',
         f'movetoworkspacesilent {workspace},title:{title}',
@@ -166,15 +176,20 @@ async def show(plasmoid_name):
         await show(plasmoid_name)
 
 async def main():
-    if len(sys.argv) == 3:
+    if len(sys.argv) > 1:
         command = sys.argv[1]
-        arg = sys.argv[2]
-        if command == 'show':
-            await show(arg)
-        elif command == 'hide':
-            await hide(arg)
-        elif command == 'toggle':
-            await toggle(arg)
+        if command == 'hide-all':
+            await hide_all()
+        else:
+            arg = sys.argv[2]
+            if command == 'show':
+                await show(arg)
+            elif command == 'hide':
+                await hide(arg)
+            elif command == 'toggle':
+                await toggle(arg)
+            else:
+                print(f'Unknown command: {command}')
     else:
         await daemon()
 
