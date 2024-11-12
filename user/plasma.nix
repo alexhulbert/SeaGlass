@@ -89,4 +89,35 @@ in
   # Icons
   xdg.dataFile."icons/Papirus-Colors".source = "${papirus-icons}/Papirus-Colors";
   xdg.dataFile."icons/Papirus-Colors-Dark".source = "${papirus-icons}/Papirus-Colors-Dark";
+
+  # Fonts
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      sansSerif = [
+        "SF Pro Display"
+        "SFNS Display"
+        "Source Han Sans"
+        "Source Han Sans SC"
+        "Source Han Sans TC"
+        "Source Han Sans JP"
+        "Source Han Sans K"
+      ];
+      monospace = [
+        "FiraCode Nerd Font"
+        "Source Han Mono"
+      ];
+      serif = [
+        "New York"
+        "Source Han Serif"
+        "Source Han Serif SC"
+        "Source Han Serif TC"
+        "Source Han Serif JP"
+        "Source Han Serif K"
+      ];
+      emoji = [
+        "Apple Color Emoji"
+      ];
+    };
+  };
 }

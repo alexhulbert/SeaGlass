@@ -33,13 +33,11 @@ in {
         shfmt
         nodejs-18_x
         marksman
-        nodePackages.pyright
         nodePackages.prettier
         nodePackages.stylelint
         nodePackages.jsonlint
         nodePackages.typescript-language-server
         nodePackages.vscode-langservers-extracted
-        # nodePackages.yarn
         nodePackages.bash-language-server
         nodePackages.node2nix
       ];

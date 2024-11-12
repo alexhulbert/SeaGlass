@@ -1,5 +1,3 @@
-AddPackage ttf-firacode-nerd # Patched font Fira (Fura) Code from nerd fonts library
-AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly from Apple official source
 AddPackage firefox # Standalone web browser from mozilla.org
 AddPackage nvidia # NVIDIA drivers for linux
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
@@ -18,6 +16,13 @@ AddPackage --foreign beeper-latest-bin # all your chats in one app
 AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
 AddPackage --foreign 1password # Password manager and secure wallet
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
+
+# fonts
+AddPackage ttf-firacode-nerd # Patched font Fira (Fura) Code from nerd fonts library
+AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly from Apple official source
+AddPackage --foreign ttf-apple-emoji # Apple Color Emoji is a color typeface used by iOS and macOS to display emoji
+AddPackage adobe-source-han-sans-otc-fonts # Adobe Source Han Sans - Pan-CJK OpenType/CFF Collection fonts
+AddPackage adobe-source-han-serif-otc-fonts # Adobe Source Han Serif - Pan-CJK OpenType/CFF Collection fonts
 
 # spotify
 AddPackage --foreign spicetify-cli # Command-line tool to customize Spotify client
