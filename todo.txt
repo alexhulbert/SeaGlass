@@ -1,23 +1,22 @@
 Issues:
 * wallpaper upscale
-* blank screen issue
 * dont refresh on external monitor
+. xwayland dpi fix
 . Plasma EventCalendar
 . camera
 
 Install Fixes:
-- firefox profile
 - autoinstall firefox/chrome extensions
 - publish copilot2ctrl with pkgbuild
 
 Etc:
-- battery screen on load
-- rustfmt vscode
-- switch to windows button
+? lockscreen issues
+- replace reload.sh with hypridle
+- sidebar monitor
+- remove wallpaper from repo
 - replace logout command + ldm shortcut
 - vim theme/tabs/commands
 - hyperlink color / background autorefresh firefox
-- better symlink activation script
 - clean up xdg portal vars
-. hyprchroma opacity issues
-. plasma-hud
+- custom color schemes
+- plasma-hud

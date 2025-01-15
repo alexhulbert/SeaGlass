@@ -1,0 +1,140 @@
+NoteDecorations {{
+  preview-fg: {foreground};
+  preview-bg: {background};
+  highlight-fg: {color5};
+  highlight-bg: {background};
+  encryption-icon: {color7};
+  encryption-icon-active: {foreground};
+  toolbar-icon: {color7};
+  toolbar-icon-active: {foreground};
+  status-icon: {color7};
+  status-icon-active: {color6};
+  border-color: {background};
+}}
+
+QTextEdit#html,
+QPlainTextEdit#plain {{
+  color: {color8};
+  background-color: {background};
+}}
+
+QTextEdit:active#html,
+QPlainTextEdit:active#plain {{
+  color: {foreground};
+}}
+
+QTextEdit[readOnly="true"]#html,
+QPlainTextEdit[readOnly="true"]#plain {{
+  color: {color8};
+}}
+
+QFrame#html,
+QFrame#plain {{
+  font-size: 14;
+  border: none;
+}}
+
+AbstractText,
+QSizeGrip,
+Vim,
+QFrame#hotbar-frame,
+QFrame#hotbar-spacer {{
+  color: {color7};
+  background-color: {background};
+}}
+
+QLabel#topbar-title,
+QPushButton#topbar-status,
+QPushButton#topbar-close {{
+  color: {color7};
+  background-color: {background};
+  border: none;
+}}
+
+QLabel:active#topbar-title,
+QPushButton:active#topbar-close {{
+  color: {foreground};
+}}
+
+QPushButton:hover#topbar-close {{
+  color: {color6};
+}}
+
+QFrame#popup-frame,
+QFrame#msgbar-frame,
+QLabel#msgbar-folder,
+QLabel#msgbar-pixels,
+QLabel#msgbar-popup-left,
+QLabel#msgbar-popup-right,
+QLabel#msgbar-words {{
+  color: {color7};
+  background-color: {background};
+}}
+
+QFrame:active#msgbar-frame,
+QLabel:active#msgbar-folder,
+QLabel:active#msgbar-pixels,
+QLabel:active#msgbar-popup-left,
+QLabel:active#msgbar-popup-right,
+QLabel:active#msgbar-words {{
+  color: {foreground};
+}}
+
+QFrame#toolbar-frame,
+QLabel#toolbar-spacer,
+QLabel#toolbar-separator {{
+  color: {background};
+  background-color: {background};
+  border: none;
+}}
+
+QPushButton:hover#toolbar-icon {{
+  background-color: {background};
+}}
+
+QPushButton#toolbar-icon,
+QPushButton:pressed#toolbar-icon {{
+  background-color: {background};
+}}
+
+QSizeGrip:hover {{
+  background-color: {color6};
+}}
+
+QScrollBar {{
+  background: {background};
+}}
+
+QScrollBar::handle {{
+  background-color: {color7};
+}}
+
+QWidget#lockscreen {{
+  background-color: {background};
+}}
+
+QWidget#lockscreen-frame {{
+  background-color: {background};
+}}
+
+QLabel#lockscreen-label {{
+  color: {color8};
+}}
+
+QLabel:active#lockscreen-label {{
+  color: {foreground};
+}}
+
+QLineEdit#lockscreen-input {{
+  color: {color8};
+  background-color: {color7};
+}}
+
+QLineEdit:active#lockscreen-input {{
+  color: {foreground};
+}}
+
+QLineEdit[error="true"]#lockscreen-input {{
+  color: {color1};
+  background-color: {color9};
+}}

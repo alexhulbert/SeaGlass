@@ -23,6 +23,7 @@ in
     ./vim
     ./personal.nix
     ./pkgs/symlink.nix
+    ./pkgs/mutable-config.nix
     nix-index-database.hmModules.nix-index
   ];
 

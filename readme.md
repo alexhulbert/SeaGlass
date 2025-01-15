@@ -179,4 +179,3 @@ As stated above, this repository contains my personal dotfiles, including everyt
 - __caps.hwdb file in `system/21-gui.sh`__: This remaps the caps lock key to switch back and forth between the last visited workspace
 - __copilot key remapping lines in `system/21-gui.sh`__: This remaps the "Copilot Key" on windows laptops to right control
 - __localtime symlink in `system/20-base.sh`__: If you don't live in the EST time zone, this should be changed
-- __bootloader/initramfs configuration in `system/20-base.sh`__: My grub configuration is specific to my laptop and filesystem type

@@ -18,24 +18,12 @@ in
       "${config.xdg.cacheHome}/wal/ulauncher.css";
   };
 
-  xdg.configFile = {
-    "ulauncher/settings.json".text = builtins.toJSON {
-      "arrow_key_aliases" = "hjkl";
-      "blacklisted_desktop_dirs" = lib.concatStringsSep ":" [
-        "/usr/share/locale"
-        "/usr/share/app-install"
-        "/usr/share/kservices5"
-        "/usr/share/fk5"
-        "/usr/share/kservicetypes5"
-        "/usr/share/applications/screensavers"
-        "/usr/share/kde4"
-        "/usr/share/mimelnk"
-      ];
+  mutableConfig.files = {
+    "${config.xdg.configHome}/ulauncher/settings.json" = {
       "clear_previous_query" = true;
       "disable_desktop_filters" = false;
       "enable_application_mode" = true;
       "grab_mouse_pointer" = true;
-      "jump_keys" = "1234567890abcdefghijklmnopqrstuvwxyz";
       "max_recent_apps" = 0;
       "raise_if_started" = false;
       "render_on_screen" = "mouse-pointer-monitor";
@@ -44,7 +32,9 @@ in
       "close_on_focus_out" = false;
       "theme_name" = "Pywal-Ulauncher-Theme";
     };
+  };
 
+  xdg.configFile = {
     "wal/templates/ulauncher.css".source =
       "${ulauncher-pywal-theme}/pywal-ulauncher-themplate.css";
     "ulauncher/user-themes/pywal-ulauncher-theme/manifest.json".source =

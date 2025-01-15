@@ -27,6 +27,7 @@ let
         monitoradded*) lidhandler ;;
         monitorremoved*) lidhandler ;;
         configReloaded*) lidhandler ;;
+        # openwindow*) echo "$*" >> /home/alex/windows.log
       esac
     }
     socat -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do handle "$line"; done
@@ -35,6 +36,7 @@ in {
 
   outOfStoreSymlinks.xdgConfig = {
     "hypr/hyprland.conf" = "${builtins.toString ./.}/files/hyprland.conf";
+    "hypr/hyprlock.conf" = "${builtins.toString ./.}/files/hyprlock.conf";
     ags = "${builtins.toString ./.}/files/ags";
     wallpaper = "${builtins.toString ./..}/wallpaper";
     swaync = "${builtins.toString ./.}/files/theme/swaync";
@@ -52,5 +54,18 @@ in {
     ".local/bin/lidhandler".source = ./files/lidhandler.sh;
     ".local/bin/hyprwatchd".source = pkgs.writeScript "hyprwatchd" hyprwatchd;
     ".local/bin/dndwatchd".source = pkgs.writeScript "dndwatchd" dndwatchd;
+  };
+
+  mutableConfig.files = {
+    "${config.xdg.configHome}/primenote/settings.json" = {
+      "profile default" = {
+        width = 300;
+        height = 210;
+        zoom = 5;
+        mode = "html";
+        style = "toolbar.css";
+        palette = "wal.css";
+      };
+    };
   };
 }

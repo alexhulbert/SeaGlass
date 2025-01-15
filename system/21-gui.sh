@@ -21,3 +21,6 @@ CopyFileTo /spotify.desktop /usr/share/applications/spotify.desktop
 
 # hide notifications during screenshare
 CopyFileTo /hyprland-portals.conf /usr/share/xdg-desktop-portal/hyprland-portals.conf
+
+# primenote theme
+CreateLink /usr/lib/python3.12/site-packages/primenote/ui/palettes/wal.css $HOME/.cache/wal/primenote.css

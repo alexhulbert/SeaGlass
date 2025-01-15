@@ -1,5 +1,5 @@
 AddPackage firefox # Standalone web browser from mozilla.org
-AddPackage nvidia # NVIDIA drivers for linux
+AddPackage nvidia-dkms # NVIDIA kernel modules - module sources
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
 AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
 AddPackage filelight # View disk usage information
@@ -20,7 +20,7 @@ AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 # fonts
 AddPackage ttf-firacode-nerd # Patched font Fira (Fura) Code from nerd fonts library
 AddPackage --foreign apple-fonts # Apple San Francisco, New York fonts, directly from Apple official source
-AddPackage --foreign ttf-apple-emoji # Apple Color Emoji is a color typeface used by iOS and macOS to display emoji
+AddPackage noto-fonts-emoji # Google Noto emoji fonts
 AddPackage adobe-source-han-sans-otc-fonts # Adobe Source Han Sans - Pan-CJK OpenType/CFF Collection fonts
 AddPackage adobe-source-han-serif-otc-fonts # Adobe Source Han Serif - Pan-CJK OpenType/CFF Collection fonts
 
@@ -45,7 +45,9 @@ AddPackage plasma-meta # Meta package to install KDE Plasma
 AddPackage dolphin # KDE File Manager
 AddPackage kdegraphics-thumbnailers # Thumbnailers for various graphics file formats
 AddPackage gwenview # A fast and easy to use image viewer
+AddPackage kate # Advanced text editor
 AddPackage power-profiles-daemon # Makes power profiles handling available over D-Bus
+AddPackage --foreign primenote-git # Fanciest sticky note-taking application
 
 # theming
 AddPackage python-pywal # Generate and change colorschemes on the fly
@@ -61,6 +63,7 @@ AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox br
 # wayland / hyprland specific
 AddPackage hyprland # a highly customizable dynamic tiling Wayland compositor
 AddPackage hyprwayland-scanner # A Hyprland implementation of wayland-scanner, in and for C++
+AddPackage hyprlock # hyprland’s GPU-accelerated screen locking utility
 AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
 AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland

@@ -61,6 +61,11 @@ in {
       "diffEditor.codeLens" = true;
 
       "terminal.integrated.commandsToSkipShell" = [ "-workbench.action.terminal.goToRecentDirectory" ];
+      "rust-analyzer.check.command" = "clippy";
+      "terminal.integrated.env.linux" = {
+        "EDITOR" = "code --wait";
+        "VISUAL" = "code --wait";
+      };
     };
     keybindings = [
       {
@@ -99,34 +104,16 @@ in {
     electronOptions = ''
       --enable-features=UseOzonePlatform
       --ozone-platform=wayland
+      --ozone-platform-hint=auto
     '';
   in {
     "code-flags.conf".text = electronOptions;
     "electron-flags.conf".text = electronOptions;
     "electron12-flags.conf".text = electronOptions;
+    "electron32-flags.conf".text = electronOptions;
   };
 
-  # make settings.json mutable
-  config.home = let
-    configFilePath = "${config.xdg.configHome}/Code/User/settings.json";
-    userSettings = config.programs.vscode.userSettings;
-    jsonFormat = pkgs.formats.json {};
-  in {
-    file."${configFilePath}".enable = lib.mkForce false;
-    activation.injectVscodeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      tmp="$(mktemp)"
-      touch "${configFilePath}"
-      if [[ -v DRY_RUN ]]; then
-        echo tmp="\$(mktemp)"
-        echo ${pkgs.jq}/bin/jq -s "'reduce .[] as \$x ({}; . * \$x)'" "${
-          jsonFormat.generate "vscode-user-settings" userSettings
-        }" "${configFilePath}" ">" "$tmp"
-      else
-        ${pkgs.jq}/bin/jq -s 'reduce .[] as $x ({}; . * $x)' "${
-          jsonFormat.generate "vscode-user-settings" userSettings
-        }" "${configFilePath}" > "$tmp"
-      fi
-      $DRY_RUN_CMD mv "$tmp" "${configFilePath}"
-    '';
+  config.mutableConfig.files = {
+    "${config.xdg.configHome}/Code/User/settings.json" = config.programs.vscode.userSettings;
   };
 }

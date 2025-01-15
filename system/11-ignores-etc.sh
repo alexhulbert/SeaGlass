@@ -20,6 +20,7 @@ IgnorePath '/etc/skel/.bashrc'
 IgnorePath '/etc/*-'
 IgnorePath '/etc/cni/net.d'
 IgnorePath '/etc/hostname'
+IgnorePath '/etc/containers/*'
 
 IgnorePath '/etc/.updated'
 IgnorePath '/var/.updated'

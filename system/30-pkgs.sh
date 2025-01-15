@@ -2,11 +2,11 @@
 
 AddPackage base # Minimal package set to define a basic Arch Linux installation
 AddPackage base-devel # Basic tools to build Arch Linux packages
+AddPackage dosfstools # DOS filesystem utilities
 AddPackage intel-ucode # Microcode update files for Intel CPUs
+AddPackage clang # C language family frontend for LLVM
 AddPackage efibootmgr # Linux user-space application to modify the EFI Boot Manager
 AddPackage linux-headers # Headers and scripts for building modules for the Linux kernel
-AddPackage grub # GNU GRand Unified Bootloader (2)
-AddPackage grub-btrfs # Include btrfs snapshots in GRUB boot options
 AddPackage os-prober # Utility to detect other OSes on a set of drives
 AddPackage btrfs-progs # Btrfs filesystem utilities
 AddPackage linux # The Linux kernel and modules
@@ -32,7 +32,7 @@ AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage interception-tools # A minimal composable infrastructure on top of libudev and libevdev
 AddPackage wtype # xdotool type for wayland
 AddPackage kdialog # A utility for displaying dialog boxes from shell scripts
-AddPackage --foreign python-fuzzywuzzy # Fuzzy string matching like a boss
+AddPackage --foreign python-thefuzz # Fuzzy string matching like a boss
 
 # latex
 AddPackage texlive-fontsextra # TeX Live - Additional fonts

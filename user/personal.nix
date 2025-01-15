@@ -29,7 +29,8 @@ in {
     videos = "${config. home.homeDirectory}/files/media";
   };
 
-  home.file.".mozilla/firefox/default/chrome/layout.css".source =
-    lib.mkForce ./files/theme/firefox/oneline.css;
+  home.file = {
+    ".mozilla/firefox/default/chrome/oneline.css".source = ./files/theme/firefox/oneline.css;
+  };
 
 }

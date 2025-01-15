@@ -1,2 +1,0 @@
-#!/bin/bash
-QT_QPA_PLATFORMTHEME=gtk3 /usr/bin/hyprland-share-picker $@

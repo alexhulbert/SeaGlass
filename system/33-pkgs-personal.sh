@@ -11,4 +11,16 @@ AddPackage --foreign moonlight-qt # GameStream client for PCs (Windows, Mac, and
 AddPackage --foreign fx_cast-bin # Implementation of the Google Cast Chrome Sender SDK within Firefox
 AddPackage --foreign flashprint # Slicer for the FlashForge 3D printers.
 AddPackage --foreign platformio # A cross-platform code builder and library manager
+AddPackage openscad # The programmers solid 3D CAD modeller
+
+# for work
+AddPackage --foreign yocto-nanbield-meta # Yocto Nanbield project build dependencies
+AddPackage cargo-nextest # A next-generation test runner for Rust.
+AddPackage fuse-overlayfs # FUSE implementation of overlayfs
+AddPackage gocryptfs # Encrypted overlay filesystem written in Go.
+AddPackage podman # Tool and library for running OCI-based containers in pods
+AddPackage musl # Lightweight implementation of C standard library
+AddPackage repo # The Multiple Git Repository Tool from the Android Open Source Project
+IgnorePath '/etc/fuse.conf'
+
 CopyFileTo /FlashPrint5.desktop /usr/share/applications/FlashPrint5.desktop

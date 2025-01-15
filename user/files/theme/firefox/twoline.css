@@ -1,26 +1,32 @@
-:root .tabbrowser-tab[fadein]:not([pinned]) {
-  max-width: 225px !important;
-  max-height: 52px !important;
+#navigator-toolbox, #tabbrowser-tabs {
+  border: none !important;
 }
 
-.tab-background {
-  margin: 0 !important;
+#nav-bar {
+  background: transparent !important;
 }
 
-.tab-background[selected] {
-  outline: 1px solid var(--tab-selected-textcolor);
-  outline-offset: -1px;
+#TabsToolbar {
+  padding-top: 5px !important;
+  padding-bottom: 3.5px !important;
+  padding-left: 10px !important;
+  transition: margin-bottom 150ms ease !important;
 }
 
-.urlbarView {
-  width: 100% !important;
-  margin-top: -2px;
-  margin-inline: 0 !important;
-  border-radius: 0 0 4px 4px;
-  padding: 10px;
-  background: var(--newtab-background-color) !important;
+.tab-background[selected], .tab-background[multiselected] {
+  background-color: var(--urlbarView-highlight-background) !important;
+  opacity: 0.25;
 }
 
-.titlebar-spacer, .titlebar-buttonbox-container {
-  display: none;
+.tabbrowser-tab:hover .tab-background:not([selected]):not([multiselected]) {
+  background-color: var(--urlbarView-highlight-background) !important;
+  opacity: 0.5;
+}
+
+#firefox-view-button {
+  margin-left: 8px !important;
+}
+
+.titlebar-spacer[type="post-tabs"], .titlebar-buttonbox-container {
+  display: none !important;
 }

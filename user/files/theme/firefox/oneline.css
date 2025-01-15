@@ -1,80 +1,14 @@
-:root .tabbrowser-tab[fadein]:not([pinned]) {
-  max-width: 225px !important;
-}
-
-#tabbrowser-tabs {
-  margin-left: 8px !important;
-}
-
-#tabbrowser-tabs:not([noshadowfortests]) .tab-background:is([selected], [multiselected]) {
-  box-shadow: none !important;
-}
-
-.tabbrowser-tab.identity-color-yellow {
-  margin-left: 4px !important;
-  margin-right: 4px !important;
-  outline: 2px solid color-mix(in srgb, var(--tab-selected-textcolor), transparent 50%) !important;
-  outline-offset: -2px;
-}
-
-.tabbrowser-tab[usercontextid] > .tab-stack > .tab-background > .tab-context-line {
-  background-color: transparent !important;
-}
-
-.identity-color-yellow.tabbrowser-tab + .identity-color-yellow.tabbrowser-tab {
-  margin-left: 0px !important;
+#navigator-toolbox, #TabsToolbar, #nav-bar {
+  height: 52.5px !important;
+  min-height: 52.5px !important;
+  max-height: 52.5px !important;
 }
 
 #navigator-toolbox {
-  height: 52px;
-  display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse !important;
 }
 
-#titlebar {
-  transition: margin-top 150ms ease;
-}
-
-#navigator-toolbox:focus-within #titlebar {
-  margin-top: -48px;
-}
-
-#nav-bar {
-  transition: opacity 100ms ease;
-  opacity: 0;
-}
-
-#navigator-toolbox:focus-within #nav-bar {
-  opacity: 1;
-}
-
-.tab-background {
-  margin-block: 0 !important;
-  background: transparent !important;
-  outline: none !important;
-}
-
-.urlbarView {
-  width: 100% !important;
-  margin-top: -2px;
-  margin-inline: 0 !important;
-  border-radius: 0 0 4px 4px;
-  padding: 10px;
-  background: var(--newtab-background-color) !important;
-}
-
-.titlebar-spacer, .titlebar-buttonbox-container {
-  display: none;
-}
-
-.tabbrowser-tab[visuallyselected] {
-  background-color: var(--button-active-bgcolor) !important;
-}
-
-.urlbar-input-container {
-  height: 100% !important;
-}
-
-.urlbar-input {
-  height: 2em !important;
+#navigator-toolbox:focus-within #TabsToolbar {
+  margin-bottom: -52.5px !important;
+  transition: margin-bottom 0s !important;
 }

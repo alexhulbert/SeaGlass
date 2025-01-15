@@ -13,7 +13,8 @@
   padding-right: 43px;
 }
 
-#display-switcher widget:nth-child(3) > .icon {
+#display-switcher widget:nth-child(3) > .icon,
+#power-menu widget:nth-child(4) > .icon {
   min-width: 180px;
   padding-right: 20px;
 }
@@ -21,6 +22,11 @@
 #display-switcher widget:nth-child(4) > .icon {
   min-width: 165px;
   padding-right: 35px;
+}
+
+box:nth-child(2) > widget:nth-child(2) > .icon {
+  min-width: 175px;
+  padding-right: 25px;
 }
 
 box:nth-child(2) > widget:nth-child(1) > .icon {

@@ -26,12 +26,6 @@ SystemdEnable tailscale /usr/lib/systemd/system/tailscaled.service
 SystemdEnable openssh /usr/lib/systemd/system/sshd.service
 SystemdEnable pcsclite /usr/lib/systemd/system/pcscd.socket
 
-# for copilot key remapping
-SystemdEnable interception-tools /usr/lib/systemd/system/udevmon.service
-CopyFileTo /udevmon.yaml /etc/interception/udevmon.yaml
-CopyFileTo /copilot.hwdb /etc/udev/hwdb.d/20-copilot.hwdb
-CopyFileTo /copilot2ctrl /usr/local/bin/copilot2ctrl 755
-
 # refresh display configuration on wake from suspend
 CopyFileTo /system-sleep.sh /usr/lib/systemd/system-sleep/reload.sh 755
 
@@ -63,7 +57,13 @@ CopyFileTo /logind.conf /etc/systemd/logind.conf
 
 # bootloader/initramfs configuration
 CopyFileTo /mkinitcpio.conf /etc/mkinitcpio.conf
-CopyFileTo /grub.cfg /etc/default/grub
-SystemdEnable grub-btrfs /usr/lib/systemd/system/grub-btrfsd.service
 
+# env vars
 CopyFileTo /environment /etc/environment
+
+# set MAKEFLAGS to utilize all cores
+make_pkg_conf=$(GetPackageOriginalFile pacman '/etc/makepkg.conf')
+echo MAKEFLAGS=\"-j$(nproc)\" >> $make_pkg_conf
+
+pacman_conf=$(GetPackageOriginalFile pacman '/etc/pacman.conf')
+echo 'IgnorePkg = hyprland aquamarine linux linux-headers' >> pacman_conf

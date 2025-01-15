@@ -2,11 +2,10 @@
 IgnorePath '/boot/vmlinuz-*'
 IgnorePath '/boot/lost+found'
 IgnorePath '/boot/loader/*'
-IgnorePath '/etc/mkinitcpio.d/linux.preset'
+IgnorePath '/etc/mkinitcpio.d/*'
 IgnorePath '/usr/lib/modules/*'
 IgnorePath '/boot/*.img'
 IgnorePath '/boot/EFI/*'
-IgnorePath '/boot/grub/*'
 IgnorePath '/boot/System Volume Information'
 
 # pacman

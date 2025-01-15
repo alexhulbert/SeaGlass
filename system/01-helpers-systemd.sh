@@ -157,4 +157,3 @@ EOF
 
     SystemdEnable --from-file "$autounit"
 }
-

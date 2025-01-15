@@ -40,7 +40,7 @@ in
       After = [ "user-path-import.service" ];
     };
     services = {
-      ags = (generateService "ags" "ags");
+      ags = (generateService "ags" "agsv1");
       swayosd = (generateService "swayosd" "swayosd-server");
       ulauncher = (generateServiceWith "ulauncher" "ulauncher --hide-window --no-window --no-window-shadow" { Unit.After = [ "seaglass-theme.service" ]; });
       plasma-waybar = (generateServiceWith "plasma-waybar" "plasma-waybar" { Unit.After = [ "swaync.service" ]; });
@@ -55,6 +55,7 @@ in
       dndwatchd = (generateService "dndwatchd" "dndwatchd");
       xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
       xdg-home-cleaner = (generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh);
+      # "1password" = (generateService "1password" "1password --disable-gpu --silent --ozone-platform-hint=auto");
     };
   };
 

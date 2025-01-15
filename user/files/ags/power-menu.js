@@ -26,12 +26,27 @@ const PowerMenu = ButtonGroup(
       icon: [0xf0904]
     },
     {
+      label: 'Switch to Windows',
+      action: () => {
+        Utils.exec('sudo efibootmgr --bootnext 0001')
+        Utils.exec('sudo reboot')
+      },
+      icon: [0xf05b3]
+    },
+    {
       label: 'Hibernate',
       action: () => {
         Utils.exec('systemctl hibernate')
         PowerMenu.selectIcon(-1)
       },
       icon: [0xf0901]
+    },
+    {
+      label: 'Change Theme',
+      action: () => {
+        Utils.exec('seaglass-theme')
+      },
+      icon: [0xf0e09]
     },
     {
       label: 'Lock',
@@ -48,7 +63,7 @@ const PowerMenu = ButtonGroup(
       },
       icon: [0xf0450]
     }
-  ], 3
+  ], 4
 )
 
 export default PowerMenu

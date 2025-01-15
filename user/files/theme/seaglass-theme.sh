@@ -16,7 +16,7 @@ else
   if ! pgrep -x "swww-daemon" > /dev/null; then
     export SWWW_TRANSITION_STEP=255
   fi
-  swww init --no-cache
+  swww-daemon --no-cache &
   swww img "$wallpaper"
 fi
 

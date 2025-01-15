@@ -78,6 +78,7 @@ in
         urestart = "systemctl restart --user";
         usystatus = "systemctl status --user";
         ulog = "journalctl --user -xeu";
+        relock = "hyprctl --instance 0 keyword \"misc:allow_session_lock_restore 1\"; hyprctl --instance 0 keyword \"exec hyprlock\"";
 
         e = "vim";
         se = "svim";

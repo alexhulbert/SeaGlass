@@ -90,6 +90,8 @@ in
   xdg.dataFile."icons/Papirus-Colors".source = "${papirus-icons}/Papirus-Colors";
   xdg.dataFile."icons/Papirus-Colors-Dark".source = "${papirus-icons}/Papirus-Colors-Dark";
 
+  xdg.configFile."wal/templates/primenote.css".source = ./files/theme/primenote.css;
+
   # Fonts
   fonts.fontconfig = {
     enable = true;
@@ -115,9 +117,9 @@ in
         "Source Han Serif JP"
         "Source Han Serif K"
       ];
-      emoji = [
+      /*emoji = [
         "Apple Color Emoji"
-      ];
+      ];*/
     };
   };
 }

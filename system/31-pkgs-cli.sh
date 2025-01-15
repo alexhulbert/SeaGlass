@@ -6,12 +6,8 @@ AddPackage docker # Pack, ship and run any application as a lightweight containe
 AddPackage rsync # A fast and versatile file copying tool for remote and local files
 AddPackage snapper # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
 
-AddPackage --foreign platformio # A cross-platform code builder and library manager
-AddPackage --foreign shellgpt-git # A command-line productivity tool powered by OpenAI's ChatGPT (GPT-3.5)
-AddPackage --foreign litellm # Call all LLM APIs using the OpenAI format
-
-
 # cli tools
+AddPackage aichat # All-in-one AI CLI tool featuring Chat-REPL, Shell Assistant, RAG, AI tools & agents
 AddPackage android-tools # Android platform tools
 AddPackage --foreign android-apktool-bin # A tool for reverse engineering Android .apk files
 AddPackage --foreign android-sdk-cmdline-tools-latest # Android SDK Command-line Tools (latest)
@@ -21,6 +17,7 @@ AddPackage bc # An arbitrary precision calculator language
 AddPackage eza # A modern replacement for ls (community fork of exa)
 AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
+AddPackage jujutsu # Git-compatible VCS that is both simple and powerful
 AddPackage zoxide # A smarter cd command for your terminal
 AddPackage openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant.
 AddPackage httpie # human-friendly CLI HTTP client for the API era
