@@ -26,6 +26,11 @@ SystemdEnable tailscale /usr/lib/systemd/system/tailscaled.service
 SystemdEnable openssh /usr/lib/systemd/system/sshd.service
 SystemdEnable pcsclite /usr/lib/systemd/system/pcscd.socket
 
+# nvidia sleep/hibernate support
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-hibernate.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-resume.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-suspend.service
+
 # refresh display configuration on wake from suspend
 CopyFileTo /system-sleep.sh /usr/lib/systemd/system-sleep/reload.sh 755
 
