@@ -66,4 +66,4 @@ make_pkg_conf=$(GetPackageOriginalFile pacman '/etc/makepkg.conf')
 echo MAKEFLAGS=\"-j$(nproc)\" >> $make_pkg_conf
 
 pacman_conf=$(GetPackageOriginalFile pacman '/etc/pacman.conf')
-echo 'IgnorePkg = hyprland aquamarine linux linux-headers' >> pacman_conf
+sed -i 's/^#IgnorePkg.*$/IgnorePkg = hyprland aquamarine linux linux-headers hyprutils hyprutils-git/' "$pacman_conf"

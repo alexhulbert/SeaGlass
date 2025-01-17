@@ -50,10 +50,8 @@ AddPackage power-profiles-daemon # Makes power profiles handling available over 
 AddPackage --foreign primenote-git # Fanciest sticky note-taking application
 
 # theming
-AddPackage python-pywal # Generate and change colorschemes on the fly
 AddPackage papirus-icon-theme # Papirus icon theme
-AddPackage --foreign lightly-kf5-git # A modern style for qt applications.
-AddPackage --foreign lightly-kf6-git # A modern style for qt applications. (qt6 branch)
+AddPackage --foreign darkly-bin # A modern style for qt applications.
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.
 AddPackage --foreign kde-material-you-colors # A script to generate Material You color schemes for KDE Plasma.
@@ -70,7 +68,6 @@ AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume
-AddPackage --foreign aylurs-gtk-shell # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage --foreign wdisplays # GUI display configurator for wlroots compositors
 AddPackage swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs
 

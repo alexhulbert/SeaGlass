@@ -1,5 +1,6 @@
 #navigator-toolbox, #tabbrowser-tabs {
   border: none !important;
+  background-color: transparent !important;
 }
 
 #nav-bar {

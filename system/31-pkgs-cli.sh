@@ -7,7 +7,7 @@ AddPackage rsync # A fast and versatile file copying tool for remote and local f
 AddPackage snapper # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
 
 # cli tools
-AddPackage aichat # All-in-one AI CLI tool featuring Chat-REPL, Shell Assistant, RAG, AI tools & agents
+AddPackage --foreign aichat # All-in-one AI CLI tool featuring Chat-REPL, Shell Assistant, RAG, AI tools & agents
 AddPackage android-tools # Android platform tools
 AddPackage --foreign android-apktool-bin # A tool for reverse engineering Android .apk files
 AddPackage --foreign android-sdk-cmdline-tools-latest # Android SDK Command-line Tools (latest)
@@ -19,13 +19,14 @@ AddPackage fd # Simple, fast and user-friendly alternative to find
 AddPackage fzf # Command-line fuzzy finder
 AddPackage jujutsu # Git-compatible VCS that is both simple and powerful
 AddPackage zoxide # A smarter cd command for your terminal
+AddPackage mosh # Mobile shell, surviving disconnects with local echo and line editing
 AddPackage openbsd-netcat # TCP/IP swiss army knife. OpenBSD variant.
 AddPackage httpie # human-friendly CLI HTTP client for the API era
 AddPackage less # A terminal based program for viewing text files
 AddPackage man-db # A utility for reading man pages
 AddPackage ffmpeg # Complete solution to record, convert and stream audio and video
 AddPackage neovim # Fork of Vim aiming to improve user experience, plugins, and GUIs
-AddPackage p7zip # Command-line file archiver with high compression ratio
+AddPackage --foreign 7zip # File archiver for extremely high compression
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage tree # A directory listing program displaying a depth indented list of files
 AddPackage unzip # For extracting and viewing files in .zip archives

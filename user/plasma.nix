@@ -35,11 +35,11 @@ in
         };
         KDE = {
           LookAndFeelPackage = "seaglass";
-          widgetStyle = "Lightly";
+          widgetStyle = "Darkly";
         };
       };
       dolphinrc.MainWindow.MenuBar = "Disabled";
-      lightlyrc.Style = {
+      darklyrc.Style = {
         DolphinSidebarOpacity = 80;
         MenuOpacity = 80;
       };
