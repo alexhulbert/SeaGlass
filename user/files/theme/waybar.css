@@ -3,8 +3,18 @@
     font-size: 18px;
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 window#waybar {
     background: transparent;
+    animation: fadeIn 0.5s ease-in forwards;
 }
 
 window#waybar > box {
