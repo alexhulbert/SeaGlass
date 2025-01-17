@@ -27,7 +27,7 @@ excludes = ["slack", "terminal"]
 
 [scratchpads.slack]
 command = "google-chrome-stable --profile-directory=Default --app=https://app.slack.com/client/T02CVA1G1H6"
-class = "chrome-slack.com__-Default"
+class = "chrome-app.slack.com__client_T02CVA1G1H6-Default"
 animation = "fromTop"
 process_tracking = false
 margin = 40
