@@ -15,8 +15,7 @@
 }
 
 .tab-background[selected], .tab-background[multiselected] {
-  background-color: var(--urlbarView-highlight-background) !important;
-  opacity: 0.25;
+  background-color: var(--toolbar-field-background-color) !important;
 }
 
 .tabbrowser-tab:hover .tab-background:not([selected]):not([multiselected]) {
