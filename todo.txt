@@ -4,8 +4,11 @@ Issues:
 . xwayland dpi fix
 . Plasma EventCalendar
 . camera
+- png support in wallpaper
+- quick click plasma-waybar
 
 Install Fixes:
+- mkdir -p basepath on injectMutableSettings
 - autoinstall firefox/chrome extensions
 - publish copilot2ctrl with pkgbuild
 
@@ -15,7 +18,6 @@ Etc:
 - sidebar monitor
 - remove wallpaper from repo
 - replace logout command + ldm shortcut
-- vim theme/tabs/commands
 - hyperlink color / background autorefresh firefox
 - clean up xdg portal vars
 - custom color schemes

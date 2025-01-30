@@ -8,7 +8,7 @@ let
   shim = import ../pkgs/shim.nix { inherit pkgs; };
 in {
   config = {
-    # xdg.configFile."nvim".source = ./nvim;
+    xdg.configFile."nvim".source = ./nvim;
     programs.neovim = {
       enable = true;
       vimAlias = true;
@@ -42,7 +42,7 @@ in {
         nodePackages.node2nix
       ];
       plugins = with pkgs.vimPlugins; [
-        catppuccin-nvim
+        pywal-nvim
         vim-nix
         rust-tools-nvim
         crates-nvim
@@ -50,7 +50,8 @@ in {
 
         # copilot-vim
         vim-fugitive
-        vim-airline
+        lualine-nvim
+        nvim-web-devicons
         bufferline-nvim
         diffview-nvim
         vim-better-whitespace
