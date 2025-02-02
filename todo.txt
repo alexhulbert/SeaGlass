@@ -15,7 +15,6 @@ Install Fixes:
 Etc:
 ? lockscreen issues
 - replace reload.sh with hypridle
-- sidebar monitor
 - remove wallpaper from repo
 - replace logout command + ldm shortcut
 - hyperlink color / background autorefresh firefox
