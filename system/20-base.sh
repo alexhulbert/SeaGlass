@@ -1,3 +1,14 @@
+# Kernel command line: 
+# loglevel=3
+# initcall_blacklist=simpledrm_platform_driver_init
+# i915.enable_psr=0
+# i915.enable_dc=0
+# i915.enable_dpcd_backlight=1
+# rd.luks.name={UUID}=cryptroot
+# root=/dev/mapper/cryptroot
+# rootflags=subvol=@
+# rw quiet splash
+
 # user files
 cat >| "$(CreateFile '/etc/subuid')" <<< "${USER}:100000:65536"
 cat >| "$(CreateFile '/etc/subgid')" <<< "${USER}:100000:65536"

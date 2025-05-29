@@ -1,19 +1,20 @@
 AddPackage firefox # Standalone web browser from mozilla.org
+AddPackage --foreign legacyfox # Legacy bootstrapped extensions for Firefox 65 and beyond
 AddPackage nvidia-dkms # NVIDIA kernel modules - module sources
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
+AddPackage plymouth # Graphical boot splash screen
+AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
+
 AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Editor for building and debugging modern web and cloud applications (official binary version)
 AddPackage filelight # View disk usage information
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
-AddPackage --foreign legacyfox # Legacy bootstrapped extensions for Firefox 65 and beyond
 AddPackage --foreign ulauncher # Application launcher for Linux
 AddPackage --foreign pamac-aur # A Gtk3 frontend, Package Manager based on libalpm with AUR and Appstream support
 AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
-AddPackage plymouth # Graphical boot splash screen
 AddPackage gimp # GNU Image Manipulation Program
 AddPackage --foreign google-chrome # The popular web browser by Google (Stable Channel)
 AddPackage --foreign beeper-latest-bin # all your chats in one app
-AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
 AddPackage --foreign 1password # Password manager and secure wallet
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
@@ -30,13 +31,8 @@ AddPackage --foreign spicetify-marketplace-bin # Spicetify app that integrates a
 AddPackage --foreign spicetify-themes-git # A community-driven collection of themes for spicetify
 AddPackage --foreign spotify # A proprietary music streaming service
 
-# audio / bluetooth
-AddPackage pavucontrol-qt # A Pulseaudio mixer in Qt (port of pavucontrol)
-AddPackage wireplumber # Session / policy manager implementation for PipeWir
-AddPackage pulseaudio-bluetooth # Bluetooth support for PulseAudio
-AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
-
 # kde
+AddPackage pavucontrol-qt # A Pulseaudio mixer in Qt (port of pavucontrol)
 AddPackage plasma5-integration # Qt5 Platform Theme integration plugins for the Plasma workspaces
 AddPackage qt5-tools # A cross-platform application and UI framework (Development Tools, QtHelp)
 AddPackage plasma-sdk # Applications useful for Plasma development
@@ -65,6 +61,7 @@ AddPackage hyprlock # hyprland’s GPU-accelerated screen locking utility
 AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
 AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
+AddPackage xdg-desktop-portal-gnome # Backend implementation for xdg-desktop-portal for the GNOME desktop environment
 AddPackage --foreign agsv1 # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks

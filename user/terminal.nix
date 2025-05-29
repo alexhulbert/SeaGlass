@@ -1,10 +1,10 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
-let
-  shim = import ./pkgs/shim.nix { inherit pkgs; };
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  shim = import ./pkgs/shim.nix {inherit pkgs;};
   sgptInit = ''
     # Shell-GPT integration ZSH v0.2
     _sgpt_zsh() {
@@ -19,8 +19,7 @@ let
     zle -N _sgpt_zsh
     bindkey ^g _sgpt_zsh
   '';
-in
-{
+in {
   config.home = {
     sessionVariables = {
       FZF_COMPLETE = "2";
@@ -29,6 +28,8 @@ in
       FZF_TMUX = "1";
       NIXPKGS_ALLOW_UNFREE = "1";
       GOPATH = "${config.home.homeDirectory}/.go";
+      EDITOR = "vim";
+      VISUAL = "vim";
     };
     sessionPath = [
       "${config.home.homeDirectory}/.local/bin"
@@ -41,20 +42,22 @@ in
       ''
         ${config.lib.shell.exportAll config.home.sessionVariables}
       ''
-      + lib.optionalString (config.home.sessionPath != [ ]) ''
+      + lib.optionalString (config.home.sessionPath != []) ''
         export PATH="$PATH''${PATH:+:}${builtins.concatStringsSep ":" config.home.sessionPath}"
       ''
       + config.home.sessionVariablesExtra;
   };
 
-  config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml { }).generate "cod.toml" {
-    rule = [{
-      executable = "**";
-      policy = "trust";
-    }];
+  config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml {}).generate "cod.toml" {
+    rule = [
+      {
+        executable = "**";
+        policy = "trust";
+      }
+    ];
   };
 
-  config.xdg.configFile."direnv/direnv.toml".source = (pkgs.formats.toml { }).generate "direnv.toml" {
+  config.xdg.configFile."direnv/direnv.toml".source = (pkgs.formats.toml {}).generate "direnv.toml" {
     global.hide_env_diff = true;
   };
 
@@ -80,6 +83,7 @@ in
         ulog = "journalctl --user -xeu";
         relock = "hyprctl --instance 0 keyword \"misc:allow_session_lock_restore 1\"; hyprctl --instance 0 keyword \"exec hyprlock\"";
 
+        svim = "sudo -e";
         e = "vim";
         se = "svim";
         ls = "eza";
@@ -93,6 +97,7 @@ in
         ldm = "hyprctl dispatch exit";
       };
       initExtra = ''
+        bindkey '^A' beginning-of-line
         bindkey '^H' backward-kill-word
         bindkey '5~' kill-word
         bindkey '^[[1;5C' forward-word
@@ -125,11 +130,11 @@ in
       zplug = {
         enable = true;
         plugins = [
-          { name = "zsh-users/zsh-autosuggestions"; }
-          { name = "chisui/zsh-nix-shell"; }
-          { name = "zsh-users/zsh-syntax-highlighting"; }
-          { name = "zsh-users/zsh-history-substring-search"; }
-          { name = "ptavares/zsh-direnv"; }
+          {name = "zsh-users/zsh-autosuggestions";}
+          {name = "chisui/zsh-nix-shell";}
+          {name = "zsh-users/zsh-syntax-highlighting";}
+          {name = "zsh-users/zsh-history-substring-search";}
+          {name = "ptavares/zsh-direnv";}
         ];
       };
     };

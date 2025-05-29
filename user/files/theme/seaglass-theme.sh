@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 
 if [ -z "$1" ]; then
-  wallpaper=$(find ~/.config/wallpaper/ -type f | shuf -n 1)
+	wallpaper=$(find ~/.config/wallpaper/ -type f | shuf -n 1)
 else
-  wallpaper=$1
+	wallpaper=$1
 fi
 
 if [ -e "$wallpaper.scheme" ]; then
-  echo test
-  # pass
+	echo test
+	# pass
 else
-  rm ~/.cache/wallpaper
-  ln -s "$wallpaper" ~/.cache/wallpaper
-  echo "$wallpaper" > ~/.cache/wallpaper-path
-  if ! pgrep -x "swww-daemon" > /dev/null; then
-    export SWWW_TRANSITION_STEP=255
-  fi
-  swww-daemon --no-cache &
-  swww img "$wallpaper"
+	rm ~/.cache/wallpaper
+	ln -s "$wallpaper" ~/.cache/wallpaper
+	echo "$wallpaper" >~/.cache/wallpaper-path
+	if ! pgrep -x "swww-daemon" >/dev/null; then
+		export SWWW_TRANSITION_STEP=255
+	fi
+	swww-daemon --no-cache &
+	swww img "$wallpaper"
 fi
 
 kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 --on-change-hook "kde-material-you-colors --stop"
@@ -38,13 +38,13 @@ sed -i "s/$gtkBkg/$background/g" ~/.config/gtk-4.0/colors.css
 
 # add selection colors
 for file in "$HOME/.config/gtk-3.0/colors.css" "$HOME/.config/gtk-4.0/colors.css"; do
-    mkdir -p "$(dirname "$file")"
-    grep -q "@define-color selected_bg_color" "$file" 2>/dev/null || echo "
+	mkdir -p "$(dirname "$file")"
+	grep -q "@define-color selected_bg_color" "$file" 2>/dev/null || echo "
 @define-color selected_bg_color @theme_selected_bg_color_breeze;
-@define-color selected_fg_color @theme_selected_fg_color_breeze;" >> "$file"
+@define-color selected_fg_color @theme_selected_fg_color_breeze;" >>"$file"
 done
 
 pywalfox update
 
-systemctl --user restart ulauncher swaync ags waybar &
+systemctl --user restart ulauncher swaync swayosd ags waybar &
 seaglass-spicetify

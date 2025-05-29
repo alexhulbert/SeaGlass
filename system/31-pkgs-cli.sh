@@ -7,7 +7,6 @@ AddPackage rsync # A fast and versatile file copying tool for remote and local f
 AddPackage snapper # A tool for managing BTRFS and LVM snapshots. It can create, diff and restore snapshots and provides timelined auto-snapping.
 
 # cli tools
-AddPackage --foreign aichat # All-in-one AI CLI tool featuring Chat-REPL, Shell Assistant, RAG, AI tools & agents
 AddPackage android-tools # Android platform tools
 AddPackage --foreign android-apktool-bin # A tool for reverse engineering Android .apk files
 AddPackage --foreign android-sdk-cmdline-tools-latest # Android SDK Command-line Tools (latest)
@@ -26,7 +25,7 @@ AddPackage less # A terminal based program for viewing text files
 AddPackage man-db # A utility for reading man pages
 AddPackage ffmpeg # Complete solution to record, convert and stream audio and video
 AddPackage neovim # Fork of Vim aiming to improve user experience, plugins, and GUIs
-AddPackage --foreign 7zip # File archiver for extremely high compression
+AddPackage 7zip # File archiver for extremely high compression
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage tree # A directory listing program displaying a depth indented list of files
 AddPackage unzip # For extracting and viewing files in .zip archives
@@ -34,6 +33,12 @@ AddPackage wget # Network utility to retrieve files from the Web
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
 AddPackage inotify-tools # inotify-tools is a C library and a set of command-line programs for Linux providing a simple interface to inotify.
 AddPackage inetutils # A collection of common network programs
+AddPackage samply # A command-line sampling profiler for macOS and Linux
+AddPackage cpupower # Linux kernel tool to examine and tune power saving related features of your processor
+AddPackage diffoscope # Tool for in-depth comparison of files, archives, and directories
+AddPackage nmap # Utility for network discovery and security auditing
+AddPackage reptyr # Utility for taking an existing running program and attaching it to a new terminal
+AddPackage postgresql # Sophisticated object-relational DBMS
 AddPackage screen # Full-screen window manager that multiplexes a physical terminal
 AddPackage yt-dlp # A youtube-dl fork with additional features and fixes
 AddPackage yubikey-manager # Python library and command line tool for configuring a YubiKey

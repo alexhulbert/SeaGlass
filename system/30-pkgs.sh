@@ -21,7 +21,10 @@ AddPackage nodejs-lts-iron # Evented I/O for V8 javascript (LTS release: Iron)
 AddPackage npm # A package manager for JavaScript
 AddPackage libvips # A fast image processing library with low memory needs
 AddPackage pkgfile # a pacman .files metadata explorer
-AddPackage pulseaudio # A featureful, general-purpose sound server
+AddPackage pipewire # Low-latency audio/video router and processor
+AddPackage pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
+AddPackage wireplumber # Session / policy manager implementation for PipeWire
+AddPackage bluez-utils # Development and debugging utilities for the bluetooth protocol stack
 AddPackage python-pipx # Install and Run Python Applications in Isolated Environments
 AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wherever they are.
 AddPackage ntfs-3g # NTFS filesystem driver and utilities

@@ -28,7 +28,9 @@ const PowerMenu = ButtonGroup(
     {
       label: 'Switch to Windows',
       action: () => {
-        Utils.exec('sudo efibootmgr --bootnext 0001')
+        const bootEntries = Utils.exec('efibootmgr')
+        const matches = bootEntries.match(/Boot(\d{4})\* Windows Boot Manager/)
+        Utils.exec(`sudo efibootmgr --bootnext ${matches[1]}`)
         Utils.exec('sudo reboot')
       },
       icon: [0xf05b3]

@@ -1,11 +1,13 @@
 Issues:
 * wallpaper upscale
 * dont refresh on external monitor
-. xwayland dpi fix
-. Plasma EventCalendar
-. camera
+* sidebar crash
+* cpu usage of darkreader file watch & pnote
+- display switcher (just memory)
 - png support in wallpaper
 - quick click plasma-waybar
+- xwayland dpi fix
+. Plasma EventCalendar
 
 Install Fixes:
 - mkdir -p basepath on injectMutableSettings
@@ -13,11 +15,13 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
-? lockscreen issues
+- asd control/monitor cfg
+- upgrade darkreader upstream
 - replace reload.sh with hypridle
+- plasma-hud
 - remove wallpaper from repo
 - replace logout command + ldm shortcut
 - hyperlink color / background autorefresh firefox
 - clean up xdg portal vars
 - custom color schemes
-- plasma-hud
+- light color schemes (paper)
