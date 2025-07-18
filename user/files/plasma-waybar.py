@@ -72,7 +72,7 @@ async def handle_event(data):
     event_type = data.split('>>')[0]
     if event_type == 'workspace':
         # Hide all plasmoids when switching workspace
-        monitor = await ipc.get_focused_monitor_props()
+        monitor = await ipc.get_monitor_props()
         windows = await ipc.hyprctl_json('clients', logger=None)
         for plasmoid_name in config:
             if await is_visible(plasmoid_name, monitor, windows):
@@ -83,13 +83,12 @@ async def handle_event(data):
         plasmoid_titles = [config[plasmoid_name]['title'] for plasmoid_name in config]
         if current_window in plasmoid_titles:
             if not is_plasmoid_active:
-                await asyncio.sleep(1)
                 is_plasmoid_active = True
         elif is_plasmoid_active:
             # Hide all plasmoids when switching window
             is_plasmoid_active = False
             await restore_focus_props()
-            monitor = await ipc.get_focused_monitor_props()
+            monitor = await ipc.get_monitor_props()
             windows = await ipc.hyprctl_json('clients', logger=None)
             for plasmoid_name in config:
                 if await is_visible(plasmoid_name, monitor, windows):
@@ -98,7 +97,7 @@ async def handle_event(data):
 
 async def is_visible(plasmoid_name, monitor=None, windows=None):
     if monitor is None:
-        monitor = await ipc.get_focused_monitor_props()
+        monitor = await ipc.get_monitor_props()
     if windows is None:
         windows = await ipc.hyprctl_json('clients', logger=None)
     workspace = monitor['activeWorkspace']['id']
@@ -115,7 +114,7 @@ async def toggle(plasmoid_name):
 
 async def hide_all(except_plasmoid=None, monitor=None, windows=None):
     if monitor is None:
-        monitor = await ipc.get_focused_monitor_props()
+        monitor = await ipc.get_monitor_props()
     if windows is None:
         windows = await ipc.hyprctl_json('clients', logger=None)
     for other_plasmoid in config:
@@ -126,7 +125,7 @@ async def hide_all(except_plasmoid=None, monitor=None, windows=None):
 
 async def hide(plasmoid_name):
     cfg = config[plasmoid_name]
-    monitor = await ipc.get_focused_monitor_props()
+    monitor = await ipc.get_monitor_props()
 
     title = build_title(cfg['title'])
     offset = floor(cfg['height'] * 1.3 + monitor['reserved'][1] + GAP)
@@ -138,7 +137,7 @@ async def hide(plasmoid_name):
 
 async def show(plasmoid_name):
     cfg = config[plasmoid_name]
-    monitor = await ipc.get_focused_monitor_props()
+    monitor = await ipc.get_monitor_props()
     workspace = monitor['activeWorkspace']['id']
 
     title = build_title(cfg['title'])

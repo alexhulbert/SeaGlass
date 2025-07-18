@@ -55,6 +55,7 @@ in
       dndwatchd = (generateService "dndwatchd" "dndwatchd");
       xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
       xdg-home-cleaner = (generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh);
+      swww-daemon = generateService "swww" "swww-daemon";
       # "1password" = (generateService "1password" "1password --disable-gpu --silent --ozone-platform-hint=auto");
     };
   };
