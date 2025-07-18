@@ -1,11 +1,11 @@
 Issues:
+* default dialog size
 * wallpaper upscale
 * dont refresh on external monitor
 * sidebar crash
 * cpu usage of darkreader file watch & pnote
 - display switcher (just memory)
 - png support in wallpaper
-- quick click plasma-waybar
 - xwayland dpi fix
 . Plasma EventCalendar
 
@@ -15,7 +15,7 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
-- asd control/monitor cfg
+- light color schemes (paper)
 - upgrade darkreader upstream
 - replace reload.sh with hypridle
 - plasma-hud
@@ -24,4 +24,3 @@ Etc:
 - hyperlink color / background autorefresh firefox
 - clean up xdg portal vars
 - custom color schemes
-- light color schemes (paper)
