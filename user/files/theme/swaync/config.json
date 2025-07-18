@@ -25,7 +25,7 @@
 	      {
           "label": "Displays",
           "type": "normal",
-          "command": "zsh -c 'wdisplays & swaync-client -cp'"
+          "command": "zsh -c 'nwg-displays & swaync-client -cp'"
         }
       ]
     }

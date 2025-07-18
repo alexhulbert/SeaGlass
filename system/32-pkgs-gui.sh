@@ -66,7 +66,7 @@ AddPackage --foreign agsv1 # Aylurs's Gtk Shell (AGS), An eww inspired gtk widge
 AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume
-AddPackage --foreign wdisplays # GUI display configurator for wlroots compositors
+AddPackage nwg-displays # Output management utility for sway and Hyprland Wayland compositors
 AddPackage swaync # A simple notification daemon with a GTK panel for checking previous notifications like other DEs
 
 # hyprland deps
