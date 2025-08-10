@@ -27,13 +27,11 @@ let
         monitoradded*) lidhandler ;;
         monitorremoved*) lidhandler ;;
         configReloaded*) lidhandler ;;
-        # openwindow*) echo "$*" >> /home/alex/windows.log
       esac
     }
     socat -U - UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock | while read -r line; do handle "$line"; done
   '';
 in {
-
   outOfStoreSymlinks.xdgConfig = {
     "hypr/hyprland.conf" = "${builtins.toString ./.}/files/hyprland.conf";
     "hypr/hyprlock.conf" = "${builtins.toString ./.}/files/hyprlock.conf";
@@ -44,6 +42,7 @@ in {
 
   xdg.configFile = {
     "hypr/pyprland.toml".source = ./files/pyprland.toml;
+    "hypr/hypridle.conf".source = ./files/hypridle.conf;
     "wal/templates/colors-hyprland.conf".source = ./files/theme/colors-hyprland.conf;
 
     "wal/templates/wezterm-wal.toml".source = ./files/theme/wezterm-wal.toml;

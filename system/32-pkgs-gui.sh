@@ -58,6 +58,7 @@ AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox br
 AddPackage hyprland # a highly customizable dynamic tiling Wayland compositor
 AddPackage hyprwayland-scanner # A Hyprland implementation of wayland-scanner, in and for C++
 AddPackage hyprlock # hyprland’s GPU-accelerated screen locking utility
+AddPackage hypridle # hyprland’s idle daemon
 AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based compositors
 AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland

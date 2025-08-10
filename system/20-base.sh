@@ -42,9 +42,6 @@ SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-hibernate.service
 SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-resume.service
 SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-suspend.service
 
-# refresh display configuration on wake from suspend
-CopyFileTo /system-sleep.sh /usr/lib/systemd/system-sleep/reload.sh 755
-
 # locale and timezone config
 cat >| "$(CreateFile '/etc/locale.gen')" <<< "en_US.UTF-8 UTF-8"
 cat >| "$(CreateFile '/etc/locale.conf')" <<< "LANG=en_US.UTF-8"
