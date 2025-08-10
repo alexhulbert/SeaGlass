@@ -34,6 +34,8 @@ AddPackage zip # Compressor/archiver for creating and modifying zipfiles
 AddPackage inotify-tools # inotify-tools is a C library and a set of command-line programs for Linux providing a simple interface to inotify.
 AddPackage inetutils # A collection of common network programs
 AddPackage samply # A command-line sampling profiler for macOS and Linux
+AddPackage jq # Command-line JSON processor
+AddPackage yq # Command-line YAML, XML, TOML processor - jq wrapper for YAML/XML/TOML documents
 AddPackage cpupower # Linux kernel tool to examine and tune power saving related features of your processor
 AddPackage diffoscope # Tool for in-depth comparison of files, archives, and directories
 AddPackage nmap # Utility for network discovery and security auditing

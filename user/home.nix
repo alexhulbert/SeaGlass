@@ -1,16 +1,16 @@
-{ lib
-, config
-, pkgs
-, ...
-}:
-let
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
   flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
   nix-index-database =
     (import flake-compat {
       src = builtins.fetchTarball "https://github.com/nix-community/nix-index-database/archive/refs/tags/2024-03-17-030743.zip";
-    }).defaultNix;
-in
-{
+    })
+    .defaultNix;
+in {
   imports = [
     ./hyprland.nix
     ./terminal.nix
@@ -39,16 +39,4 @@ in
   home.stateVersion = "22.11";
 
   programs.home-manager.enable = true;
-
-  systemd.user.services.cleanup = {
-    Unit.Description = "Clean and optimize Nix store on boot";
-    Install.WantedBy = [ "default.target" ];
-    Service = {
-      Type = "oneshot";
-      ExecStart = "${pkgs.writeShellScriptBin "clean-nix-store" ''
-          nix-store --gc
-          nix-store --optimize
-        ''}/bin/clean-nix-store";
-    };
-  };
 }

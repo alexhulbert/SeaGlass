@@ -1,5 +1,4 @@
 Issues:
-* default dialog size
 * wallpaper upscale
 * dont refresh on external monitor
 * sidebar crash
@@ -14,8 +13,6 @@ Install Fixes:
 
 Etc:
 - light color schemes (paper)
-- upgrade darkreader upstream
-- replace reload.sh with hypridle
 - plasma-hud
 - remove wallpaper from repo
 - replace logout command + ldm shortcut

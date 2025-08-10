@@ -1,6 +1,6 @@
 AddPackage firefox # Standalone web browser from mozilla.org
 AddPackage --foreign legacyfox # Legacy bootstrapped extensions for Firefox 65 and beyond
-AddPackage nvidia-dkms # NVIDIA kernel modules - module sources
+AddPackage nvidia # NVIDIA kernel modules
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
 AddPackage plymouth # Graphical boot splash screen
 AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
@@ -14,7 +14,6 @@ AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
 AddPackage gimp # GNU Image Manipulation Program
 AddPackage --foreign google-chrome # The popular web browser by Google (Stable Channel)
-AddPackage --foreign beeper-latest-bin # all your chats in one app
 AddPackage --foreign 1password # Password manager and secure wallet
 AddPackage --foreign zoom # Video Conferencing and Web Conferencing Service
 
