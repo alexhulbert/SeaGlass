@@ -11,42 +11,36 @@
       title = "Calendar";
       width = 500;
       height = 500;
-      margin_right = 0;
       plasmoid = "org.kde.plasma.calendar";
     };
     battery = {
       title = "Power and Battery";
       width = 500;
       height = 270;
-      margin_right = 60;
       plasmoid = "org.kde.plasma.battery";
     };
     network = {
       title = "Networks";
       width = 500;
       height = 500;
-      margin_right = 80;
       plasmoid = "org.kde.plasma.networkmanagement";
     };
     bluetooth = {
       title = "Bluetooth";
       width = 500;
       height = 500;
-      margin_right = 105;
       plasmoid = "org.kde.plasma.bluetooth";
     };
     audio = {
       title = "Audio Volume";
       width = 600;
       height = 270;
-      margin_right = 125;
       plasmoid = "org.kde.plasma.volume";
     };
     kde-connect = {
       title = "KDE Connect";
       width = 500;
       height = 500;
-      margin_right = 150;
       plasmoid = "org.kde.kdeconnect";
     };
   };
@@ -59,7 +53,6 @@ in {
     };
     style = ./files/theme/waybar.css;
     settings = [{
-      layer = "top";
       spacing = 8;
       modules-left = ["hyprland/workspaces"];
       modules-center = [];
