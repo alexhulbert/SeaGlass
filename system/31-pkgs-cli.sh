@@ -45,4 +45,5 @@ AddPackage yubikey-manager # Python library and command line tool for configurin
 AddPackage nvtop # GPUs process monitoring for AMD, Intel and NVIDIA
 AddPackage net-tools # Configuration tools for Linux networking
 AddPackage strace # A diagnostic, debugging and instructional userspace tracer
+AddPackage --foreign pacdate # Automates downgrading packages to a specific date
 AddPackage --foreign intentrace # strace with intent, it goes all the way for you instead of half the way

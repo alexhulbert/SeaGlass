@@ -64,7 +64,7 @@ AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage xdg-desktop-portal-gnome # Backend implementation for xdg-desktop-portal for the GNOME desktop environment
 AddPackage --foreign agsv1 # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
-AddPackage --foreign hyprshot # A utility to easily take screenshots in Hyprland using your mouse
+AddPackage hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume
 AddPackage nwg-displays # Output management utility for sway and Hyprland Wayland compositors
@@ -75,4 +75,4 @@ AddPackage cmake # A cross-platform open-source make system
 AddPackage cpio # A tool to copy files into or out of a cpio or tar archive
 AddPackage meson # High productivity build system
 AddPackage glm # C++ mathematics library for 3D software based on the OpenGL Shading Language (GLSL) specification
-
+AddPackage glaze # An Extremely fast, In-Memory JSON and Interface Library for Modern C++

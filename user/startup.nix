@@ -17,7 +17,7 @@ let
     Install.WantedBy = [ "hyprland.target" ];
     Service = {
       Type = "simple";
-      Restart = "on-failure";
+      Restart = "always";
       ExecStart = "/usr/bin/env ${command}";
       RestartSec = "1";
     };
