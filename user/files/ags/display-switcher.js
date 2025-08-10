@@ -1,8 +1,17 @@
 import ButtonGroup from './button-group.js'
+const monitorsConfig = Utils.HOME + '/.config/hypr/monitors.conf'
 
 const getMonitors = (onlyEnabled) => {
   const command = onlyEnabled ? 'hyprctl monitors enabled -j' : 'hyprctl monitors all -j'
   return JSON.parse(Utils.exec(command))
+}
+
+const writeMonitorConfig = async (lines) => {
+  try {
+    await Utils.writeFile(lines.join('\n') + '\n', monitorsConfig)
+  } catch (err) {
+    console.error('Failed to write monitor config:', err)
+  }
 }
 
 const DisplaySwitcher = ButtonGroup(
@@ -10,47 +19,76 @@ const DisplaySwitcher = ButtonGroup(
   [
     {
       label: 'Laptop Only',
-      action: () => {
-        const monitors = getMonitors().filter(m => m.name !== 'eDP-1')
-        for (const { name } of monitors) {
-          Utils.exec(`hyprctl keyword monitor ${name},disable`)
+      action: async () => {
+        const monitors = getMonitors()
+        const lines = []
+        
+        // Enable laptop display
+        const laptop = monitors.find(m => m.name === 'eDP-1')
+        if (laptop) {
+          lines.push(`monitor=eDP-1,preferred,auto,auto`)
         }
-        Utils.exec('hyprctl keyword monitor eDP-1,preferred,auto,auto')
+        
+        // Disable all other monitors
+        monitors.filter(m => m.name !== 'eDP-1').forEach(monitor => {
+          lines.push(`monitor=${monitor.name},disable`)
+        })
+        
+        await writeMonitorConfig(lines)
       },
       icon: [0xf0322]
     },
     {
       label: 'Duplicate Screen',
-      action: () => {
-        const monitors = getMonitors().filter(m => m.name !== 'eDP-1')
-        Utils.exec('hyprctl keyword monitor eDP-1,preferred,0x0,auto')
-        for (const { name } of monitors) {
-          Utils.exec(`hyprctl keyword monitor ${name},preferred,auto,auto,mirror,eDP-1`)
-        }
+      action: async () => {
+        const monitors = getMonitors()
+        const lines = []
+        
+        // Set laptop as primary at 0x0
+        lines.push(`monitor=eDP-1,preferred,0x0,auto`)
+        
+        // Mirror all other monitors to laptop
+        monitors.filter(m => m.name !== 'eDP-1').forEach(monitor => {
+          lines.push(`monitor=${monitor.name},preferred,auto,auto,mirror,eDP-1`)
+        })
+        
+        await writeMonitorConfig(lines)
       },
       icon: [0xf037a]
     },
     {
       label: 'Extend Screen',
-      action: () => {
-        const monitors = getMonitors().filter(m => m.name !== 'eDP-1')
-        Utils.exec('hyprctl keyword monitor eDP-1,preferred,0x0,auto')
-        for (const { name } of monitors) {
-          Utils.exec(`hyprctl keyword monitor ${name},preferred,auto,auto`)
-        }
+      action: async () => {
+        const monitors = getMonitors()
+        const lines = []
+        
+        // Set laptop at 0x0
+        lines.push(`monitor=eDP-1,preferred,0x0,auto`)
+        
+        // Extend other monitors
+        monitors.filter(m => m.name !== 'eDP-1').forEach(monitor => {
+          lines.push(`monitor=${monitor.name},preferred,auto,auto`)
+        })
+        
+        await writeMonitorConfig(lines)
       },
       icon: [0xf1724]
     },
     {
       label: 'Second Screen Only',
-      action: () => {
-        const monitors = getMonitors().filter(m => m.name !== 'eDP-1')
-        if (monitors.length) {
-          Utils.exec('hyprctl keyword monitor eDP-1,disable')
-          for (const { name } of monitors) {
-            Utils.exec(`hyprctl keyword monitor ${name},preferred,auto,auto`)
-          }
-        }
+      action: async () => {
+        const monitors = getMonitors()
+        const lines = []
+        
+        // Disable laptop
+        lines.push(`monitor=eDP-1,disable`)
+        
+        // Enable all other monitors
+        monitors.filter(m => m.name !== 'eDP-1').forEach(monitor => {
+          lines.push(`monitor=${monitor.name},preferred,auto,auto`)
+        })
+        
+        await writeMonitorConfig(lines)
       },
       icon: [0xf0379]
     }

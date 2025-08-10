@@ -4,9 +4,7 @@ Issues:
 * dont refresh on external monitor
 * sidebar crash
 * cpu usage of darkreader file watch & pnote
-- display switcher (just memory)
-- png support in wallpaper
-- xwayland dpi fix
+. xwayland dpi fix
 . Plasma EventCalendar
 
 Install Fixes:
