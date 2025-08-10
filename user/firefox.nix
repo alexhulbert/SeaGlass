@@ -23,7 +23,7 @@ let
 in
 {
   config.xdg.configFile."google-chrome/NativeMessagingHosts/darkreader.json".text = builtins.toJSON
-    (darkreaderManifest // { allowed_origins = [ "chrome-extension://gidgehhdgebooieidpcckaphjbfcghpe/" ]; });
+    (darkreaderManifest // { allowed_origins = [ "chrome-extension://eimdkcfmnnhlocgglnpbjgjibbfkejcn/" ]; });
 
   config.home.file = {
     ".mozilla/native-messaging-hosts/darkreader.json".text = builtins.toJSON
