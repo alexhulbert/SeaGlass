@@ -36,6 +36,8 @@ AddPackage interception-tools # A minimal composable infrastructure on top of li
 AddPackage wtype # xdotool type for wayland
 AddPackage kdialog # A utility for displaying dialog boxes from shell scripts
 AddPackage --foreign python-thefuzz # Fuzzy string matching like a boss
+AddPackage fwupd # Simple daemon to allow session software to update firmware
+AddPackage go # Core compiler tools for the Go programming language
 
 # latex
 AddPackage texlive-fontsextra # TeX Live - Additional fonts

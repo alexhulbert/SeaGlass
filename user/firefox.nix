@@ -14,10 +14,15 @@ let
     };
   });
 
+  darkreaderHost = pkgs.runCommand "darkreader-host" {} ''
+    mkdir -p $out/bin
+    ${pkgs.gcc}/bin/gcc -O2 -o $out/bin/darkreader ${./files/coloreader-native.c}
+  '';
+
   darkreaderManifest = {
     name = "darkreader";
     description = "custom darkreader native host for syncing with pywal";
-    path = "${./files/darkreader}/index.js";
+    path = "${darkreaderHost}/bin/darkreader";
     type = "stdio";
   };
 in

@@ -1,4 +1,4 @@
-# Kernel command line: 
+# Kernel command line:
 # loglevel=3
 # initcall_blacklist=simpledrm_platform_driver_init
 # i915.enable_psr=0
@@ -10,16 +10,16 @@
 # rw quiet splash
 
 # user files
-cat >| "$(CreateFile '/etc/subuid')" <<< "${USER}:100000:65536"
-cat >| "$(CreateFile '/etc/subgid')" <<< "${USER}:100000:65536"
-cat <<EOF >| "$(CreateFile '/etc/sudoers')"
+cat >|"$(CreateFile '/etc/subuid')" <<<"${USER}:100000:65536"
+cat >|"$(CreateFile '/etc/subgid')" <<<"${USER}:100000:65536"
+cat <<EOF >|"$(CreateFile '/etc/sudoers')"
 root ALL=(ALL:ALL) ALL
 ${USER} ALL=(ALL:ALL) NOPASSWD: ALL
 @includedir /etc/sudoers.d
 EOF
 
 # windows dual boot system clock compat config
-cat <<EOF >| "$(CreateFile '/etc/adjtime')"
+cat <<EOF >|"$(CreateFile '/etc/adjtime')"
 0.0 0 0
 0
 LOCAL
@@ -43,13 +43,12 @@ SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-resume.service
 SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-suspend.service
 
 # locale and timezone config
-cat >| "$(CreateFile '/etc/locale.gen')" <<< "en_US.UTF-8 UTF-8"
-cat >| "$(CreateFile '/etc/locale.conf')" <<< "LANG=en_US.UTF-8"
-cat >| "$(CreateFile '/etc/vconsole.conf')" <<< "KEYMAP=us"
-CreateLink /etc/localtime /usr/share/zoneinfo/America/New_York
+cat >|"$(CreateFile '/etc/locale.gen')" <<<"en_US.UTF-8 UTF-8"
+cat >|"$(CreateFile '/etc/locale.conf')" <<<"LANG=en_US.UTF-8"
+cat >|"$(CreateFile '/etc/vconsole.conf')" <<<"KEYMAP=us"
 
 # terminal autologin
-cat <<EOF >| "$(CreateFile '/etc/systemd/system/getty@tty1.service.d/autologin.conf')"
+cat <<EOF >|"$(CreateFile '/etc/systemd/system/getty@tty1.service.d/autologin.conf')"
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin ${USER} --skip-login --nonewline --noissue %I \$TERM
@@ -60,7 +59,7 @@ CopyFileTo /kde-fingerprint.pam.conf /etc/pam.d/kde-fingerprint
 CopyFileTo /polkit-1.pam.conf /etc/pam.d/polkit-1
 
 # serial device permissions
-cat <<EOF >| "$(CreateFile '/etc/udev/rules.d/40-serial.rules')"
+cat <<EOF >|"$(CreateFile '/etc/udev/rules.d/40-serial.rules')"
 KERNEL=="ttyUSB[0-9]*",MODE="0666"
 KERNEL=="ttyACM[0-9]*",MODE="0666"
 EOF
@@ -76,7 +75,11 @@ CopyFileTo /environment /etc/environment
 
 # set MAKEFLAGS to utilize all cores
 make_pkg_conf=$(GetPackageOriginalFile pacman '/etc/makepkg.conf')
-echo MAKEFLAGS=\"-j$(nproc)\" >> $make_pkg_conf
+echo MAKEFLAGS=\"-j$(nproc)\" >>$make_pkg_conf
 
 pacman_conf=$(GetPackageOriginalFile pacman '/etc/pacman.conf')
 sed -i 's/^#IgnorePkg.*$/IgnorePkg = hyprland aquamarine linux linux-headers hyprutils hyprutils-git/' "$pacman_conf"
+
+# preload prefetcher
+AddPackage --foreign preload # Makes applications run faster by prefetching binaries and shared objects
+SystemdEnable preload /usr/lib/systemd/system/preload.service

@@ -1,10 +1,19 @@
 html[data-darkreader-mode] body a {{
-  color: rgb({color2.rgb}) !important;
+  color: var(--darkreader-selection-background) !important;
 }}
 
 @-moz-document regexp('^(?!http).*') {{
   :root>* {{
-    background: rgb({background.rgb}) !important;
+    background: var(--lwt-accent-color, var(--newtab-background-color, rgb({background.rgb}))) !important;
+  }}
+
+  :root {{
+    --newtab-background-color-secondary: transparent !important;
+  }}
+
+  .search-wrapper .search-handoff-button, .search-wrapper input {{
+    border: 1px solid var(--newtab-text-primary-color) !important;
+    box-shadow: none !important;
   }}
 }}
 

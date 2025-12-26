@@ -1,10 +1,11 @@
 Issues:
-* wallpaper upscale
-* dont refresh on external monitor
-* sidebar crash
+* notifications
 * cpu usage of darkreader file watch & pnote
+* spotify ziro theme
+- widget z-order
+- Plasma EventCalendar replacement
 . xwayland dpi fix
-. Plasma EventCalendar
+? sidebar crash
 
 Install Fixes:
 - mkdir -p basepath on injectMutableSettings
@@ -13,9 +14,12 @@ Install Fixes:
 
 Etc:
 - light color schemes (paper)
+  - firefox
+  - vscode
+  - ulauncher
+- hyprchroma -> darkwindow deprecation notice
 - plasma-hud
 - remove wallpaper from repo
 - replace logout command + ldm shortcut
-- hyperlink color / background autorefresh firefox
 - clean up xdg portal vars
 - custom color schemes

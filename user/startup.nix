@@ -57,6 +57,7 @@ in
       xdg-home-cleaner = (generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh);
       swww-daemon = generateService "swww" "swww-daemon";
       hypridle = generateService "hypridle" "hypridle";
+      variety = generateService "variety" "variety -n";
       # "1password" = (generateService "1password" "1password --disable-gpu --silent --ozone-platform-hint=auto");
     };
   };
@@ -75,7 +76,7 @@ in
     Unit = {
       Description = "Seaglass Theme";
       PartOf = [ "hyprland.target" ];
-      After = [ "user-path-import.service" ];
+      After = [ "user-path-import.service" "variety.service" ];
     };
     Install.WantedBy = [ "hyprland.target" ];
     Service = {

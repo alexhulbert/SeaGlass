@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
+# light=true
+
 if [ -z "$1" ]; then
-	wallpaper=$(find ~/.config/wallpaper/ -type f | shuf -n 1)
+	wallpaper="$(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt)"
 else
 	wallpaper=$1
 fi
@@ -20,15 +22,26 @@ else
 	swww img "$wallpaper"
 fi
 
-kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 --on-change-hook "kde-material-you-colors --stop"
+echo ABC
+if [ -n "$light" ]; then
+	kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wall -ko 84 --scheme-variant 6
+else
+	kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6
+fi
+echo XYZ
 source ~/.cache/wal/colors.sh
 sed -i "/\[Colors:Window]/,+2 s/=#....../=$background/g" ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -Ei '/\[Colors:(Header|Tooltip|Complementary)\]/,+2 s/=#/=#D4/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i '/\[Colors:View\]/,+2 s/=#/=#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 
 lookandfeeltool -a "$HOME/.local/share/plasma/look-and-feel/sealass"
-plasma-apply-colorscheme MaterialYouDark2
-plasma-apply-colorscheme MaterialYouDark
+if [ -n "$light" ]; then
+	plasma-apply-colorscheme MaterialYouLight2
+	plasma-apply-colorscheme MaterialYouLight
+else
+	plasma-apply-colorscheme MaterialYouDark2
+	plasma-apply-colorscheme MaterialYouDark
+fi
 
 # change breeze gtk background to match qt
 sleep 0.5

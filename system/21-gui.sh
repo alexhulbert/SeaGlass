@@ -1,5 +1,5 @@
 # systemd services for plasma
-SystemdEnable --type user xdg-user-dirs /usr/lib/systemd/user/xdg-user-dirs-update.service
+SystemdEnable --type user xdg-user-dirs /usr/lib/systemd/user/xdg-user-dirs.service
 SystemdEnable --type user pipewire /usr/lib/systemd/user/pipewire.socket
 SystemdEnable --type user wireplumber /usr/lib/systemd/user/wireplumber.service
 SystemdEnable --type user pipewire-pulse /usr/lib/systemd/user/pipewire-pulse.socket
@@ -21,6 +21,10 @@ CopyFileTo /spotify.desktop /usr/share/applications/spotify.desktop
 
 # hide notifications during screenshare
 CopyFileTo /hyprland-portals.conf /usr/share/xdg-desktop-portal/hyprland-portals.conf
+
+# firefox smart launcher (preloads, per-workspace windows)
+CopyFileTo /firefox-smart /usr/bin/firefox
+sed 's|/usr/lib/firefox/firefox|/usr/bin/firefox|g' /usr/share/applications/firefox.desktop >"$(CreateFile /usr/share/applications/firefox.desktop)"
 
 # primenote theme
 CreateLink /usr/lib/python3.13/site-packages/primenote/ui/palettes/wal.css $HOME/.cache/wal/primenote.css

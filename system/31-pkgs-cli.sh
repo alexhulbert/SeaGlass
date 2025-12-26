@@ -49,3 +49,9 @@ AddPackage net-tools # Configuration tools for Linux networking
 AddPackage strace # A diagnostic, debugging and instructional userspace tracer
 AddPackage --foreign pacdate # Automates downgrading packages to a specific date
 AddPackage --foreign intentrace # strace with intent, it goes all the way for you instead of half the way
+AddPackage htop # Interactive process viewer
+AddPackage jless # A command-line pager for JSON data
+AddPackage btop # A monitor of system resources, bpytop ported to C++
+AddPackage tinyxxd # Standalone version of the hex dump utility that comes with ViM
+AddPackage --foreign safe-rm # A tool intended to prevent the accidental deletion of important files
+CopyFile /etc/safe-rm.conf

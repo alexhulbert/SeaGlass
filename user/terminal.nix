@@ -5,20 +5,6 @@
   ...
 }: let
   shim = import ./pkgs/shim.nix {inherit pkgs;};
-  sgptInit = ''
-    # Shell-GPT integration ZSH v0.2
-    _sgpt_zsh() {
-      if [[ -n "$BUFFER" ]]; then
-          _sgpt_prev_cmd=$BUFFER
-          BUFFER+="⌛"
-          zle -I && zle redisplay
-          BUFFER=$(sgpt --shell <<< "$_sgpt_prev_cmd" --no-interaction)
-          zle end-of-line
-      fi
-    }
-    zle -N _sgpt_zsh
-    bindkey ^g _sgpt_zsh
-  '';
 in {
   config.home = {
     sessionVariables = {
@@ -86,13 +72,11 @@ in {
         svim = "sudo -e";
         e = "vim";
         se = "svim";
-        ls = "eza";
-        cat = "bat";
-        cd = "z";
+        rm = "safe-rm";
 
         install = "paru -S";
         ii = "paru -S";
-        sw = "home-manager switch";
+        sw = "home-manager switch && hyprctl reload";
 
         ldm = "hyprctl dispatch exit";
       };
@@ -124,8 +108,9 @@ in {
         bindkey "^[[A" up-line-or-beginning-search
         bindkey "^[[B" down-line-or-beginning-search
 
-        eval "$(zoxide init zsh)"
-        ${sgptInit}
+        [[ $- == *i* ]] && eval "$(zoxide init --cmd cd zsh)"
+        [[ $- == *i* ]] && alias ls=eza
+        [[ $- == *i* ]] && alias cat=bat
       '';
       zplug = {
         enable = true;

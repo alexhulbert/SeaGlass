@@ -78,6 +78,32 @@ in
       };
 
       "zoomus.conf".General.xwayland = false;
+
+      "mimeapps.list"."Default Applications" = {
+        # Images - Gwenview
+        "image/png" = "org.kde.gwenview.desktop";
+        "image/jpeg" = "org.kde.gwenview.desktop";
+        "image/gif" = "org.kde.gwenview.desktop";
+        "image/webp" = "org.kde.gwenview.desktop";
+        "image/svg+xml" = "org.kde.gwenview.desktop";
+        "image/bmp" = "org.kde.gwenview.desktop";
+        "image/tiff" = "org.kde.gwenview.desktop";
+
+        # Documents - GNOME Papers
+        "application/pdf" = "org.gnome.Papers.desktop";
+        "application/epub+zip" = "org.gnome.Papers.desktop";
+        "application/x-cbz" = "org.gnome.Papers.desktop";
+        "application/x-cbr" = "org.gnome.Papers.desktop";
+        "image/vnd.djvu" = "org.gnome.Papers.desktop";
+
+        # Text - KWrite
+        "text/plain" = "org.kde.kwrite.desktop";
+        "text/markdown" = "org.kde.kwrite.desktop";
+        "text/csv" = "org.kde.kwrite.desktop";
+        "application/json" = "org.kde.kwrite.desktop";
+        "application/xml" = "org.kde.kwrite.desktop";
+        "text/xml" = "org.kde.kwrite.desktop";
+      };
     };
   };
 

@@ -9,7 +9,9 @@ AddPackage --foreign visual-studio-code-bin # Visual Studio Code (vscode): Edito
 AddPackage filelight # View disk usage information
 AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
 AddPackage --foreign ulauncher # Application launcher for Linux
-AddPackage --foreign pamac-aur # A Gtk3 frontend, Package Manager based on libalpm with AUR and Appstream support
+AddPackage gnome-calendar # Simple and beautiful calendar application designed to perfectly fit the GNOME desktop
+AddPackage papers # Document viewer for PDF and other document formats aimed at the GNOME desktop
+AddPackage variety # Changes the wallpaper on a regular interval using user-specified or automatically downloaded images.
 AddPackage haruna # Video player built with Qt/QML on top of libmpv
 AddPackage ark # Archiving Tool
 AddPackage gimp # GNU Image Manipulation Program

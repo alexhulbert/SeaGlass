@@ -43,6 +43,7 @@ window#waybar > box {
 
 .modules-right {
     margin-right: 9;
+    font-family: "Fira Code Nerd Font";
 }
 
 #clock {
@@ -61,6 +62,9 @@ window#waybar > box {
     color: @error_color_breeze;
 }
 
+#bluetooth {
+  margin-right: 4px;
+}
 
 #pulseaudio, #custom-notification {
     margin-right: -7;

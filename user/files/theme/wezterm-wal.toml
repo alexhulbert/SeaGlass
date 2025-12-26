@@ -1,3 +1,6 @@
+[metadata]
+name = "wezterm-wal"
+
 [colors]
 foreground = "{foreground}"
 background = "{background}"

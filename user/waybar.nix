@@ -101,7 +101,8 @@ in {
         format = "󰂯";
         format-disabled = "󰂲";
         format-connected = "󰂱";
-        format-connected-battery = "󰂱";
+        format-connected-battery = "{icon}";
+        format-icons = ["󰤾" "󰤿" "󰥀" "󰥁" "󰥂" "󰥃" "󰥄" "󰥅" "󰥆" "󰥈"];
         on-click = "${plasma-waybar} toggle bluetooth";
       };
       network = {

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+PRELOAD_WS="special:ffpreload"
+FIREFOX_BIN="/usr/lib/firefox/firefox"
+
+# Check if Firefox is running
+if ! pgrep -x firefox > /dev/null; then
+    # Spawn hidden preload window
+    hyprctl dispatch exec "[workspace $PRELOAD_WS silent] $FIREFOX_BIN about:blank"
+
+    # Wait for Firefox window to appear
+    for _ in {1..50}; do
+        if hyprctl clients -j | jq -e '.[] | select(.class == "firefox")' > /dev/null 2>&1; then
+            break
+        fi
+        sleep 0.1
+    done
+fi
+
+# Get current workspace ID
+current_ws=$(hyprctl activeworkspace -j | jq -r '.id')
+
+# Get Firefox window address on current workspace (if any)
+firefox_addr=$(hyprctl clients -j | jq -r --argjson ws "$current_ws" \
+    '.[] | select(.class == "firefox" and .workspace.id == $ws) | .address' | head -1)
+
+if [ -n "$firefox_addr" ]; then
+    # Focus Firefox on current workspace and open as new tab
+    hyprctl dispatch focuswindow "address:$firefox_addr"
+    exec $FIREFOX_BIN "$@"
+else
+    # Open new Firefox window
+    exec $FIREFOX_BIN --new-window "$@"
+fi

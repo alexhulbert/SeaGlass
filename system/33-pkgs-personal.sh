@@ -35,3 +35,14 @@ AddPackage crun # A fast and lightweight fully featured OCI runtime and C librar
 AddPackage debootstrap # Bootstrap a basic Debian system
 
 CopyFileTo /FlashPrint5.desktop /usr/share/applications/FlashPrint5.desktop
+
+AddPackage blender # A fully integrated 3D graphics creation suite
+AddPackage inkscape # Professional vector graphics editor
+AddPackage docker-buildx # Docker CLI plugin for extended build capabilities with BuildKit
+AddPackage jekyll # A simple, blog aware, static site generator.
+AddPackage kicad # Electronic schematic and printed circuit board (PCB) design tools
+AddPackage --foreign beeper-v4-bin # The ultimate messaging app
+AddPackage --foreign copybara-git # A tool for transforming and moving code between repositories
+AddPackage --foreign gamemaker-beta-bin # Make a game with GameMaker, the best free video game engine. Perfect for beginners and professionals.
+AddPackage --foreign lima-bin # Linux virtual machines, typically on macOS, for running containerd.
+AddPackage --foreign uefitool-bin # UEFI firmware image viewer and editor
