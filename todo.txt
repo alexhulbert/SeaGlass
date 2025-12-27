@@ -1,5 +1,4 @@
 Issues:
-* notifications
 * cpu usage of darkreader file watch & pnote
 * spotify ziro theme
 - widget z-order
