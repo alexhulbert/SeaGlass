@@ -54,7 +54,7 @@ IgnorePath '/usr/share/mime/*.xml' # Localizations
 IgnorePath '/usr/share/mime/XMLnamespaces'
 IgnorePath '/usr/share/mime/aliases' # MIME aliases
 IgnorePath '/usr/share/mime/generic-icons'
-IgnorePath '/usr/share/mime/globs' # File extensions
+IgnorePath '/usr/share/mime/globs'  # File extensions
 IgnorePath '/usr/share/mime/globs2' # Weighted file extensions?
 IgnorePath '/usr/share/mime/icons'
 IgnorePath '/usr/share/mime/magic' # Binary magic database
@@ -80,7 +80,7 @@ IgnorePath '/etc/X11/xorg.conf.d/20-nvidia.conf'
 IgnorePath '/usr/lib/ruby/gems/*'
 
 # spotify pywal
-IgnorePath '/usr/share/spicetify-cli/Themes/Ziro/color.ini'
+IgnorePath '/opt/spicetify-cli/Themes/Ziro/color.ini'
 
 # latex
 IgnorePath '/etc/texmf/*'

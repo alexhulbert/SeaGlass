@@ -1,17 +1,17 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
-let
-  papirus-icons = import ./pkgs/papirus-icons.nix { inherit pkgs; };
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
+  papirus-icons = import ./pkgs/papirus-icons.nix {inherit pkgs;};
   flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
   plasma-manager =
     (import flake-compat {
       src = builtins.fetchTarball "https://github.com/pjones/plasma-manager/archive/9bac5925cf7716979535eed9c88e307fa9744169.tar.gz";
-    }).defaultNix;
-in
-{
+    })
+    .defaultNix;
+in {
   imports = [
     plasma-manager.homeManagerModules.plasma-manager
   ];
@@ -44,20 +44,17 @@ in
         MenuOpacity = 80;
       };
 
-      powermanagementprofilesrc =
-        let
-          events = grp: {
-            lidAction = "null";
-            powerButtonAction = "null";
-            configGroupNesting = [ grp "HandleButtonEvents" ];
-          };
-        in
-        {
-          AC = events "AC";
-          Battery = events "Battery";
-          LowBattery = events "LowBattery";
+      powermanagementprofilesrc = let
+        events = grp: {
+          lidAction = "null";
+          powerButtonAction = "null";
+          configGroupNesting = [grp "HandleButtonEvents"];
         };
-
+      in {
+        AC = events "AC";
+        Battery = events "Battery";
+        LowBattery = events "LowBattery";
+      };
 
       "spicetify/config-xpui.ini" = {
         Setting = {
@@ -107,7 +104,7 @@ in
     };
   };
 
-  outOfStoreSymlinks.xdgConfig."spicetify/Themes/Ziro" = "/usr/share/spicetify-cli/Themes/Ziro";
+  outOfStoreSymlinks.xdgConfig."spicetify/Themes/Ziro" = "/opt/spicetify-cli/Themes/Ziro";
 
   # Plasma theme
   outOfStoreSymlinks.xdgData."plasma/look-and-feel/seaglass" = "${builtins.toString ./.}/files/theme/kde-theme";
@@ -143,9 +140,11 @@ in
         "Source Han Serif JP"
         "Source Han Serif K"
       ];
-      /*emoji = [
+      /*
+        emoji = [
         "Apple Color Emoji"
-      ];*/
+      ];
+      */
     };
   };
 }

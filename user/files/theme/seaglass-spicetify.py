@@ -45,7 +45,7 @@ for key, value in color_mapping.items():
     colorfile.set("pywal", key, color)
 
 # Path to the spicetify theme
-colorfile_path = "/usr/share/spicetify-cli/Themes/Ziro/color.ini"
+colorfile_path = "/opt/spicetify-cli/Themes/Ziro/color.ini"
 
 # Check if we have write access to colorfile_path
 # If not, use sudo to give everyone write access
