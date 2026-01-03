@@ -40,7 +40,7 @@ in
       After = [ "user-path-import.service" ];
     };
     services = {
-      ags = (generateService "ags" "agsv1");
+      ags = (generateService "ags" "ags run ${config.xdg.configHome}/ags/app.ts");
       swayosd = (generateService "swayosd" "swayosd-server");
       ulauncher = (generateServiceWith "ulauncher" "ulauncher --hide-window --no-window --no-window-shadow" { Unit.After = [ "seaglass-theme.service" ]; });
       waybar = (generateServiceWith "waybar" "${config.programs.waybar.package}/bin/waybar" { Unit.After = [ "seaglass-theme.service" ]; });

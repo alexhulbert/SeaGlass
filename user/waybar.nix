@@ -32,7 +32,7 @@
       plasmoid = "org.kde.plasma.eventcalendar";
     };
     battery = {
-      title = "Power and Battery";
+      title = "Power Management";
       width = 500;
       height = 270;
       plasmoid = "org.kde.plasma.battery";

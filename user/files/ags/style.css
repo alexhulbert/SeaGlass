@@ -1,9 +1,9 @@
 .icon {
-  font-size: 120;
+  font-size: 120px;
   min-width: 200px;
   min-height: 200px;
   background-color: rgba(255, 255, 255, 0.075);
-  margin: 10;
+  margin: 10px;
   transition-duration: 0.2s;
   transition-property: background-color, color;
 }
@@ -13,23 +13,23 @@
   padding-right: 43px;
 }
 
-#display-switcher widget:nth-child(3) > .icon,
-#power-menu widget:nth-child(4) > .icon {
+#display-switcher eventbox:nth-child(3) > .icon,
+#power-menu eventbox:nth-child(4) > .icon {
   min-width: 180px;
   padding-right: 20px;
 }
 
-#display-switcher widget:nth-child(4) > .icon {
+#display-switcher eventbox:nth-child(4) > .icon {
   min-width: 165px;
   padding-right: 35px;
 }
 
-box:nth-child(2) > widget:nth-child(2) > .icon {
+box:nth-child(2) > eventbox:nth-child(2) > .icon {
   min-width: 175px;
   padding-right: 25px;
 }
 
-box:nth-child(2) > widget:nth-child(1) > .icon {
+box:nth-child(2) > eventbox:nth-child(1) > .icon {
   min-width: 185px;
   padding-right: 15px;
 }
@@ -39,24 +39,24 @@ window {
 }
 
 window > box, .icon {
-  border-radius: 10;
+  border-radius: 10px;
 }
 
 window > box {
-  padding: 5;
-  border-radius: 10;
+  padding: 5px;
+  border-radius: 10px;
   margin: 8px;
   box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
 }
 
 .selection-label {
-  font-size: 16;
-  margin-top: -5;
-  margin-bottom: 5;
+  font-size: 16px;
+  margin-top: -5px;
+  margin-bottom: 5px;
 }
 
 .icon.hover {
-  margin: 8;
+  margin: 8px;
   background-color: rgba(255, 255, 255, 0.15);
   border: 2px solid @borders_breeze;
 }

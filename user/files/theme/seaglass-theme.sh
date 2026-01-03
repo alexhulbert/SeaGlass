@@ -3,44 +3,38 @@
 # light=true
 
 if [ -z "$1" ]; then
-	wallpaper="$(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt)"
+  wallpaper="$(cat ~/.config/variety/wallpaper/wallpaper.jpg.txt)"
 else
-	wallpaper=$1
+  wallpaper=$1
 fi
 
 if [ -e "$wallpaper.scheme" ]; then
-	echo test
-	# pass
+  echo test
+  # pass
 else
-	rm ~/.cache/wallpaper
-	ln -s "$wallpaper" ~/.cache/wallpaper
-	echo "$wallpaper" >~/.cache/wallpaper-path
-	if ! pgrep -x "swww-daemon" >/dev/null; then
-		export SWWW_TRANSITION_STEP=255
-	fi
-	swww-daemon --no-cache &
-	swww img "$wallpaper"
+  rm ~/.cache/wallpaper
+  ln -s "$wallpaper" ~/.cache/wallpaper
+  echo "$wallpaper" >~/.cache/wallpaper-path
+  if ! pgrep -x "swww-daemon" >/dev/null; then
+    export SWWW_TRANSITION_STEP=255
+  fi
+  swww-daemon --no-cache &
+  swww img "$wallpaper"
 fi
 
-echo ABC
-if [ -n "$light" ]; then
-	kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wall -ko 84 --scheme-variant 6
-else
-	kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6
-fi
-echo XYZ
+kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 2>/dev/null
 source ~/.cache/wal/colors.sh
 sed -i "/\[Colors:Window]/,+2 s/=#....../=$background/g" ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -Ei '/\[Colors:(Header|Tooltip|Complementary)\]/,+2 s/=#/=#D4/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i '/\[Colors:View\]/,+2 s/=#/=#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 
-lookandfeeltool -a "$HOME/.local/share/plasma/look-and-feel/sealass"
+lookandfeeltool -a seaglass
 if [ -n "$light" ]; then
-	plasma-apply-colorscheme MaterialYouLight2
-	plasma-apply-colorscheme MaterialYouLight
+  plasma-apply-colorscheme MaterialYouLight2
+  plasma-apply-colorscheme MaterialYouLight
 else
-	plasma-apply-colorscheme MaterialYouDark2
-	plasma-apply-colorscheme MaterialYouDark
+  plasma-apply-colorscheme MaterialYouDark2
+  plasma-apply-colorscheme MaterialYouDark
 fi
 
 # change breeze gtk background to match qt
@@ -51,8 +45,8 @@ sed -i "s/$gtkBkg/$background/g" ~/.config/gtk-4.0/colors.css
 
 # add selection colors
 for file in "$HOME/.config/gtk-3.0/colors.css" "$HOME/.config/gtk-4.0/colors.css"; do
-	mkdir -p "$(dirname "$file")"
-	grep -q "@define-color selected_bg_color" "$file" 2>/dev/null || echo "
+  mkdir -p "$(dirname "$file")"
+  grep -q "@define-color selected_bg_color" "$file" 2>/dev/null || echo "
 @define-color selected_bg_color @theme_selected_bg_color_breeze;
 @define-color selected_fg_color @theme_selected_fg_color_breeze;" >>"$file"
 done
