@@ -2,7 +2,6 @@ Issues:
 * cpu usage of darkreader file watch & pnote
 * spotify ziro theme
 - widget z-order
-- Plasma EventCalendar replacement
 . xwayland dpi fix
 ? sidebar crash
 

@@ -22,14 +22,14 @@
       rev = "bbb7f377612ba66bcd2d11541cea127ff5b0b284";
       hash = "sha256-2YlUBiKbQnqZf6jX7ePtVK96+rtCHo1sIPCht6B99mY=";
     };
-    mesonFlags = (old.mesonFlags or []) ++ [ "-Dcava=disabled" ];
+    mesonFlags = (old.mesonFlags or []) ++ ["-Dcava=disabled"];
   });
   plasmoids = {
     eventcal = {
-      title = "Calendar";
-      width = 500;
+      title = "Event Calendar";
+      width = 1000;
       height = 500;
-      plasmoid = "org.kde.plasma.calendar";
+      plasmoid = "org.kde.plasma.eventcalendar";
     };
     battery = {
       title = "Power and Battery";
