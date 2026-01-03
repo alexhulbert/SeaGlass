@@ -17,7 +17,7 @@
 in {
   config.programs.vscode = {
     enable = true;
-    userSettings = {
+    profiles.default.userSettings = {
       "workbench.colorTheme" = "Wal";
       "breadcrumbs.enabled" = false;
       "window.menuBarVisibility" = "toggle";
@@ -67,7 +67,7 @@ in {
         "VISUAL" = "code --wait";
       };
     };
-    keybindings = [
+    profiles.default.keybindings = [
       {
         key = "ctrl+c";
         command = "workbench.action.terminal.copySelection";
@@ -87,7 +87,7 @@ in {
         command = "workbench.action.showCommands";
       }
     ];
-    extensions = with pkgs.vscode-utils; [
+    profiles.default.extensions = with pkgs.vscode-utils; [
       theme
       (buildVscodeMarketplaceExtension {
         mktplcRef = {
@@ -114,6 +114,6 @@ in {
   };
 
   config.mutableConfig.files = {
-    "${config.xdg.configHome}/Code/User/settings.json" = config.programs.vscode.userSettings;
+    "${config.xdg.configHome}/Code/User/settings.json" = config.programs.vscode.profiles.default.userSettings;
   };
 }

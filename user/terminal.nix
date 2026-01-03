@@ -23,17 +23,6 @@ in {
     ];
   };
 
-  config.home.file.".zshenv" = lib.mkForce {
-    text =
-      ''
-        ${config.lib.shell.exportAll config.home.sessionVariables}
-      ''
-      + lib.optionalString (config.home.sessionPath != []) ''
-        export PATH="$PATH''${PATH:+:}${builtins.concatStringsSep ":" config.home.sessionPath}"
-      ''
-      + config.home.sessionVariablesExtra;
-  };
-
   config.xdg.configFile."cod/config.toml".source = (pkgs.formats.toml {}).generate "cod.toml" {
     rule = [
       {
@@ -80,12 +69,12 @@ in {
 
         ldm = "hyprctl dispatch exit";
       };
-      initExtra = ''
+      initContent = ''
         bindkey '^A' beginning-of-line
-        bindkey '^H' backward-kill-word
+        bindkey '^H' vi-backward-kill-word
         bindkey '5~' kill-word
-        bindkey '^[[1;5C' forward-word
-        bindkey '^[[1;5D' backward-word
+        bindkey '^[[1;5C' vi-forward-word
+        bindkey '^[[1;5D' vi-backward-word
 
         ZSH_AUTOSUGGEST_STRATEGY=(history completion)
         ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=magenta'

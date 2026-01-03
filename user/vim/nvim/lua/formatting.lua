@@ -1,43 +1,44 @@
-local null_ls = require("null-ls")
+local conform = require("conform")
+local lint = require("lint")
 
-local lsp_formatting = function(bufnr)
-	vim.lsp.buf.format({
-		filter = function(client)
-			return client.name == "null-ls"
-		end,
-		bufnr = bufnr,
-	})
-end
-
-local on_attach = function(client, bufnr)
-	if client.supports_method("textDocument/formatting") then
-		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			group = augroup,
-			buffer = bufnr,
-			callback = function()
-				lsp_formatting(bufnr)
-			end,
-		})
-	end
-end
-
-null_ls.setup({
-	-- add your sources / config options here
-	sources = {
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.prettier,
-		null_ls.builtins.formatting.uncrustify,
-		null_ls.builtins.diagnostics.shellcheck,
-		null_ls.builtins.diagnostics.stylelint,
-		null_ls.builtins.diagnostics.jsonlint,
-		null_ls.builtins.formatting.alejandra,
-		null_ls.builtins.formatting.shfmt,
-		null_ls.builtins.formatting.rustfmt.with({
-			extra_args = { "--edition=2021" },
-		}),
+conform.setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		javascript = { "prettier" },
+		typescript = { "prettier" },
+		javascriptreact = { "prettier" },
+		typescriptreact = { "prettier" },
+		css = { "prettier" },
+		html = { "prettier" },
+		json = { "prettier" },
+		yaml = { "prettier" },
+		markdown = { "prettier" },
+		c = { "uncrustify" },
+		cpp = { "uncrustify" },
+		nix = { "alejandra" },
+		sh = { "shfmt" },
+		bash = { "shfmt" },
+		rust = { "rustfmt" },
 	},
-	on_attach = on_attach,
-	-- you can reuse a shared lspconfig on_attach callback here
-	debug = false,
+	formatters = {
+		rustfmt = {
+			prepend_args = { "--edition=2021" },
+		},
+	},
+	format_on_save = {
+		timeout_ms = 500,
+		lsp_fallback = true,
+	},
+})
+
+lint.linters_by_ft = {
+	sh = { "shellcheck" },
+	bash = { "shellcheck" },
+	css = { "stylelint" },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "InsertLeave" }, {
+	callback = function()
+		lint.try_lint()
+	end,
 })

@@ -19,7 +19,7 @@ in {
       withPython3 = false;
       extraPackages = with pkgs; [
         nil
-        sumneko-lua-language-server
+        lua-language-server
         stylua
         uncrustify
         shellcheck
@@ -31,11 +31,10 @@ in {
         black
         shellcheck
         shfmt
-        nodejs-18_x
+        nodejs_20
         marksman
         nodePackages.prettier
         nodePackages.stylelint
-        nodePackages.jsonlint
         nodePackages.typescript-language-server
         nodePackages.vscode-langservers-extracted
         nodePackages.bash-language-server
@@ -44,9 +43,10 @@ in {
       plugins = with pkgs.vimPlugins; [
         pywal-nvim
         vim-nix
-        rust-tools-nvim
+        rustaceanvim
         crates-nvim
-        null-ls-nvim
+        conform-nvim
+        nvim-lint
 
         # copilot-vim
         vim-fugitive

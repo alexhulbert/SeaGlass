@@ -13,13 +13,12 @@ local servers = {
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-for _, lsp in pairs(servers) do
-    require("lspconfig")[lsp].setup({
+for _, server in pairs(servers) do
+    vim.lsp.config(server, {
         capabilities = capabilities,
-        flags = {
-            debounce_text_changes = 200,
-        },
     })
 end
 
-require("rust-tools").setup()
+vim.lsp.enable(servers)
+
+vim.g.rustaceanvim = {}

@@ -12,6 +12,7 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
+- hypr-plasmoid documentation
 - light color schemes (paper)
   - firefox
   - vscode

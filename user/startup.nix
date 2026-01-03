@@ -43,8 +43,7 @@ in
       ags = (generateService "ags" "agsv1");
       swayosd = (generateService "swayosd" "swayosd-server");
       ulauncher = (generateServiceWith "ulauncher" "ulauncher --hide-window --no-window --no-window-shadow" { Unit.After = [ "seaglass-theme.service" ]; });
-      plasma-waybar = (generateServiceWith "plasma-waybar" "plasma-waybar" { Unit.After = [ "swaync.service" ]; });
-      waybar = (generateServiceWith "waybar" "waybar" { Unit.After = [ "seaglass-theme.service" ]; });
+      waybar = (generateServiceWith "waybar" "${config.programs.waybar.package}/bin/waybar" { Unit.After = [ "seaglass-theme.service" ]; });
       polkit-kde-auth = (generateService "polkit-kde-auth" "/usr/lib/polkit-kde-authentication-agent-1");
       powerdevil = (generateService "powerdevil" "/usr/lib/org_kde_powerdevil");
       xdg-desktop-portal-hyprland = (generateService "xdg-desktop-portal-hyprland" "/usr/lib/xdg-desktop-portal-hyprland");
@@ -58,6 +57,7 @@ in
       swww-daemon = generateService "swww" "swww-daemon";
       hypridle = generateService "hypridle" "hypridle";
       variety = generateService "variety" "variety -n";
+      hypr-plasmoid = generateService "hypr-plasmoid" "hypr-plasmoid daemon";
       # "1password" = (generateService "1password" "1password --disable-gpu --silent --ozone-platform-hint=auto");
     };
   };
@@ -105,6 +105,7 @@ in
           "networkstatus"
           "smbwatcher"
           "device_automounter"
+          "statusnotifierwatcher"
         )
 
         for module in $moduleNames; do

@@ -15,8 +15,8 @@ in {
       name = "git";
       cmds = ["git"];
     };
-    userName = "alexhulbert";
-    userEmail = "alex@alexhulbert.com";
+    settings.user.name = "alexhulbert";
+    settings.user.email = "alex@alexhulbert.com";
   };
 
   # shorter names for ~ subdirs

@@ -4,8 +4,26 @@
   lib,
   ...
 }: let
-  shim = import ./pkgs/shim.nix { inherit pkgs; };
-  plasma-waybar = ./files/plasma-waybar.py;
+  hypr-plasmoid = pkgs.rustPlatform.buildRustPackage {
+    pname = "hypr-plasmoid";
+    version = "0.1.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "alexhulbert";
+      repo = "hypr-plasmoid";
+      rev = "213df0d2c5dfbafc606af89a5db14c00ebebeb1b";
+      hash = "sha256-CN48k6+jbVrrBI/M/XfrPzZdq+NhpvmNfTDq+IcoUJU=";
+    };
+    cargoHash = "sha256-/QENSkJDLzdvXCBTTX8fIa074v1JEwLzhNzFk0FI/Lc=";
+  };
+  waybar-patched = pkgs.waybar.overrideAttrs (old: {
+    src = pkgs.fetchFromGitHub {
+      owner = "andresilva";
+      repo = "Waybar";
+      rev = "bbb7f377612ba66bcd2d11541cea127ff5b0b284";
+      hash = "sha256-2YlUBiKbQnqZf6jX7ePtVK96+rtCHo1sIPCht6B99mY=";
+    };
+    mesonFlags = (old.mesonFlags or []) ++ [ "-Dcava=disabled" ];
+  });
   plasmoids = {
     eventcal = {
       title = "Calendar";
@@ -47,100 +65,104 @@
 in {
   programs.waybar = {
     enable = true;
-    package = shim {
-      name = "waybar";
-      cmds = ["waybar"];
-    };
+    package = waybar-patched;
     style = ./files/theme/waybar.css;
-    settings = [{
-      spacing = 8;
-      modules-left = ["hyprland/workspaces"];
-      modules-center = [];
-      modules-right = [
-        "tray"
-        "custom/notification"
-        "custom/kde-connect"
-        "pulseaudio"
-        "bluetooth"
-        "network"
-        "battery"
-        "clock"
-      ];
-      "hyprland/workspaces".all-outputs = true;
-      tray.spacing = 10;
-      "custom/kde-connect" = {
+    settings = [
+      {
+        spacing = 8;
+        modules-left = ["hyprland/workspaces"];
+        modules-center = [];
+        modules-right = [
+          "tray"
+          "custom/notification"
+          "custom/kde-connect"
+          "pulseaudio"
+          "bluetooth"
+          "network"
+          "battery"
+          "clock"
+        ];
+        "hyprland/workspaces".all-outputs = true;
+        tray = {
+          spacing = 10;
+          icons = {
+            "plasmawindowed_org.kde.plasma.bluetooth" = false;
+            "plasmawindowed_org.kde.plasma.battery" = false;
+            "plasmawindowed_org.kde.plasma.networkmanagement" = false;
+            "plasmawindowed_org.kde.kdeconnect" = false;
+          };
+        };
+        "custom/kde-connect" = {
           format = "󰄜";
-          on-click = "${plasma-waybar} toggle kde-connect";
-      };
-      "custom/notification" = {
-        tooltip = false;
-        format = "{icon} ";
-        format-icons = {
-          notification = "󱅫";
-          none = "󰂚";
-          dnd-notification = "󱏧";
-          dnd-none = "󱏧";
+          on-click = "hypr-plasmoid toggle kde-connect";
+          on-click-right = "hypr-plasmoid config kde-connect";
         };
-        return-type = "json";
-        exec-if = "which swaync-client";
-        exec = "swaync-client -swb";
-        on-click = "sleep 0.1 && ${plasma-waybar} hide-all && swaync-client -t -sw";
-      };
-      pulseaudio = {
-        format = "{icon}";
-        format-bluetooth = "{icon}";
-        format-bluetooth-muted = "󰝟 ";
-        format-muted = "󰝟 ";
-        format-icons = {
-          default = ["󰕿 " "󰖀 " "󰕾 "];
-          headphone = "󰋋 ";
+        "custom/notification" = {
+          tooltip = false;
+          format = "{icon} ";
+          format-icons = {
+            notification = "󱅫";
+            none = "󰂚";
+            dnd-notification = "󱏧";
+            dnd-none = "󱏧";
+          };
+          return-type = "json";
+          exec-if = "which swaync-client";
+          exec = "swaync-client -swb";
+          on-click = "sleep 0.1 && hypr-plasmoid hide-all && swaync-client -t -sw";
         };
-        on-click = "${plasma-waybar} toggle audio";
-      };
-      bluetooth = {
-        format = "󰂯";
-        format-disabled = "󰂲";
-        format-connected = "󰂱";
-        format-connected-battery = "{icon}";
-        format-icons = ["󰤾" "󰤿" "󰥀" "󰥁" "󰥂" "󰥃" "󰥄" "󰥅" "󰥆" "󰥈"];
-        on-click = "${plasma-waybar} toggle bluetooth";
-      };
-      network = {
-        format = "{icon} ";
-        format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
-        format-linked = "󰤩 ";
-        format-ethernet = "󰈀 ";
-        format-disconnected = "󰤮 ";
-        on-click = "${plasma-waybar} toggle network";
-      };
-      battery = {
-        states = {
-          warning = 30;
-          critical = 15;
+        pulseaudio = {
+          format = "{icon}";
+          format-bluetooth = "{icon}";
+          format-bluetooth-muted = "󰝟 ";
+          format-muted = "󰝟 ";
+          format-icons = {
+            default = ["󰕿 " "󰖀 " "󰕾 "];
+            headphone = "󰋋 ";
+          };
+          on-click = "hypr-plasmoid toggle audio";
+          on-click-right = "hypr-plasmoid config audio";
         };
-        format = "{icon} ";
-        format-charging = " ";
-        format-full = " ";
-        format-icons = ["" "" "" "" ""];
-        on-click = "${plasma-waybar} toggle battery";
-      };
-      clock = {
-        format = "{:%I:%M %p}";
-        on-click = "${plasma-waybar} toggle eventcal";
-      };
-    }];
+        bluetooth = {
+          format = "󰂯";
+          format-disabled = "󰂲";
+          format-connected = "󰂱";
+          format-connected-battery = "{icon}";
+          format-icons = ["󰤾" "󰤿" "󰥀" "󰥁" "󰥂" "󰥃" "󰥄" "󰥅" "󰥆" "󰥈"];
+          on-click = "hypr-plasmoid toggle bluetooth";
+          on-click-right = "hypr-plasmoid config bluetooth";
+        };
+        network = {
+          format = "{icon} ";
+          format-icons = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+          format-linked = "󰤩 ";
+          format-ethernet = "󰈀 ";
+          format-disconnected = "󰤮 ";
+          on-click = "hypr-plasmoid toggle network";
+          on-click-right = "hypr-plasmoid config network";
+        };
+        battery = {
+          states = {
+            warning = 30;
+            critical = 15;
+          };
+          format = "{icon} ";
+          format-charging = " ";
+          format-full = " ";
+          format-icons = ["" "" "" "" ""];
+          on-click = "hypr-plasmoid toggle battery";
+          on-click-right = "hypr-plasmoid config battery";
+        };
+        clock = {
+          format = "{:%I:%M %p}";
+          on-click = "hypr-plasmoid toggle eventcal";
+          on-click-right = "hypr-plasmoid config eventcal";
+        };
+      }
+    ];
   };
 
-  home.file.".local/bin/plasma-waybar".source = plasma-waybar;
+  xdg.configFile."hypr/plasmoids.json".text = builtins.toJSON plasmoids;
 
-  xdg.configFile = {
-    "hypr/plasmoids.json".text = builtins.toJSON plasmoids;
-    "hypr/plasmoids.conf".text = builtins.concatStringsSep "\n" (
-      lib.attrsets.mapAttrsToList (plasmoid_name: plasmoid: ''
-        windowrulev2 = move 0 -200%,title:^(${plasmoid.title})$
-        windowrulev2 = workspace special:scratch_${plasmoid_name} silent,title:^(${plasmoid.title})$
-        windowrulev2 = size ${toString plasmoid.width} ${toString plasmoid.height}, title:^(${plasmoid.title})$
-      '') plasmoids
-    );
-  };
+  home.file.".local/bin/hypr-plasmoid".source = "${hypr-plasmoid}/bin/hypr-plasmoid";
 }
