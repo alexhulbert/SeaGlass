@@ -23,6 +23,8 @@ IgnorePath '/etc/hostname'
 IgnorePath '/etc/localtime'
 IgnorePath '/etc/containers/*'
 IgnorePath '/etc/libvirt/*'
+IgnorePath '/etc/audisp'
+IgnorePath '/etc/audit/*'
 
 IgnorePath '/etc/.updated'
 IgnorePath '/var/.updated'

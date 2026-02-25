@@ -1,9 +1,5 @@
 Issues:
-* cpu usage of darkreader file watch & pnote
-* spotify ziro theme
 - widget z-order
-. xwayland dpi fix
-? sidebar crash
 
 Install Fixes:
 - mkdir -p basepath on injectMutableSettings
@@ -11,6 +7,8 @@ Install Fixes:
 - publish copilot2ctrl with pkgbuild
 
 Etc:
+- userscript for new window
+- firefox-smart x bit
 - hypr-plasmoid documentation
 - light color schemes (paper)
   - firefox
