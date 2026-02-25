@@ -16,6 +16,7 @@ in {
       GOPATH = "${config.home.homeDirectory}/.go";
       EDITOR = "vim";
       VISUAL = "vim";
+      ZSH_AI_CMD_PROVIDER = "anthropic";
     };
     sessionPath = [
       "${config.home.homeDirectory}/.local/bin"
@@ -75,6 +76,8 @@ in {
         bindkey '5~' kill-word
         bindkey '^[[1;5C' vi-forward-word
         bindkey '^[[1;5D' vi-backward-word
+        bindkey '^?' backward-delete-char
+        bindkey '^[[3~' delete-char
 
         ZSH_AUTOSUGGEST_STRATEGY=(history completion)
         ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=magenta'
@@ -109,6 +112,7 @@ in {
           {name = "zsh-users/zsh-syntax-highlighting";}
           {name = "zsh-users/zsh-history-substring-search";}
           {name = "ptavares/zsh-direnv";}
+          {name = "kylesnowschwartz/zsh-ai-cmd";}
         ];
       };
     };
