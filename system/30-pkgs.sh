@@ -17,7 +17,7 @@ AddPackage git # the fast distributed version control system
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 AddPackage sof-firmware # Sound Open Firmware
 AddPackage fuse2 # A library that makes it possible to implement a filesystem in a userspace program.
-AddPackage nodejs-lts-iron # Evented I/O for V8 javascript (LTS release: Iron)
+AddPackage nodejs # Evented I/O for V8 javascript ("Current" release)
 AddPackage npm # A package manager for JavaScript
 AddPackage libvips # A fast image processing library with low memory needs
 AddPackage pkgfile # a pacman .files metadata explorer
@@ -30,6 +30,7 @@ AddPackage tailscale # A mesh VPN that makes it easy to connect your devices, wh
 AddPackage ntfs-3g # NTFS filesystem driver and utilities
 AddPackage sshfs # FUSE client based on the SSH File Transfer Protocol
 AddPackage jdk17-openjdk # OpenJDK Java 17 development kit
+AddPackage jdk21-openjdk # OpenJDK Java 21 development kit
 AddPackage alsa-firmware # Firmware binaries for loader programs in alsa-tools and hotplug firmware loader
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage interception-tools # A minimal composable infrastructure on top of libudev and libevdev

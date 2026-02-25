@@ -1,6 +1,8 @@
 AddPackage firefox # Standalone web browser from mozilla.org
 AddPackage --foreign legacyfox # Legacy bootstrapped extensions for Firefox 65 and beyond
-AddPackage nvidia # NVIDIA kernel modules
+AddPackage nvidia-open # NVIDIA open kernel modules
+AddPackage libva-nvidia-driver # VA-API implementation that uses NVDEC as a backend
+AddPackage vlc # Free and open source cross-platform multimedia player and framework
 AddPackage xsettingsd # Provides settings to X11 applications via the XSETTINGS specification
 AddPackage plymouth # Graphical boot splash screen
 AddPackage --foreign wezterm-git # A terminal emulator implemented in Rust, using OpenGL ES 2 for rendering.
@@ -65,7 +67,7 @@ AddPackage waybar # Highly customizable Wayland bar for Sway and Wlroots based c
 AddPackage swww # A Solution to your Wayland Wallpaper Woes
 AddPackage xdg-desktop-portal-hyprland # xdg-desktop-portal backend for hyprland
 AddPackage xdg-desktop-portal-gnome # Backend implementation for xdg-desktop-portal for the GNOME desktop environment
-AddPackage --foreign aylurs-gtk-shell # Aylur's Gtk Shell v2 (AGS), A customizable and extensible shell.
+AddPackage --foreign aylurs-gtk-shell-git # Aylurs's Gtk Shell (AGS), An eww inspired gtk widget system.
 AddPackage hyprshot # A utility to easily take screenshots in Hyprland using your mouse
 AddPackage --foreign pyprland # Easy scratchpads, smart monitor placement and more Hyprland tweaks
 AddPackage --foreign swayosd-git # A GTK based on screen display for keyboard shortcuts like caps-lock and volume

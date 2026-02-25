@@ -9,7 +9,7 @@ AddPackage --foreign mullvad-vpn-bin # The Mullvad VPN client app for desktop
 AddPackage --foreign prismlauncher-qt5-bin # Minecraft launcher with ability to manage multiple instances.
 AddPackage obs-studio # Free, open source software for live streaming and recording
 AddPackage --foreign cassowary # Run Windows Applications inside a VM on Linux as if they are native.
-AddPackage moonlight-qt # GameStream client for PCs (Windows, Mac, and Linux)
+AddPackage --foreign moonlight-qt-git # GameStream client for PCs
 AddPackage --foreign fx_cast-bin # Implementation of the Google Cast Chrome Sender SDK within Firefox
 AddPackage --foreign flashprint # Slicer for the FlashForge 3D printers.
 AddPackage --foreign platformio # A cross-platform code builder and library manager
@@ -26,10 +26,9 @@ AddPackage cargo-nextest # A next-generation test runner for Rust.
 AddPackage podman # Tool and library for running OCI-based containers in pods
 AddPackage musl # Lightweight implementation of C standard library
 AddPackage repo # The Multiple Git Repository Tool from the Android Open Source Project
-AddPackage openssl-1.1 # The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
+AddPackage --foreign openssl-1.1 # The Open Source toolkit for Secure Sockets Layer and Transport Layer Security
 AddPackage docker-compose # Fast, isolated development environments using Docker
 AddPackage qemu-full # A full QEMU setup
-AddPackage debian-archive-keyring # GnuPG archive keys of the Debian archive
 AddPackage edk2-ovmf # Firmware for Virtual Machines (x86_64, i686)
 AddPackage crun # A fast and lightweight fully featured OCI runtime and C library for running containers
 AddPackage debootstrap # Bootstrap a basic Debian system
@@ -46,3 +45,5 @@ AddPackage --foreign copybara-git # A tool for transforming and moving code betw
 AddPackage --foreign gamemaker-beta-bin # Make a game with GameMaker, the best free video game engine. Perfect for beginners and professionals.
 AddPackage --foreign lima-bin # Linux virtual machines, typically on macOS, for running containerd.
 AddPackage --foreign uefitool-bin # UEFI firmware image viewer and editor
+AddPackage --foreign flutter-bin # Cross platform widget toolkit for Dart (monolithic)
+AddPackage --foreign foundry-bin # Blazing fast, portable and modular Ethereum development toolkit written in Rust
