@@ -27,7 +27,7 @@ in {
 
   programs.zsh.profileExtra = ''
     if [ -z "$DISPLAY" ] && [ "$XDG_VTNR" = 1 ]; then
-      exec zsh -c "Hyprland | logger -t hyprland; sleep 10; systemctl --user stop hyprland.target"
+      exec zsh -c "start-hyprland | logger -t hyprland; sleep 10; systemctl --user stop hyprland.target"
     fi
   '';
 

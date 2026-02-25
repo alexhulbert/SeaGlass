@@ -28,17 +28,19 @@ if [ "$1" = "--ssb" ]; then
   encoded_url=$(jq -rn --arg url "$url" '$url | @uri' | sed 's/%/=-=/g')
   ssb_url="moz-extension://${SSB_EXT_ID}/ssb.html?url=${encoded_url}&name=${title_id}&incognito=false&alternative=false"
 
-  # Set windowrule to send new Firefox windows to scratchpad
-  hyprctl keyword windowrulev2 "workspace $scratch_ws silent, class:^(firefox)$"
+  # Set named windowrule to send new Firefox windows to scratchpad
+  rule_name="ssb-${name}"
+  hyprctl keyword "windowrule[${rule_name}]:match:class" '^(firefox)$'
+  hyprctl keyword "windowrule[${rule_name}]:workspace" "$scratch_ws silent"
 
   # Launch Firefox
   $FIREFOX_BIN --new-window "$ssb_url"
 
-  # Wait for window with our title, then float it and remove rule
+  # Wait for window with our title, then float it and disable rule
   for _ in {1..50}; do
     addr=$(hyprctl clients -j | jq -r --arg title "$title_id" '.[] | select(.title | contains($title)) | .address' | head -1)
     if [ -n "$addr" ]; then
-      hyprctl keyword windowrulev2 "unset, class:^(firefox)$"
+      hyprctl keyword "windowrule[${rule_name}]:enable" false
       hyprctl dispatch setfloating "address:$addr"
       exit 0
     fi
@@ -46,7 +48,7 @@ if [ "$1" = "--ssb" ]; then
   done
 
   # Cleanup rule even if window not found
-  hyprctl keyword windowrulev2 "unset, class:^(firefox)$"
+  hyprctl keyword "windowrule[${rule_name}]:enable" false
   exit 0
 fi
 

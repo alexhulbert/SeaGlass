@@ -10,8 +10,8 @@
     src = pkgs.fetchFromGitHub {
       owner = "alexhulbert";
       repo = "hypr-plasmoid";
-      rev = "2471cc5ae2b007be14a16f8ceaeac32c83601386";
-      hash = "sha256-qEz1o2+W2cNplrxO5dWQFRWcBemFVGrsBV3rh5Ym0/s=";
+      rev = "9567639ab6a65c708ab941646b8e64c99e3c62cd";
+      hash = "sha256-cM9x1ob7Z+RSnzSu5j5uVN0FRI8isC5MN/Kv9UBpQz4=";
     };
     cargoHash = "sha256-eXSMwDzQB6wh8grTLVxbS53i8Dv2sAStBc4I5/Ph/sM=";
   };
