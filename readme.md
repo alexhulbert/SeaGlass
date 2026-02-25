@@ -17,7 +17,7 @@ This repository is designed to provide quick and automatic configuration of all 
 Currently, this repository works well, but useful features such as the ones mentioned above are intermingled with various personal configuration changes. These configuration files need to be cleaned up to modularize the various features they provide, but in the meantime, here is a quick summary of how some of the features work:
 
  <h3>Color Scheme Engine</h3>
- The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a>, <a href="https://github.com/luisbocanegra/kde-material-you-colors">kde-material-you-colors</a>, and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon</a>. This fork attaches to a custom native extension that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/files/darkreader.xpi">user/files/darkreader.xpi</a> for firefox and <a href="user/files/darkreader-chrome.zip">user/files/darkreader-chrome.zip</a> for Chrome. The associated native extension is available in <a href="user/files/darkreader">user/files/darkreader</a>. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>.
+ The color scheme engine is implemented with a combination of <a href="https://github.com/dylanaraps/pywal">pywal templates</a>, <a href="https://github.com/luisbocanegra/kde-material-you-colors">kde-material-you-colors</a>, and <a href="https://github.com/alexhulbert/darkreader">a custom fork of the dark reader addon</a>. This fork attaches to a custom native messaging host that forwards the current pywal color scheme to the addon process. A compiled version of the dark reader fork is available in <a href="user/files/darkreader.xpi">user/files/darkreader.xpi</a> for firefox and <a href="user/files/darkreader-chrome.zip">user/files/darkreader-chrome.zip</a> for Chrome. The native messaging host is a small C program (<a href="user/files/coloreader-native.c">user/files/coloreader-native.c</a>) that uses inotify to watch for pywal color changes. Everything else is in <a href="user/firefox.nix">user/firefox.nix</a>.
 
 <h3>Global Transparency</h3>
 The OS-wide frosted glass effect is achieved with a combination of <a href="https://github.com/Luwx/Lightly">lightly-qt</a> and <a href="https://github.com/alexhulbert/hyprchroma">a custom Hyprland plugin</a>. This plugin applies a GLSL shader to each window which uses the chromakey algorithm to selectively apply transparency to the system background color and colors close to it. An older commit of this repository contains the necessary configuration to apply a similar effect in i3.
@@ -36,28 +36,33 @@ Since this is a pretty broad repository and different people are likely going to
 
 I would imagine that most people visiting this repository are primarily interested in the firefox customizations contained within it, and would prefer to apply them as easily as possible to their existing configuration. If you're comfortable using nix home-manager, you can just add <a href="user/firefox.nix">firefox.nix</a> to your home-manager configuration and run `home-manager switch`. If you're not comfortable with home-manager, you can still apply the firefox customization manually.
 
-The following steps should be sufficient to apply the firefox customization to any existing Linux installation, assuming you already have pywal and nodejs installed and working.
+The following steps should be sufficient to apply the firefox customization to any existing Linux installation, assuming you already have pywal installed and working.
 
-1. Put the following content in `~/.mozilla/native-messaging-hosts/darkreader.json`:
+1. Compile the native messaging host:
+
+```
+gcc -O2 -o /opt/darkreader-pywal/darkreader user/files/coloreader-native.c
+```
+
+This path can be changed if you don't have permission to write to `/opt`.
+
+2. Put the following content in `~/.mozilla/native-messaging-hosts/darkreader.json`, updating the `path` field if you used a different location in step 1:
 
 ```
 {
   "name": "darkreader",
   "description": "custom darkreader native host for syncing with pywal",
-  "path": "/opt/darkreader-pywal/index.js",
+  "path": "/opt/darkreader-pywal/darkreader",
   "type": "stdio",
   "allowed_extensions": ["darkreader@alexhulbert.com"]
 }
 ```
-
-2. Put <a href="user/files/darkreader">these files</a> a new folder called `/opt/darkreader-pywal`. This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
-3. Set the executable bit on `/opt/darkreader-pywal/index.js` by running `chmod +x /opt/darkreader-pywal/index.js` in a terminal
-4. Open firefox and navigate to `about:config` in the URL bar. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
-   > At this point, you can skip steps 5-10 if you have your own userChrome/userContent files that you want to keep.
-5. Install pywalfox
-6. Download <a href="user/files/theme/firefox/userContent.css">user/files/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
-7. Symlink `~/.cache/wal/userContent.css` (create an empty file if it doesn't exist) to `~/.mozilla/Firefox/default/chrome/userContent.css`
-8. Put the following content in `~/.mozilla/Firefox/default/chrome/userChrome.css`:
+3. Open firefox and navigate to `about:config` in the URL bar. Set `toolkit.legacyUserProfileCustomizations.stylesheets` to `true`
+   > At this point, you can skip steps 4-9 if you have your own userChrome/userContent files that you want to keep.
+4. Install pywalfox
+5. Download <a href="user/files/theme/firefox/userContent.css">user/files/theme/firefox/userContent.css</a> and place it in `~/.config/wal/templates`
+6. Symlink `~/.cache/wal/userContent.css` (create an empty file if it doesn't exist) to `~/.mozilla/Firefox/default/chrome/userContent.css`
+7. Put the following content in `~/.mozilla/Firefox/default/chrome/userChrome.css`:
 
 ```
 @import url('blurredfox/userChrome.css');
@@ -65,11 +70,11 @@ The following steps should be sufficient to apply the firefox customization to a
 @import url('layout.css');
 ```
 
-9. Download <a href="https://github.com/eromatiya/blurredfox">this repo</a> and place the `blurredfox` folder in `~/.mozilla/Firefox/default/chrome`
-10. Download <a href="user/files/theme/firefox/twoline.css">user/files/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
-11. Download <a href="user/files/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
-12. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
-13. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
+8. Download <a href="https://github.com/eromatiya/blurredfox">this repo</a> and place the `blurredfox` folder in `~/.mozilla/Firefox/default/chrome`
+9. Download <a href="user/files/theme/firefox/twoline.css">user/files/theme/firefox/twoline.css</a> and place it in `~/.mozilla/Firefox/default/chrome`, renaming it from `twoline.css` to `layout.css`
+10. Download <a href="user/files/darkreader.xpi">this modified version of the Darkreader addon</a> and install it into firefox, making sure to delete any existing copies of Darkreader
+11. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
+12. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
 
 Close and reopen firefox and the theme should be applied.
 
@@ -87,21 +92,26 @@ The fork also works on Chrome/Chromium/Brave/etc. The steps are slightly differe
 {
   "name": "darkreader",
   "description": "custom darkreader native host for syncing with pywal",
-  "path": "/opt/darkreader-pywal/index.js",
+  "path": "/opt/darkreader-pywal/darkreader",
   "type": "stdio",
   "allowed_origins": ["chrome-extension://gidgehhdgebooieidpcckaphjbfcghpe/"]
 }
 ```
 
-2. Put <a href="user/files/darkreader">these files</a> a new folder called `/opt/darkreader-pywal` This folder can be put anywhere if you don't have permission to write to `/opt`. Just make sure to update the path in the `path` field in `darkreader.json` to match the location of these files.
-3. Set the executable bit on `/opt/darkreader-pywal/index.js` by running `chmod +x /opt/darkreader-pywal/index.js` in a terminal
-4. Download <a href="user/files/darkreader-chrome.zip">this modified version of the Darkreader addon</a> and unzip it into a folder anywhere on your computer
-5. Open chrome and navigate to `chrome://extensions` in the URL bar. Enable "Developer mode" and click "Load unpacked"
-6. Select the directory you unzipped the contents of darkreader-chrome.zip into. You can safely delete the folder after doing this.
-7. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
-8. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
-9. Optionally, you can go to the "Appearance" tab in Chrome settings and select "Use GTK" if your GTK theme matches your pywal colors.
-10. Follow the tips at the end of the <a href="#firefox-pywal-customization">Firefox section above</a> for best results.
+2. Compile the native messaging host:
+
+```
+gcc -O2 -o /opt/darkreader-pywal/darkreader user/files/coloreader-native.c
+```
+
+Update the `path` field in `darkreader.json` if you used a different location.
+3. Download <a href="user/files/darkreader-chrome.zip">this modified version of the Darkreader addon</a> and unzip it into a folder anywhere on your computer
+4. Open chrome and navigate to `chrome://extensions` in the URL bar. Enable "Developer mode" and click "Load unpacked"
+5. Select the directory you unzipped the contents of darkreader-chrome.zip into. You can safely delete the folder after doing this.
+6. Open the dark reader extension, click on "Dev Tools", and then click "Preview new design"
+7. Open the dark reader extension again, click "Settings", go to the "Advanced" tab, and enable "Synchronize site fixes"
+8. Optionally, you can go to the "Appearance" tab in Chrome settings and select "Use GTK" if your GTK theme matches your pywal colors.
+9. Follow the tips at the end of the <a href="#firefox-pywal-customization">Firefox section above</a> for best results.
 
 ## Background Transparency
 
