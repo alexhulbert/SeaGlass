@@ -59,5 +59,5 @@ with open(colorfile_path, "w") as file:
 print(f"Color mapping completed. color.ini file generated at {colorfile_path}")
 
 # Call spicetify apply to apply the new colors
-os.system("spicetify apply") 
+os.system("spicetify apply -n")
 print("Spicetify theme applied.")

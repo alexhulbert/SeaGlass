@@ -47,6 +47,19 @@ in {
 
     "wal/templates/wezterm-wal.toml".source = ./files/theme/wezterm-wal.toml;
     "wezterm/wezterm.lua".source = ./files/wezterm.lua;
+
+    "variety/scripts/set_wallpaper" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        PIDFILE=/tmp/seaglass-debounce.pid
+        if [ -f "$PIDFILE" ]; then
+          kill "$(cat "$PIDFILE")" 2>/dev/null
+        fi
+        (sleep 5 && seaglass-theme) &
+        echo $! > "$PIDFILE"
+      '';
+    };
   };
 
   home.file = {
