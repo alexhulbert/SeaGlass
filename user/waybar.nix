@@ -10,10 +10,10 @@
     src = pkgs.fetchFromGitHub {
       owner = "alexhulbert";
       repo = "hypr-plasmoid";
-      rev = "213df0d2c5dfbafc606af89a5db14c00ebebeb1b";
-      hash = "sha256-CN48k6+jbVrrBI/M/XfrPzZdq+NhpvmNfTDq+IcoUJU=";
+      rev = "2471cc5ae2b007be14a16f8ceaeac32c83601386";
+      hash = "sha256-qEz1o2+W2cNplrxO5dWQFRWcBemFVGrsBV3rh5Ym0/s=";
     };
-    cargoHash = "sha256-/QENSkJDLzdvXCBTTX8fIa074v1JEwLzhNzFk0FI/Lc=";
+    cargoHash = "sha256-eXSMwDzQB6wh8grTLVxbS53i8Dv2sAStBc4I5/Ph/sM=";
   };
   waybar-patched = pkgs.waybar.overrideAttrs (old: {
     src = pkgs.fetchFromGitHub {
@@ -32,7 +32,7 @@
       plasmoid = "org.kde.plasma.eventcalendar";
     };
     battery = {
-      title = "Power Management";
+      title = "Power Management|Power and Battery";
       width = 500;
       height = 270;
       plasmoid = "org.kde.plasma.battery";

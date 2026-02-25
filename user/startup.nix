@@ -1,20 +1,20 @@
-{ config
-, pkgs
-, lib
-, ...
-}:
-let
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   generateServiceWith = serviceName: command: extra:
-    lib.mkMerge [ (generateService serviceName command) extra ];
+    lib.mkMerge [(generateService serviceName command) extra];
 
   generateService = serviceName: command: {
     Unit = {
       Description = "${serviceName} Service";
-      PartOf = [ "hyprland.target" ];
-      Requires = [ "hyprland.target" ];
-      After = [ "user-path-import.service" ];
+      PartOf = ["hyprland.target"];
+      Requires = ["hyprland.target"];
+      After = ["user-path-import.service"];
     };
-    Install.WantedBy = [ "hyprland.target" ];
+    Install.WantedBy = ["hyprland.target"];
     Service = {
       Type = "simple";
       Restart = "always";
@@ -22,9 +22,7 @@ let
       RestartSec = "1";
     };
   };
-in
-{
-
+in {
   home.file.".hushlogin".text = "";
 
   programs.zsh.profileExtra = ''
@@ -36,24 +34,24 @@ in
   systemd.user = {
     targets.hyprland.Unit = {
       Description = "Graphical Target, starts with wayland";
-      Requires = [ "user-path-import.service" ];
-      After = [ "user-path-import.service" ];
+      Requires = ["user-path-import.service"];
+      After = ["user-path-import.service"];
     };
     services = {
-      ags = (generateService "ags" "ags run ${config.xdg.configHome}/ags/app.ts");
-      swayosd = (generateService "swayosd" "swayosd-server");
-      ulauncher = (generateServiceWith "ulauncher" "ulauncher --hide-window --no-window --no-window-shadow" { Unit.After = [ "seaglass-theme.service" ]; });
-      waybar = (generateServiceWith "waybar" "${config.programs.waybar.package}/bin/waybar" { Unit.After = [ "seaglass-theme.service" ]; });
-      polkit-kde-auth = (generateService "polkit-kde-auth" "/usr/lib/polkit-kde-authentication-agent-1");
-      powerdevil = (generateService "powerdevil" "/usr/lib/org_kde_powerdevil");
-      xdg-desktop-portal-hyprland = (generateService "xdg-desktop-portal-hyprland" "/usr/lib/xdg-desktop-portal-hyprland");
-      kded = (generateService "kded" "kded6");
-      pyprland = (generateService "pyprland" "pypr");
-      swaync = (generateServiceWith "swaync" "swaync" { Unit.After = [ "seaglass-theme.service" ]; });
-      hyprwatchd = (generateService "hyprwatchd" "hyprwatchd");
-      dndwatchd = (generateService "dndwatchd" "dndwatchd");
-      xsettingsd = (generateServiceWith "xsettingsd" "xsettingsd" { Service.Restart = lib.mkForce "always"; });
-      xdg-home-cleaner = (generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh);
+      ags = generateService "ags" "ags run ${config.xdg.configHome}/ags/app.ts";
+      swayosd = generateService "swayosd" "swayosd-server";
+      ulauncher = generateServiceWith "ulauncher" "ulauncher --hide-window --no-window --no-window-shadow" {Unit.After = ["seaglass-theme.service"];};
+      waybar = generateServiceWith "waybar" "${config.programs.waybar.package}/bin/waybar" {Unit.After = ["seaglass-theme.service"];};
+      polkit-kde-auth = generateService "polkit-kde-auth" "/usr/lib/polkit-kde-authentication-agent-1";
+      powerdevil = generateService "powerdevil" "/usr/lib/org_kde_powerdevil";
+      xdg-desktop-portal-hyprland = generateService "xdg-desktop-portal-hyprland" "/usr/lib/xdg-desktop-portal-hyprland";
+      kded = generateService "kded" "kded6";
+      pyprland = generateService "pyprland" "pypr";
+      swaync = generateServiceWith "swaync" "swaync" {Unit.After = ["seaglass-theme.service"];};
+      hyprwatchd = generateService "hyprwatchd" "hyprwatchd";
+      dndwatchd = generateService "dndwatchd" "dndwatchd";
+      xsettingsd = generateServiceWith "xsettingsd" "xsettingsd" {Service.Restart = lib.mkForce "always";};
+      xdg-home-cleaner = generateService "xdg-home-cleaner" ./files/xdg-home-cleaner.sh;
       swww-daemon = generateService "swww" "swww-daemon";
       hypridle = generateService "hypridle" "hypridle";
       variety = generateService "variety" "variety -n";
@@ -64,7 +62,7 @@ in
 
   systemd.user.services.user-path-import = {
     Unit.Description = "Import PATH from zsh";
-    Install.WantedBy = [ "hyprland.target" ];
+    Install.WantedBy = ["hyprland.target"];
     Service = {
       Type = "oneshot";
       ExecStart = "/usr/bin/zsh -lc 'systemctl --user import-environment PATH'";
@@ -75,10 +73,10 @@ in
   systemd.user.services.seaglass-theme = {
     Unit = {
       Description = "Seaglass Theme";
-      PartOf = [ "hyprland.target" ];
-      After = [ "user-path-import.service" "variety.service" ];
+      PartOf = ["hyprland.target"];
+      After = ["user-path-import.service" "variety.service"];
     };
-    Install.WantedBy = [ "hyprland.target" ];
+    Install.WantedBy = ["hyprland.target"];
     Service = {
       Type = "oneshot";
       ExecStart = "/usr/bin/env seaglass-theme";
@@ -89,10 +87,10 @@ in
   systemd.user.services.kded-modules = {
     Unit = {
       Description = "KDED Modules";
-      After = [ "kded.service" "user-path-import.service" ];
-      PartOf = [ "kded.service" ];
+      After = ["kded.service" "user-path-import.service"];
+      PartOf = ["kded.service"];
     };
-    Install.WantedBy = [ "hyprland.target" ];
+    Install.WantedBy = ["hyprland.target"];
     Service = {
       Type = "oneshot";
       ExecStart = "${pkgs.writeScript "start-kded-modules" ''
@@ -102,10 +100,8 @@ in
           "gtkconfig"
           "bluedevil"
           "networkmanagement"
-          "networkstatus"
           "smbwatcher"
           "device_automounter"
-          "statusnotifierwatcher"
         )
 
         for module in $moduleNames; do
