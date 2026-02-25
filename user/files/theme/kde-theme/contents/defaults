@@ -5,7 +5,7 @@ widgetStyle=Darkly
 ColorScheme=MaterialYouDark
 
 [kdeglobals][Icons]
-Theme=flattrcolor
+Theme=Papirus-Colors-Dark
 
 [plasmarc][Theme]
 name=breeze

@@ -51,7 +51,8 @@ AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage --foreign darkly-bin # A modern style for qt applications.
 AddPackage --foreign bibata-cursor-theme-bin # Material Based Cursor Theme
 AddPackage --foreign python-haishoku # A development tool for grabbing the dominant color or representative color palette from an image.
-AddPackage --foreign kde-material-you-colors # A script to generate Material You color schemes for KDE Plasma.
+AddPackage --foreign kde-material-you-colors-git # Automatic Material You Colors generator from your wallpaper for the Plasma Desktop
+AddPackage --foreign python-materialyoucolor # Material You color algorithms for Python!
 AddPackage --foreign python-colr # Easy terminal colors, with chainable methods.
 AddPackage --foreign python-pywalfox # Native app used alongside the Pywalfox browser extension
 

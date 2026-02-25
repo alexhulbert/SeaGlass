@@ -22,13 +22,13 @@ else
   swww img "$wallpaper"
 fi
 
-kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 2>/dev/null
+lookandfeeltool -a seaglass
+kde-material-you-colors --file ~/.cache/wallpaper-path --iconsdark Papirus-Colors-Dark --iconslight Papirus-Colors --chroma-multiplier 1.25 -wal -ko 84 --scheme-variant 6 --on-change-hook "kde-material-you-colors --stop" 2>/dev/null
 source ~/.cache/wal/colors.sh
 sed -i "/\[Colors:Window]/,+2 s/=#....../=$background/g" ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -Ei '/\[Colors:(Header|Tooltip|Complementary)\]/,+2 s/=#/=#D4/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 sed -i '/\[Colors:View\]/,+2 s/=#/=#44/g' ~/.local/share/color-schemes/MaterialYouDark.colors
 
-lookandfeeltool -a seaglass
 if [ -n "$light" ]; then
   plasma-apply-colorscheme MaterialYouLight2
   plasma-apply-colorscheme MaterialYouLight
