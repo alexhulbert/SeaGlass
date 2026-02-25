@@ -2,8 +2,9 @@
 plugins = ["workspaces_follow_focus", "scratchpads"]
 
 [scratchpads.todoist]
-command = "google-chrome-stable --profile-directory=Default --app=https://todoist.com"
-class = "chrome-todoist.com__-Default"
+command = "firefox --ssb todoist https://todoist.com"
+match_by = "title"
+title = "re:.*SIDEBAR_TODOIST.*"
 animation = "fromLeft"
 process_tracking = false
 size = "480px 100%"
@@ -14,8 +15,9 @@ smart_focus = false
 excludes = ["slack", "terminal"]
 
 [scratchpads.messages]
-command = "google-chrome-stable --profile-directory=Default --app=https://chat.beeper.com"
-class = "chrome-chat.beeper.com__-Default"
+command = "firefox --ssb messages https://chat.beeper.com"
+match_by = "title"
+title = "re:.*SIDEBAR_MESSAGES.*"
 animation = "fromRight"
 process_tracking = false
 size = "850px 100%"
@@ -26,8 +28,9 @@ smart_focus = false
 excludes = ["slack", "terminal"]
 
 [scratchpads.slack]
-command = "google-chrome-stable --profile-directory=Default --app=https://app.slack.com/client/T02CVA1G1H6"
-class = "chrome-app.slack.com__client_T02CVA1G1H6-Default"
+command = "firefox --ssb slack https://app.slack.com/client/T02CVA1G1H6"
+match_by = "title"
+title = "re:.*SIDEBAR_SLACK.*"
 animation = "fromTop"
 process_tracking = false
 margin = 40

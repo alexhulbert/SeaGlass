@@ -2,33 +2,66 @@
 
 PRELOAD_WS="special:ffpreload"
 FIREFOX_BIN="/usr/lib/firefox/firefox"
+SSB_EXT_ID="685d99ab-451f-4f68-9d9c-20ea156e6c49"
 
-# Check if Firefox is running
-if ! pgrep -x firefox > /dev/null; then
-    # Spawn hidden preload window
-    hyprctl dispatch exec "[workspace $PRELOAD_WS silent] $FIREFOX_BIN about:blank"
+# Ensure Firefox is running (shared by both modes)
+if ! pgrep -x firefox >/dev/null; then
+  # Spawn hidden preload window
+  hyprctl dispatch exec "[workspace $PRELOAD_WS silent] $FIREFOX_BIN about:blank"
 
-    # Wait for Firefox window to appear
-    for _ in {1..50}; do
-        if hyprctl clients -j | jq -e '.[] | select(.class == "firefox")' > /dev/null 2>&1; then
-            break
-        fi
-        sleep 0.1
-    done
+  # Wait for Firefox window to appear
+  for _ in {1..50}; do
+    if hyprctl clients -j | jq -e '.[] | select(.class == "firefox")' >/dev/null 2>&1; then
+      break
+    fi
+    sleep 0.1
+  done
+fi
+
+# SSB Mode: firefox --ssb <scratchpad_name> <url>
+if [ "$1" = "--ssb" ]; then
+  name="$2"
+  url="$3"
+  title_id="SIDEBAR_${name^^}"
+  scratch_ws="special:S-${name}"
+
+  encoded_url=$(jq -rn --arg url "$url" '$url | @uri' | sed 's/%/=-=/g')
+  ssb_url="moz-extension://${SSB_EXT_ID}/ssb.html?url=${encoded_url}&name=${title_id}&incognito=false&alternative=false"
+
+  # Set windowrule to send new Firefox windows to scratchpad
+  hyprctl keyword windowrulev2 "workspace $scratch_ws silent, class:^(firefox)$"
+
+  # Launch Firefox
+  $FIREFOX_BIN --new-window "$ssb_url"
+
+  # Wait for window with our title, then float it and remove rule
+  for _ in {1..50}; do
+    addr=$(hyprctl clients -j | jq -r --arg title "$title_id" '.[] | select(.title | contains($title)) | .address' | head -1)
+    if [ -n "$addr" ]; then
+      hyprctl keyword windowrulev2 "unset, class:^(firefox)$"
+      hyprctl dispatch setfloating "address:$addr"
+      exit 0
+    fi
+    sleep 0.1
+  done
+
+  # Cleanup rule even if window not found
+  hyprctl keyword windowrulev2 "unset, class:^(firefox)$"
+  exit 0
 fi
 
 # Get current workspace ID
 current_ws=$(hyprctl activeworkspace -j | jq -r '.id')
 
-# Get Firefox window address on current workspace (if any)
+# Get Firefox window address on current workspace (excluding scratchpads)
 firefox_addr=$(hyprctl clients -j | jq -r --argjson ws "$current_ws" \
-    '.[] | select(.class == "firefox" and .workspace.id == $ws) | .address' | head -1)
+  '.[] | select(.class == "firefox" and .workspace.id == $ws and (.title | contains("SIDEBAR_") | not)) | .address' | head -1)
 
 if [ -n "$firefox_addr" ]; then
-    # Focus Firefox on current workspace and open as new tab
-    hyprctl dispatch focuswindow "address:$firefox_addr"
-    exec $FIREFOX_BIN "$@"
+  # Focus Firefox on current workspace and open as new tab
+  hyprctl dispatch focuswindow "address:$firefox_addr"
+  exec $FIREFOX_BIN "$@"
 else
-    # Open new Firefox window
-    exec $FIREFOX_BIN --new-window "$@"
+  # Open new Firefox window
+  exec $FIREFOX_BIN --new-window "$@"
 fi

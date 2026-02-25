@@ -23,7 +23,7 @@ CopyFileTo /spotify.desktop /usr/share/applications/spotify.desktop
 CopyFileTo /hyprland-portals.conf /usr/share/xdg-desktop-portal/hyprland-portals.conf
 
 # firefox smart launcher (preloads, per-workspace windows)
-CopyFileTo /firefox-smart /usr/bin/firefox
+CopyFileTo /firefox-smart /usr/bin/firefox 755
 sed 's|/usr/lib/firefox/firefox|/usr/bin/firefox|g' /usr/share/applications/firefox.desktop >"$(CreateFile /usr/share/applications/firefox.desktop)"
 
 # primenote theme

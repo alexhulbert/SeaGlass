@@ -51,7 +51,6 @@ in {
 
   home.file = {
     ".local/bin/lidhandler".source = ./files/lidhandler.sh;
-    ".local/bin/waybar-visibility".source = ./files/waybar-visibility.sh;
     ".local/bin/hyprwatchd".source = pkgs.writeScript "hyprwatchd" hyprwatchd;
     ".local/bin/dndwatchd".source = pkgs.writeScript "dndwatchd" dndwatchd;
   };
