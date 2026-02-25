@@ -5,9 +5,24 @@
   ...
 }: let
   shim = import ./pkgs/shim.nix { inherit pkgs; };
+  gpgKey = "54F7B202E38A7ED2";
 in {
   home.username = "alex";
   home.homeDirectory = "/home/alex";
+
+  programs.gpg = {
+    enable = true;
+    settings.default-key = gpgKey;
+  };
+
+  services.gpg-agent = {
+    enable = true;
+    enableZshIntegration = true;
+    enableScDaemon = true;
+    defaultCacheTtl = 86400;
+    maxCacheTtl = 86400;
+    extraConfig = "pinentry-program /usr/bin/pinentry-qt";
+  };
 
   programs.git = {
     enable = true;
@@ -17,6 +32,10 @@ in {
     };
     settings.user.name = "alexhulbert";
     settings.user.email = "alex@alexhulbert.com";
+    signing = {
+      key = gpgKey;
+      signByDefault = true;
+    };
   };
 
   # shorter names for ~ subdirs
