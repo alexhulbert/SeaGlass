@@ -80,6 +80,9 @@ echo MAKEFLAGS=\"-j$(nproc)\" >>$make_pkg_conf
 pacman_conf=$(GetPackageOriginalFile pacman '/etc/pacman.conf')
 sed -i 's/^#IgnorePkg.*$/IgnorePkg = hyprland aquamarine linux linux-headers hyprutils hyprutils-git/' "$pacman_conf"
 
+# safe-rm config
+CopyFileTo /safe-rm.conf /etc/safe-rm.conf
+
 # preload prefetcher
 AddPackage --foreign preload # Makes applications run faster by prefetching binaries and shared objects
 SystemdEnable preload /usr/lib/systemd/system/preload.service

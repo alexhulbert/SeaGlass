@@ -56,4 +56,3 @@ AddPackage tinyxxd # Standalone version of the hex dump utility that comes with 
 AddPackage --foreign safe-rm # A tool intended to prevent the accidental deletion of important files
 AddPackage uv # An extremely fast Python package installer and resolver written in Rust
 AddPackage --foreign github-cli-git # The GitHub CLI tool
-CopyFile /etc/safe-rm.conf
