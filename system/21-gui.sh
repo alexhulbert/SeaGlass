@@ -19,6 +19,9 @@ CopyFileTo /caps.hwdb /etc/udev/hwdb.d/10-caps.hwdb
 # spotify wayland compatibility
 CopyFileTo /spotify.desktop /usr/share/applications/spotify.desktop
 
+# prevent kded from hogging the systray dbus
+SetFileProperty /usr/lib/qt6/plugins/kf6/kded/statusnotifierwatcher.so deleted y
+
 # hide notifications during screenshare
 CopyFileTo /hyprland-portals.conf /usr/share/xdg-desktop-portal/hyprland-portals.conf
 
