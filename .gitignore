@@ -1,1 +1,14 @@
 .directory
+__pycache__/
+.claudesync/
+repomix-output.*
+todo.log
+/modules/home/programs/nvim/colors/dms.lua
+/modules/home/programs/nvim/lua/lualine/themes/dms.lua
+/system/files/**/.snapshots/
+/system/files/**/boot/
+/system/files/**/etc/
+/system/files/**/lost+found/
+/system/files/**/opt/
+/system/files/**/usr/
+/system/files/**/var/

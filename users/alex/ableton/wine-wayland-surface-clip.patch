@@ -1,0 +1,91 @@
+--- a/dlls/winewayland.drv/window_surface.c
++++ b/dlls/winewayland.drv/window_surface.c
+@@ -217,7 +217,9 @@
+ static void wayland_window_surface_set_clip(struct window_surface *window_surface,
+                                             const RECT *rects, UINT count)
+ {
+-    /* TODO */
++    TRACE("surface=%p rects=%p count=%u\n", window_surface, rects, count);
++    window_surface->bounds = window_surface->rect;
++    OffsetRect(&window_surface->bounds, -window_surface->rect.left, -window_surface->rect.top);
+ }
+
+ /**********************************************************************
+@@ -337,6 +339,27 @@
+                       src->format == WL_SHM_FORMAT_XRGB8888 && dst->format == WL_SHM_FORMAT_ARGB8888);
+ }
+
++static BOOL wayland_shm_buffer_clear_region(struct wayland_shm_buffer *buffer, HRGN region)
++{
++    RECT bounds = {0, 0, buffer->width, buffer->height}, rect;
++    RGNDATA *data = get_region_data(region);
++    const RECT *rects;
++    UINT i;
++    int y;
++
++    if (!data) return FALSE;
++    rects = (const RECT *)data->Buffer;
++    for (i = 0; i < data->rdh.nCount; ++i)
++    {
++        if (!intersect_rect(&rect, &bounds, &rects[i])) continue;
++        for (y = rect.top; y < rect.bottom; ++y)
++            memset((UINT32 *)buffer->map_data + y * buffer->width + rect.left,
++                   0, (rect.right - rect.left) * sizeof(UINT32));
++    }
++    free(data);
++    return TRUE;
++}
++
+ /**********************************************************************
+  *          wayland_shm_buffer_copy_shape
+  */
+@@ -376,9 +399,12 @@
+     struct wayland_window_surface *wws = wayland_window_surface_cast(window_surface);
+     struct wayland_shm_buffer *shm_buffer = NULL, *latest_buffer;
+     BOOL flushed = FALSE;
+-    HRGN surface_damage_region = NULL;
++    HRGN surface_damage_region = NULL, clear_region = NULL;
+     HRGN copy_from_window_region;
+     uint32_t buffer_format;
++    /* Clipping owned Ableton dialogs erases their client contents */
++    HRGN clip_region = NtUserGetWindowRelative(window_surface->hwnd, GW_OWNER) ? NULL :
++                       window_surface->clip_region;
+
+     surface_damage_region = NtGdiCreateRectRgn(rect->left + dirty->left, rect->top + dirty->top,
+                                                rect->left + dirty->right, rect->top + dirty->bottom);
+@@ -388,7 +414,8 @@
+         goto done;
+     }
+
+-    buffer_format = (shape_bits || wws->layered) ? WL_SHM_FORMAT_ARGB8888 : WL_SHM_FORMAT_XRGB8888;
++    buffer_format = (shape_bits || wws->layered || clip_region) ?
++                    WL_SHM_FORMAT_ARGB8888 : WL_SHM_FORMAT_XRGB8888;
+     if (wws->wayland_buffer_queue->format != buffer_format)
+     {
+         int width = wws->wayland_buffer_queue->width;
+@@ -440,8 +467,16 @@
+     }
+
+     wayland_shm_buffer_copy_data(shm_buffer, color_bits, &surface_rect, copy_from_window_region,
+-                                 shape_bits && !wws->layered);
++                                 (shape_bits || clip_region) && !wws->layered);
+     if (shape_bits) wayland_shm_buffer_copy_shape(shm_buffer, rect, shape_info, shape_bits);
++
++    if (clip_region)
++    {
++        if (!(clear_region = NtGdiCreateRectRgn(0, 0, 0, 0))) goto done;
++        if (NtGdiCombineRgn(clear_region, copy_from_window_region,
++                           clip_region, RGN_DIFF) == ERROR) goto done;
++        if (!wayland_shm_buffer_clear_region(shm_buffer, clear_region)) goto done;
++    }
+
+     NtGdiSetRectRgn(shm_buffer->damage_region, 0, 0, 0, 0);
+
+@@ -449,6 +484,7 @@
+     wl_display_flush(process_wayland.wl_display);
+
+ done:
++    if (clear_region) NtGdiDeleteObjectApp(clear_region);
+     if (surface_damage_region) NtGdiDeleteObjectApp(surface_damage_region);
+     return flushed;
+ }

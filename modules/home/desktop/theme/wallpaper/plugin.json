@@ -1,0 +1,10 @@
+{
+  "id": "seaglassWallpaper",
+  "name": "Wallpaper",
+  "description": "Open Wallpaper Carousel",
+  "version": "1.0.0",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./Wallpaper.qml",
+  "icon": "wallpaper"
+}

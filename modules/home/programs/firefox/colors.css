@@ -1,0 +1,29 @@
+@-moz-document url-prefix("about:"), url("chrome://browser/content/browser.xhtml") {
+  :root {
+    --background-color-canvas: light-dark({{colors.background.light.hex}}, {{colors.background.dark.hex}}) !important;
+    --background-color-box: light-dark({{colors.surface_container.light.hex}}, {{colors.surface_container.dark.hex}}) !important;
+    --text-color: light-dark({{colors.on_surface.light.hex}}, {{colors.on_surface.dark.hex}}) !important;
+    --color-accent-primary: light-dark({{colors.primary.light.hex}}, {{colors.primary.dark.hex}}) !important;
+    --color-accent-primary-hover: color-mix(in srgb, var(--color-accent-primary) 90%, var(--text-color)) !important;
+    --color-accent-primary-active: color-mix(in srgb, var(--color-accent-primary) 80%, var(--text-color)) !important;
+    --color-accent-primary-selected: var(--color-accent-primary) !important;
+    --color-accent-attention: var(--color-accent-primary) !important;
+    --text-color-accent-primary-selected: light-dark({{colors.on_primary.light.hex}}, {{colors.on_primary.dark.hex}}) !important;
+    --button-text-color-primary: var(--text-color-accent-primary-selected) !important;
+    --input-text-background-color: var(--background-color-box) !important;
+    --input-text-color: var(--text-color) !important;
+    --sidebar-background-color: var(--background-color-canvas) !important;
+    --sidebar-text-color: var(--text-color) !important;
+    --table-background-color: var(--background-color-box) !important;
+    --table-header-text-color: var(--text-color-accent-primary-selected) !important;
+    --border-color: light-dark({{colors.outline_variant.light.hex}}, {{colors.outline_variant.dark.hex}}) !important;
+    --border-color-interactive: var(--border-color) !important;
+    --link-color: var(--color-accent-primary) !important;
+    --link-color-hover: var(--color-accent-primary-hover) !important;
+    --link-color-active: var(--color-accent-primary-active) !important;
+    --focus-outline-color: var(--color-accent-primary) !important;
+    --newtab-primary-action-background: var(--color-accent-primary) !important;
+    --newtab-primary-action-text-color: var(--text-color-accent-primary-selected) !important;
+    accent-color: var(--color-accent-primary) !important;
+  }
+}

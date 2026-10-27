@@ -1,0 +1,16 @@
+{
+  "misc": {
+    "singleClickActivate": false
+  },
+  "theme": {
+    "font": {
+      "family": "SFNS Display",
+      "size": 11
+    },
+    "fontFixed": {
+      "family": "FiraCode Nerd Font",
+      "size": 11
+    },
+    "style": "Darkly"
+  }
+}

@@ -1,0 +1,36 @@
+--- a/dlls/winewayland.drv/wayland_surface.c
++++ b/dlls/winewayland.drv/wayland_surface.c
+@@ -157,9 +157,6 @@
+
+     surface->window.scale = scale;
+
+-    /* reattach client surfaces as their rects have changed */
+-    update_client_surfaces(hwnd);
+-
+     /* the subsurface rect has changed */
+     if (surface->role == WAYLAND_SURFACE_ROLE_SUBSURFACE)
+     {
+@@ -169,6 +166,8 @@
+
+     wayland_win_data_release(data);
+
++    /* Take the Win32 user lock only after releasing win_data_mutex */
++    update_client_surfaces(hwnd);
+     NtUserExposeWindowSurface(hwnd, 0, NULL);
+ }
+
+@@ -1182,12 +1181,13 @@
+     struct wayland_client_surface *surface = impl_from_client_surface(client);
+     HWND hwnd = client->hwnd, toplevel = client->toplevel;
+     struct wayland_win_data *data;
++    BOOL visible = toplevel && NtUserIsWindowVisible(hwnd);
+
+     TRACE("%s\n", debugstr_client_surface(client));
+
+     if (!(data = wayland_win_data_get(hwnd))) return;
+
+-    if (toplevel && NtUserIsWindowVisible(hwnd))
++    if (visible)
+         wayland_client_surface_attach(surface, toplevel, &client->monitor_rect);
+     else
+         wayland_client_surface_attach(surface, NULL, NULL);

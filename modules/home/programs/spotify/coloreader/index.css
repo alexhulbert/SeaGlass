@@ -1,0 +1,20 @@
+.encore-bright-accent-set {
+    --background-base: var(--spice-button);
+    --background-highlight: var(--spice-button-active);
+    --background-press: var(--spice-button-secondary);
+    --text-base: var(--spice-button-text);
+    --text-subdued: var(--spice-button-text);
+    --essential-base: var(--spice-button-text);
+}
+
+.main-entityHeader-headerText * {
+    color: inherit !important;
+}
+
+[data-testid="tracklist-row"] [role="gridcell"] {
+    color: var(--spice-subtext);
+}
+
+.playlist-playlist-actionBarBackground-background {
+    background: none !important;
+}

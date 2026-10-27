@@ -1,0 +1,18 @@
+{
+  "light": {
+    "Text": "{{colors.on_surface.light.hex}}",
+    "Highlight": "{{colors.primary.light.hex}}",
+    "Background": "{{colors.surface.light.hex}}",
+    "NeutralText": "{{colors.secondary.light.hex}}",
+    "PositiveText": "{{colors.tertiary.light.hex}}",
+    "NegativeText": "{{colors.error.light.hex}}"
+  },
+  "dark": {
+    "Text": "{{colors.on_surface.dark.hex}}",
+    "Highlight": "{{colors.primary.dark.hex}}",
+    "Background": "{{colors.surface.dark.hex}}",
+    "NeutralText": "{{colors.secondary.dark.hex}}",
+    "PositiveText": "{{colors.tertiary.dark.hex}}",
+    "NegativeText": "{{colors.error.dark.hex}}"
+  }
+}

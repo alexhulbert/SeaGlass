@@ -1,0 +1,15 @@
+{
+  "id": "seaglassCanvas",
+  "name": "Theme",
+  "description": "Extended theme controls",
+  "version": "1.0.0",
+  "author": "Alex",
+  "type": "composite",
+  "capabilities": ["control-center", "daemon"],
+  "components": {
+    "widget": "./CanvasWidget.qml",
+    "daemon": "./CanvasController.qml"
+  },
+  "icon": "palette",
+  "permissions": ["settings_read", "settings_write"]
+}

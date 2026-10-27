@@ -1,0 +1,8 @@
+{
+  "id": "handyEdit",
+  "name": "Voice editing",
+  "description": "Show progress while rewriting selected text",
+  "version": "1.0.0",
+  "type": "daemon",
+  "component": "./Editing.qml"
+}

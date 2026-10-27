@@ -1,0 +1,111 @@
+{
+  "nodes": {
+    "coloreader": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793041306,
+        "narHash": "sha256-vtl+jXfw7CbbdfNNeMlGikWcVt3D5T3Znz9DTOIwmR0=",
+        "owner": "alexhulbert",
+        "repo": "coloreader",
+        "rev": "875bbc640f741157520965c5c4862a8df6e87426",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexhulbert",
+        "repo": "coloreader",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791642191,
+        "narHash": "sha256-0bK0A59rVUn1SRZzo4cNi4VSqAe7vR1gL2/MZl53Frw=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "c58f54c733a7894d84fa2fdff26cc12088c4b78c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nix-index-database": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791711434,
+        "narHash": "sha256-LpIhxnuO0tYeZ4k7BbNMxsPs2zJpB4hWXO1jdhUuE7Q=",
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "rev": "9a2dd40780eeab8543aa97c59c26f11267025616",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nix-index-database",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1791487292,
+        "narHash": "sha256-tqM7xDEsaeK1p6VvRygeZ9LkQRpUUkbRT02BHv6hnTM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8edc0c72e3a38faf5434e40d1f19431125fe4b30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "coloreader": "coloreader",
+        "home-manager": "home-manager",
+        "nix-index-database": "nix-index-database",
+        "nixpkgs": "nixpkgs",
+        "wayhud": "wayhud"
+      }
+    },
+    "wayhud": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1792357304,
+        "narHash": "sha256-HShkq5B8gG4KLxwlsdL8MLboEGyj5IasPQ8ws5zZXCA=",
+        "owner": "alexhulbert",
+        "repo": "wayhud",
+        "rev": "ae3dc3f156b258cb17088a135f4c60c4d55a520d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "alexhulbert",
+        "repo": "wayhud",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

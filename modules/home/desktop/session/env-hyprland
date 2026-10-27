@@ -1,0 +1,8 @@
+export QT_QPA_PLATFORMTHEME=qtengine
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+export QT_WAYLAND_DISABLED_INTERFACES=ext_background_effect_manager_v1
+export QT_SCALE_FACTOR_ROUNDING_POLICY=PassThrough
+export GDK_WAYLAND_DISABLE=ext_background_effect_manager_v1
+export GSK_RENDERER=gl
+export CLAUDE_USE_WAYLAND=1

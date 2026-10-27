@@ -1,0 +1,10 @@
+{
+  "id": "seaglassScrolling",
+  "name": "Scroll",
+  "description": "Toggle between scrolling and dwindle layouts",
+  "version": "1.0.0",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./Scroll.qml",
+  "icon": "view_carousel"
+}

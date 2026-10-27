@@ -1,0 +1,30 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Control Panel\Colors]
+"ActiveTitle"="{{colors.surface.default.red}} {{colors.surface.default.green}} {{colors.surface.default.blue}}"
+"GradientActiveTitle"="{{colors.surface.default.red}} {{colors.surface.default.green}} {{colors.surface.default.blue}}"
+"TitleText"="{{colors.on_surface.default.red}} {{colors.on_surface.default.green}} {{colors.on_surface.default.blue}}"
+"InactiveTitle"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"GradientInactiveTitle"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"InactiveTitleText"="{{colors.on_surface_variant.default.red}} {{colors.on_surface_variant.default.green}} {{colors.on_surface_variant.default.blue}}"
+"ActiveBorder"="{{colors.surface.default.red}} {{colors.surface.default.green}} {{colors.surface.default.blue}}"
+"InactiveBorder"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"WindowFrame"="{{colors.outline_variant.default.red}} {{colors.outline_variant.default.green}} {{colors.outline_variant.default.blue}}"
+"MenuBar"="{{colors.surface.default.red}} {{colors.surface.default.green}} {{colors.surface.default.blue}}"
+"Menu"="{{colors.surface_container_lowest.default.red}} {{colors.surface_container_lowest.default.green}} {{colors.surface_container_lowest.default.blue}}"
+"MenuText"="{{colors.on_surface.default.red}} {{colors.on_surface.default.green}} {{colors.on_surface.default.blue}}"
+"MenuHilight"="{{colors.primary_container.default.red}} {{colors.primary_container.default.green}} {{colors.primary_container.default.blue}}"
+"Hilight"="{{colors.primary_container.default.red}} {{colors.primary_container.default.green}} {{colors.primary_container.default.blue}}"
+"HilightText"="{{colors.on_primary_container.default.red}} {{colors.on_primary_container.default.green}} {{colors.on_primary_container.default.blue}}"
+"ButtonFace"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"ButtonText"="{{colors.on_surface.default.red}} {{colors.on_surface.default.green}} {{colors.on_surface.default.blue}}"
+"GrayText"="{{colors.on_surface_variant.default.red}} {{colors.on_surface_variant.default.green}} {{colors.on_surface_variant.default.blue}}"
+"ButtonShadow"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"ButtonDkShadow"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"ButtonHilight"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"ButtonLight"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"InfoWindow"="{{colors.surface_container.default.red}} {{colors.surface_container.default.green}} {{colors.surface_container.default.blue}}"
+"InfoText"="{{colors.on_surface.default.red}} {{colors.on_surface.default.green}} {{colors.on_surface.default.blue}}"
+
+[HKEY_CURRENT_USER\Control Panel\Desktop]
+"UserPreferencesMask"=hex:10,00,02,80,12,00,00,00

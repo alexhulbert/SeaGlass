@@ -1,0 +1,6 @@
+#!/usr/bin/bash
+set -euo pipefail
+zenity --question --title="Switch to Windows" --text="Restart into Windows?" || exit 0
+entry=$(efibootmgr | sed -nE 's/^Boot([[:xdigit:]]{4})\*? Windows Boot Manager.*$/\1/p' | head -1)
+sudo -n efibootmgr --bootnext "$entry" || { zenity --error --text="Could not set Windows as the next boot entry."; exit 1; }
+systemctl reboot

@@ -1,0 +1,27 @@
+{
+  "name": "OLEDpuccin",
+  "dark": {
+    "primary": "#cba6f7",
+    "primaryText": "#000000",
+    "primaryContainer": "#413956",
+    "secondary": "#f5c2e7",
+    "tertiary": "#fab387",
+    "surface": "#000000",
+    "surfaceText": "#cdd6f4",
+    "surfaceVariant": "#000000",
+    "surfaceVariantText": "#a6adc8",
+    "surfaceTint": "#cba6f7",
+    "background": "#000000",
+    "backgroundText": "#cdd6f4",
+    "outline": "#585b70",
+    "surfaceContainerLow": "#000000",
+    "surfaceContainer": "#000000",
+    "surfaceContainerHigh": "#000000",
+    "surfaceContainerHighest": "#000000",
+    "error": "#f38ba8",
+    "errorText": "#000000",
+    "surfaceDim": "#000000",
+    "surfaceBright": "#000000",
+    "surfaceContainerLowest": "#000000"
+  }
+}

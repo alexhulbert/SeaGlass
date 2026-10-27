@@ -1,0 +1,57 @@
+diff --git a/src/backend/drm/DRM.cpp b/src/backend/drm/DRM.cpp
+index 2f3dcc7..06d0f68 100644
+--- a/src/backend/drm/DRM.cpp
++++ b/src/backend/drm/DRM.cpp
+@@ -617,6 +617,20 @@ void Aquamarine::CDRMBackend::restoreAfterVT() {
+         }
+     }
+ 
++    for (auto const& c : connectors) {
++        uint64_t crtcID = 0;
++        if (!c->props.values.crtc_id || !getDRMProp(gpu->fd, c->id, c->props.values.crtc_id, &crtcID))
++            continue;
++
++        const auto CRTC = crtcByID(crtcID);
++        if (crtcID && !CRTC) {
++            backend->log(AQ_LOG_ERROR, std::format("drm: Unknown CRTC {} on {} during restore", crtcID, c->szName));
++            continue;
++        }
++
++        c->setCRTC(CRTC);
++    }
++
+     recheckOutputs();
+ 
+     backend->log(AQ_LOG_DEBUG, "drm: Rescanned connectors");
+@@ -980,6 +994,12 @@ void Aquamarine::CDRMBackend::recheckCRTCs() {
+ 
+         // disabled outputs release their CRTCs so active outputs get priority
+         if (c->crtc && c->status == DRM_MODE_CONNECTED && c->output && !c->output->enabledState) {
++            c->output->state->setEnabled(false);
++            if (!c->output->commit()) {
++                backend->log(AQ_LOG_ERROR, std::format("drm: Failed to disable {} before releasing its CRTC", c->szName));
++                continue;
++            }
++
+             backend->log(AQ_LOG_DEBUG, std::format("drm: {} is disabled, releasing crtc {}", c->szName, c->crtc->id));
+             c->setCRTC(nullptr);
+         }
+@@ -1026,7 +1046,7 @@ void Aquamarine::CDRMBackend::recheckCRTCs() {
+                 continue;
+ 
+             // deactivate old output
+-            if (c->output && c->output->enabledState) {
++            if (c->crtc && c->output && c->output->enabledState) {
+                 c->output->state->setEnabled(false);
+                 if (!c->output->commit()) {
+                     backend->log(AQ_LOG_ERROR, std::format("drm: Failed to disable {} before reassigning its CRTC", c->szName));
+@@ -1205,6 +1225,9 @@ void Aquamarine::CDRMBackend::markRedundantTiles() {
+ }
+ 
+ void Aquamarine::CDRMBackend::recheckOutputs() {
++    if (!sessionActive())
++        return;
++
+     scanConnectors();
+     markRedundantTiles();
+ 

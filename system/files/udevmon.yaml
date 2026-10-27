@@ -1,3 +1,0 @@
-- JOB: intercept -g $DEVNODE | copilot2ctrl | uinput -d $DEVNODE
-  DEVICE:
-    NAME: AT Translated Set 2 keyboard

@@ -1,0 +1,27 @@
+--- a/dlls/winewayland.drv/window.c
++++ b/dlls/winewayland.drv/window.c
+@@ -434,17 +434,23 @@
+     HWND owner = NtUserGetAncestor(hwnd, GA_ROOT);
+     struct wayland_surface *owner_surface;
+     struct wayland_win_data *data, *owner_data;
+     BOOL managed, fullscreen = swp_flags & WINE_SWP_FULLSCREEN;
++    BOOL popup = (NtUserGetWindowLongW(hwnd, GWL_STYLE) &
++                  (WS_POPUP | WS_CAPTION | WS_THICKFRAME | WS_SYSMENU)) == WS_POPUP;
+
+     TRACE("hwnd %p new_rects %s after %p flags %08x\n", hwnd, debugstr_window_rects(new_rects), insert_after, swp_flags);
+
+     /* Get the managed state with win_data unlocked, as is_window_managed
+      * may need to query win_data information about other HWNDs and thus
+      * acquire the lock itself internally. */
+-    if (!(managed = is_window_managed(hwnd, swp_flags, fullscreen)) && surface) owner = owner_hint;
++    managed = is_window_managed(hwnd, swp_flags, fullscreen);
+
+     if (!(data = wayland_win_data_get(hwnd))) return;
++    /* Activating a mapped menu must not recreate it as a compositor toplevel */
++    if (popup && data->wayland_surface && data->wayland_surface->window.visible && !data->managed)
++        managed = FALSE;
++    if (!managed && surface) owner = owner_hint;
+     owner_data = owner && owner != hwnd ? wayland_win_data_get(owner) : NULL;
+     owner_surface = owner_data ? owner_data->wayland_surface : NULL;
+
+     data->rects = *new_rects;

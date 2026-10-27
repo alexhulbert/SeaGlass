@@ -1,0 +1,85 @@
+diff --git a/quickshell/Modules/ControlCenter/Details/AudioOutputDetail.qml b/quickshell/Modules/ControlCenter/Details/AudioOutputDetail.qml
+index 81df20062d..48d1235677 100644
+--- a/quickshell/Modules/ControlCenter/Details/AudioOutputDetail.qml
++++ b/quickshell/Modules/ControlCenter/Details/AudioOutputDetail.qml
+@@ -62,7 +62,7 @@ Item {
+                     model: ScriptModel {
+                         values: {
+                             const hidden = SessionData.hiddenOutputDeviceNames ?? [];
+-                            const nodes = AudioService.allNodes.filter(node => node.audio && node.isSink && !node.isStream && !hidden.includes(node.name));
++                            const nodes = AudioService.allNodes.filter(node => node.audio && node.isSink && !node.isStream && !hidden.includes(node.name) && AudioService.isSinkAvailable(node));
+                             const pinnedList = root.pinnedOutputs;
+                             return nodes.sort((a, b) => {
+                                 const aPinned = pinnedList.indexOf(a.name);
+diff --git a/quickshell/Modules/ControlCenter/Widgets/CcAudioDevices.qml b/quickshell/Modules/ControlCenter/Widgets/CcAudioDevices.qml
+index ac998e1016..1937252991 100644
+--- a/quickshell/Modules/ControlCenter/Widgets/CcAudioDevices.qml
++++ b/quickshell/Modules/ControlCenter/Widgets/CcAudioDevices.qml
+@@ -11,7 +11,7 @@ CcTileActions {
+     readonly property var selectedNode: isInput ? AudioService.source : AudioService.sink
+     readonly property var devices: {
+         const hidden = (isInput ? SessionData.hiddenInputDeviceNames : SessionData.hiddenOutputDeviceNames) || [];
+-        return AudioService.allNodes.filter(node => node.audio && node.isSink !== isInput && !node.isStream && !hidden.includes(node.name)).sort((a, b) => {
++        return AudioService.allNodes.filter(node => node.audio && node.isSink !== isInput && !node.isStream && !hidden.includes(node.name) && (isInput || AudioService.isSinkAvailable(node))).sort((a, b) => {
+             const aPin = pins.indexOf(a.name);
+             const bPin = pins.indexOf(b.name);
+             if (aPin !== bPin)
+diff --git a/quickshell/Services/AudioService.qml b/quickshell/Services/AudioService.qml
+index 38f319b45c..36c054a479 100644
+--- a/quickshell/Services/AudioService.qml
++++ b/quickshell/Services/AudioService.qml
+@@ -191,13 +191,18 @@ Singleton {
+         }
+     }
+ 
++    function isSinkAvailable(node) {
++        const ports = sinkPorts[node?.name]?.ports;
++        return !ports?.length || ports.some(port => port.availability !== "no");
++    }
++
+     function getAvailableSinks() {
+         if (freebsdAudio) {
+             const hidden = SessionData.hiddenOutputDeviceNames ?? [];
+             return nativeSinks.filter(node => !hidden.includes(node.name));
+         }
+         const hidden = SessionData.hiddenOutputDeviceNames ?? [];
+-        return root.pipewireNodes.filter(node => node.audio && node.isSink && (SettingsData.audioShowStreamDevices || !node.isStream) && !hidden.includes(node.name));
++        return root.pipewireNodes.filter(node => node.audio && node.isSink && (SettingsData.audioShowStreamDevices || !node.isStream) && !hidden.includes(node.name) && isSinkAvailable(node));
+     }
+ 
+     property var typedSinks: []
+@@ -282,6 +287,19 @@ Singleton {
+         return false;
+     }
+ 
++    Process {
++        running: root.pipewireReady
++        command: ["env", "LC_ALL=C", "pactl", "subscribe"]
++        onStarted: root.refreshSinkPorts()
++        onExited: root.sinkPorts = ({})
++        stdout: SplitParser {
++            onRead: line => {
++                if (line.includes(" on card #"))
++                    Qt.callLater(root.refreshSinkPorts);
++            }
++        }
++    }
++
+     function refreshSinkPorts(callback) {
+         if (freebsdAudio) {
+             sinkPorts = ({});
+@@ -636,11 +654,11 @@ Singleton {
+ 
+     function cycleAudioOutputDirection(forward) {
+         const sinks = getAvailableSinks();
+-        if (sinks.length < 2)
+-            return null;
+-
+         const currentName = root.sink?.name ?? "";
+         const currentIndex = sinks.findIndex(s => s.name === currentName);
++        if (sinks.length === 0 || (sinks.length === 1 && currentIndex === 0))
++            return null;
++
+         let nextIndex;
+         if (forward) {
+             nextIndex = (currentIndex + 1) % sinks.length;

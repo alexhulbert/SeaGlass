@@ -1,0 +1,10 @@
+{
+  "id": "airplay",
+  "name": "Cast",
+  "description": "Cast using AirPlay or Moonlight",
+  "version": "1.0.0",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./AirPlay.qml",
+  "icon": "airplay"
+}

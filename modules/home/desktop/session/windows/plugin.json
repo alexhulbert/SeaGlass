@@ -1,0 +1,10 @@
+{
+  "id": "switchToWindows",
+  "name": "Windows",
+  "description": "Restart into Windows",
+  "version": "1.0.0",
+  "type": "widget",
+  "capabilities": ["control-center"],
+  "component": "./Windows.qml",
+  "icon": "grid_view"
+}

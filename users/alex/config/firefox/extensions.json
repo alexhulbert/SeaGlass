@@ -1,0 +1,6 @@
+{
+  "adb@mozilla.org": "https://ftp.mozilla.org/pub/labs/devtools/adb-extension/linux64/adb-extension-latest-linux64.xpi",
+  "search@kagi.com": "https://addons.mozilla.org/firefox/downloads/latest/search@kagi.com/latest.xpi",
+  "{aecec67f-0d10-4fa7-b7c7-609a2db280cf}": "https://addons.mozilla.org/firefox/downloads/latest/%7Baecec67f-0d10-4fa7-b7c7-609a2db280cf%7D/latest.xpi",
+  "jid1-KKzOGWgsW3Ao4Q@jetpack": "https://addons.mozilla.org/firefox/downloads/latest/jid1-KKzOGWgsW3Ao4Q@jetpack/latest.xpi"
+}

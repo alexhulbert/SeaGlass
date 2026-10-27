@@ -1,0 +1,41 @@
+diff --git a/src/core/mainWindow.js b/src/core/mainWindow.js
+index f4a95c4..d02472a 100644
+--- a/src/core/mainWindow.js
++++ b/src/core/mainWindow.js
+@@ -55,6 +55,7 @@ export class MainWindow extends Adw.ApplicationWindow {
+     #rendererSignals = new GObject.SignalGroup({targetType: Renderer});
+     #fileInfo = null;
+     #surfaceScaleNotifyHandleId = new Connection('notify::scale', () => this.#onScaleChanged());
++    #surfaceEnterMonitorHandleId = new Connection('enter-monitor', () => this.#onScaleChanged());
+     #requestedDefaultWidth = MIN_WIDTH;
+     #requestedDefaultHeight = MIN_HEIGHT;
+     #scaledByUser = false;
+@@ -136,12 +137,15 @@ export class MainWindow extends Adw.ApplicationWindow {
+ 
+     #onRealize = () => {
+         const surface = this.get_native()?.get_surface();
+-        if (surface != null)
++        if (surface != null) {
+             this.#surfaceScaleNotifyHandleId.connect(surface);
++            this.#surfaceEnterMonitorHandleId.connect(surface);
++        }
+     };
+ 
+     #onUnrealize = () => {
+         this.#surfaceScaleNotifyHandleId.disconnect();
++        this.#surfaceEnterMonitorHandleId.disconnect();
+     };
+ 
+     #onScaleChanged = () => {
+@@ -177,8 +181,9 @@ export class MainWindow extends Adw.ApplicationWindow {
+     #getMaxSize = () => {
+         const display = Gdk.Display.get_default();
+         const surface = this.get_surface();
+-        const monitor = display.get_monitor_at_surface(surface);
+-        const geometry = monitor.get_geometry();
++        const monitor = (surface && display.get_monitor_at_surface(surface)) ??
++            display.get_monitors().get_item(0);
++        const geometry = monitor?.get_geometry() ?? {width: 800, height: 600};
+ 
+         // Sanitize unexpected values
+         if (geometry.width > 100_000)

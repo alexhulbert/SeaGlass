@@ -1,0 +1,6 @@
+{
+  "name": "coloreader",
+  "version": "0.1.0",
+  "entries": { "js": "index.js", "css": "index.css" },
+  "dependencies": { "ziro": "^0.1.6" }
+}

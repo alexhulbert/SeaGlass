@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+if [[ $# == 0 ]]; then
+  exec /usr/lib/firefox/firefox --new-window about:blank
+fi
+
+if [[ $1 == -* ]]; then
+  exec /usr/lib/firefox/firefox "$@"
+fi
+
+workspace=$(hyprctl activeworkspace -j | jq -r '.id')
+window=$(hyprctl clients -j | jq -r --argjson workspace "$workspace" \
+  '[.[] | select(.class == "firefox" and .workspace.id == $workspace)][0].address // empty')
+
+if [[ -n $window ]]; then
+  hyprctl eval "hl.dispatch(hl.dsp.focus({ window = 'address:$window' }))"
+  exec /usr/lib/firefox/firefox --new-tab "$@"
+fi
+
+exec /usr/lib/firefox/firefox --new-window "$@"

@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+set -euo pipefail
+exec 2>&1
+target=$1
+sunshine=app-dev.lizardbyte.app.Sunshine.service
+if [[ $2 == stop ]]; then
+    systemctl --user stop "$sunshine"
+    exec adb -s "$target" shell am force-stop com.limelight
+fi
+adb connect "$target" >/dev/null
+trap 'systemctl --user stop "$sunshine"; exit 1' ERR HUP INT TERM
+systemctl --user start "$sunshine"
+python3 "$(dirname -- "${BASH_SOURCE[0]}")/resolution.py" "${3:-}"
+uuid=$(jq -r .root.uniqueid "${XDG_CONFIG_HOME:-$HOME/.config}/sunshine/sunshine_state.json")
+adb -s "$target" shell am start -n com.limelight/.ShortcutTrampoline --es UUID "$uuid" --es AppId "$2"
+for ((attempt = 0; attempt < 30; attempt++)); do
+    if pactl --format=json list source-outputs | jq -e 'any(.[]; .properties."application.process.binary" == "sunshine" and .properties."stream.is-live" == "true")' >/dev/null; then
+        exit 0
+    fi
+    sleep 1
+done
+echo 'Moonlight did not connect to Sunshine' >&2
+systemctl --user stop "$sunshine"
+exit 1

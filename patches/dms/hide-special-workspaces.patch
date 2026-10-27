@@ -1,0 +1,194 @@
+diff --git a/quickshell/Common/SettingsData.qml b/quickshell/Common/SettingsData.qml
+index cd05aff..03964a5 100644
+--- a/quickshell/Common/SettingsData.qml
++++ b/quickshell/Common/SettingsData.qml
+@@ -202,6 +202,7 @@ Singleton {
+     property int niriLayoutGapsOverride: Spec.SPEC.niriLayoutGapsOverride.def
+     property int niriLayoutRadiusOverride: Spec.SPEC.niriLayoutRadiusOverride.def
+     property int niriLayoutBorderSize: Spec.SPEC.niriLayoutBorderSize.def
++    property bool hyprlandHideSpecialWorkspaceWindows: Spec.SPEC.hyprlandHideSpecialWorkspaceWindows.def
+     property int hyprlandLayoutGapsOverride: Spec.SPEC.hyprlandLayoutGapsOverride.def
+     property int hyprlandLayoutGapsOutOverride: Spec.SPEC.hyprlandLayoutGapsOutOverride.def
+     property int hyprlandLayoutRadiusOverride: Spec.SPEC.hyprlandLayoutRadiusOverride.def
+diff --git a/quickshell/Common/settings/SettingsSpec.js b/quickshell/Common/settings/SettingsSpec.js
+index c96445c..891c4ef 100644
+--- a/quickshell/Common/settings/SettingsSpec.js
++++ b/quickshell/Common/settings/SettingsSpec.js
+@@ -143,6 +143,9 @@ var LOCAL_SPEC = {
+         def: -1,
+         onChange: "updateCompositorLayout"
+     },
++    hyprlandHideSpecialWorkspaceWindows: {
++        def: false
++    },
+     hyprlandLayoutGapsOverride: {
+         def: -1,
+         onChange: "updateCompositorLayout"
+diff --git a/quickshell/Modules/DBar/Widgets/RunningApps.qml b/quickshell/Modules/DBar/Widgets/RunningApps.qml
+index 6e32155..3cc930f 100644
+--- a/quickshell/Modules/DBar/Widgets/RunningApps.qml
++++ b/quickshell/Modules/DBar/Widgets/RunningApps.qml
+@@ -79,7 +79,7 @@ BasePill {
+ 
+     readonly property var sortedToplevels: {
+         _toplevelsUpdateTrigger;
+-        let toplevels = CompositorService.sortedToplevels;
++        let toplevels = CompositorService.appListToplevels;
+         if (!toplevels || toplevels.length === 0)
+             return [];
+ 
+diff --git a/quickshell/Modules/Settings/CompositorLayoutTab.qml b/quickshell/Modules/Settings/CompositorLayoutTab.qml
+index 4b47c9e..92024d4 100644
+--- a/quickshell/Modules/Settings/CompositorLayoutTab.qml
++++ b/quickshell/Modules/Settings/CompositorLayoutTab.qml
+@@ -784,5 +784,23 @@ awk '$1 == "xray" { print FILENAME ":" FNR; exit }' $files 2>/dev/null`;
+                 onSliderValueChanged: newValue => SettingsData.set("mangoLayoutBorderSize", newValue)
+             }
+         }
++
++        SettingsCard {
++            width: parent.width
++            tags: ["hyprland", "dock", "running", "apps", "special", "workspace", "scratchpad"]
++            title: I18n.tr("Running apps")
++            settingKey: "hyprlandRunningApps"
++            iconName: "apps"
++            visible: CompositorService.isHyprland
++
++            SettingsToggleRow {
++                tags: ["hyprland", "dock", "running", "apps", "special", "workspace", "scratchpad"]
++                settingKey: "hyprlandHideSpecialWorkspaceWindows"
++                text: I18n.tr("Hide special workspace windows", "Hyprland running apps toggle")
++                description: I18n.tr("Hides windows in special workspaces from the dock and the running apps widget", "Hyprland hide special workspace windows toggle description")
++                checked: SettingsData.hyprlandHideSpecialWorkspaceWindows
++                onToggled: checked => SettingsData.set("hyprlandHideSpecialWorkspaceWindows", checked)
++            }
++        }
+     }
+ }
+diff --git a/quickshell/Modules/SurfaceWidgets/ApplicationStrip.qml b/quickshell/Modules/SurfaceWidgets/ApplicationStrip.qml
+index 48662a4..0ca8b67 100644
+--- a/quickshell/Modules/SurfaceWidgets/ApplicationStrip.qml
++++ b/quickshell/Modules/SurfaceWidgets/ApplicationStrip.qml
+@@ -431,7 +431,7 @@ Item {
+     })
+     onModelOptionsChanged: modelUpdate.schedule()
+     onDockScreenChanged: modelUpdate.schedule()
+-    readonly property var visibleWindows: options.currentWorkspace && dockScreen ? CompositorService.filterCurrentWorkspace(CompositorService.sortedToplevels, dockScreen.name) : CompositorService.sortedToplevels
++    readonly property var visibleWindows: options.currentWorkspace && dockScreen ? CompositorService.filterCurrentWorkspace(CompositorService.appListToplevels, dockScreen.name) : CompositorService.appListToplevels
+     onVisibleWindowsChanged: modelUpdate.schedule()
+     readonly property string windowMetadata: JSON.stringify(visibleWindows.map(toplevel => [toplevel.appId, ["org.quickshell", "com.danklinux.dms"].includes(toplevel.appId) ? toplevel.title : "", options.isolateDisplays ? (toplevel.screens || []).map(screen => screen.name) : null]))
+     onWindowMetadataChanged: modelUpdate.schedule()
+diff --git a/quickshell/Services/CompositorService.qml b/quickshell/Services/CompositorService.qml
+index 67ebe68..632cdc9 100644
+--- a/quickshell/Services/CompositorService.qml
++++ b/quickshell/Services/CompositorService.qml
+@@ -86,6 +86,7 @@ Singleton {
+     signal randrDataReady
+ 
+     property var sortedToplevels: []
++    property var appListToplevels: []
+     property var hyprlandVisibleSpecialWorkspaces: ({})
+     property bool _sortScheduled: false
+ 
+@@ -449,10 +450,20 @@ Singleton {
+             // Avoid reassigning (and invalidating bindings) when contents are equivalent.
+             if (!_toplevelListEquivalent(next, sortedToplevels))
+                 sortedToplevels = next;
++            const appList = _filterSpecialWorkspaceWindows(sortedToplevels);
++            if (!_toplevelListEquivalent(appList, appListToplevels))
++                appListToplevels = appList;
+             toplevelsChanged();
+         }
+     }
+ 
++    function _filterSpecialWorkspaceWindows(toplevels) {
++        if (!isHyprland || !SettingsData.hyprlandHideSpecialWorkspaceWindows || !Hyprland.toplevels)
++            return toplevels;
++        const hyprToplevels = Array.from(Hyprland.toplevels.values);
++        return toplevels.filter(t => !WindowModel.hyprlandSpecialWorkspaceName(hyprToplevels, t));
++    }
++
+     function _toplevelListEquivalent(a, b) {
+         if (!a || !b || a.length !== b.length)
+             return false;
+@@ -2203,6 +2214,10 @@ Singleton {
+     Connections {
+         target: SettingsData
+ 
++        function onHyprlandHideSpecialWorkspaceWindowsChanged() {
++            root.scheduleSort();
++        }
++
+         function onCompositorLayoutRefreshNeeded(frame) {
+             if (root.isNiri && typeof NiriService !== "undefined")
+                 NiriService.generateNiriLayoutConfig(frame);
+diff --git a/quickshell/translations/settings_search_index.json b/quickshell/translations/settings_search_index.json
+index c525177..bc23fec 100644
+--- a/quickshell/translations/settings_search_index.json
++++ b/quickshell/translations/settings_search_index.json
+@@ -12595,6 +12595,35 @@
+     ],
+     "conditionKey": "layoutCapable"
+   },
++  {
++    "section": "hyprlandHideSpecialWorkspaceWindows",
++    "label": "Hide special workspace windows",
++    "tabIndex": 37,
++    "category": "System & integrations",
++    "keywords": [
++      "active",
++      "apps",
++      "desktop",
++      "dock",
++      "hide",
++      "hides",
++      "hyprland",
++      "integrations",
++      "open",
++      "panel",
++      "running",
++      "scratchpad",
++      "special",
++      "system",
++      "taskbar",
++      "virtual",
++      "widget",
++      "windows",
++      "workspace"
++    ],
++    "description": "Hides them from the dock and the running apps widget",
++    "conditionKey": "layoutCapable"
++  },
+   {
+     "section": "hyprlandGroupbarDisableWhenOnly",
+     "label": "Hide with one window",
+@@ -13055,6 +13084,29 @@
+     ],
+     "conditionKey": "layoutCapable"
+   },
++  {
++    "section": "hyprlandRunningApps",
++    "label": "Running apps",
++    "tabIndex": 37,
++    "category": "System & integrations",
++    "keywords": [
++      "active",
++      "apps",
++      "dock",
++      "hyprland",
++      "integrations",
++      "open",
++      "running",
++      "scratchpad",
++      "special",
++      "system",
++      "taskbar",
++      "windows",
++      "workspace"
++    ],
++    "icon": "apps",
++    "conditionKey": "isHyprland"
++  },
+   {
+     "section": "showConfigReloadToast",
+     "label": "Show \"config reloaded\" toast",

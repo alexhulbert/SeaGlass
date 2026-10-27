@@ -1,0 +1,14 @@
+{
+  "v": 1,
+  "mode": "{{mode}}",
+  "bgDark": "{{colors.background.dark.hex}}",
+  "fgDark": "{{colors.on_surface.dark.hex}}",
+  "bgLight": "{{colors.background.light.hex}}",
+  "fgLight": "{{colors.on_surface.light.hex}}",
+  "accent": "{{colors.primary.default.hex}}",
+  "onAccent": "{{colors.on_primary.default.hex}}",
+  "muted": "{{colors.on_surface_variant.default.hex}}",
+  "surface": "{{colors.surface_container.default.hex}}",
+  "surfaceHigh": "{{colors.surface_container_high.default.hex}}",
+  "error": "{{colors.error.default.hex}}"
+}

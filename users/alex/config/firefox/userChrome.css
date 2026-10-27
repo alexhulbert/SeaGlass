@@ -1,0 +1,52 @@
+@import url("shared.css");
+
+#navigator-toolbox, #TabsToolbar, #nav-bar {
+  height: 52.5px !important;
+  min-height: 52.5px !important;
+  max-height: 52.5px !important;
+}
+
+#navigator-toolbox {
+  position: relative;
+  overflow: visible !important;
+  z-index: 3 !important;
+  flex-direction: column-reverse !important;
+}
+
+#nav-bar {
+  position: static !important;
+  padding-inline: 80px 40px !important;
+}
+
+#back-button, #forward-button, #PanelUI-button {
+  position: absolute !important;
+  top: 0;
+  height: 52.5px;
+  z-index: 5;
+}
+
+#back-button { inset-inline-start: 4px; }
+#forward-button { inset-inline-start: 40px; }
+#PanelUI-button { inset-inline-end: 0; }
+
+#navigator-toolbox:has(#urlbar:focus-within) #TabsToolbar {
+  margin-bottom: -52.5px !important;
+  visibility: hidden;
+  transition: margin-bottom 0s !important;
+}
+
+#TabsToolbar {
+  padding: 5px 40px 3.5px 0 !important;
+  transition: margin-bottom 150ms ease !important;
+}
+
+#tabbrowser-tabs { padding-inline-start: 80px !important; }
+
+#notifications-toolbar {
+  order: -1 !important;
+  z-index: 6 !important;
+}
+
+.titlebar-spacer[type="post-tabs"], .titlebar-buttonbox-container {
+  display: none !important;
+}

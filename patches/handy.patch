@@ -1,0 +1,129 @@
+diff --git a/src-tauri/Cargo.lock b/src-tauri/Cargo.lock
+index 3d13b84..fa9bcc7 100644
+--- a/src-tauri/Cargo.lock
++++ b/src-tauri/Cargo.lock
+@@ -2566,6 +2566,7 @@ dependencies = [
+  "transcribe-cpp",
+  "transcribe-rs",
+  "vad-rs",
++ "webkit2gtk",
+  "webview2-com",
+  "whatlang",
+  "windows 0.61.3",
+diff --git a/src-tauri/Cargo.toml b/src-tauri/Cargo.toml
+index d1ff831..2dc2974 100644
+--- a/src-tauri/Cargo.toml
++++ b/src-tauri/Cargo.toml
+@@ -163,6 +163,7 @@ objc2-service-management = "0.3.2"
+ [target.'cfg(target_os = "linux")'.dependencies]
+ gtk-layer-shell = { version = "0.8", features = ["v0_6"] }
+ gtk = "0.18"
++webkit2gtk = { version = "2", features = ["v2_32"] }
+ libc = "0.2"
+ transcribe-cpp = { version = "0.2.4", default-features = false, features = [
+   "dynamic-backends",
+diff --git a/src-tauri/src/gtk_theme.rs b/src-tauri/src/gtk_theme.rs
+new file mode 100644
+index 0000000..7274694
+--- /dev/null
++++ b/src-tauri/src/gtk_theme.rs
+@@ -0,0 +1,48 @@
++use gtk::prelude::*;
++use std::cell::RefCell;
++use webkit2gtk::{
++    UserContentInjectedFrames, UserContentManagerExt, UserStyleLevel, UserStyleSheet, WebViewExt,
++};
++
++/// Follow GTK palette changes when the user selects the system theme.
++pub fn apply(view: &webkit2gtk::WebView) {
++    let Some(manager) = view.user_content_manager() else {
++        return;
++    };
++    let previous = RefCell::new(None);
++    let update = move |context: &gtk::StyleContext| {
++        let colors: String = [
++            ("background", "window_bg_color", "theme_bg_color"),
++            ("text", "window_fg_color", "theme_fg_color"),
++            (
++                "background-ui",
++                "accent_bg_color",
++                "theme_selected_bg_color",
++            ),
++            ("logo-primary", "accent_bg_color", "theme_selected_bg_color"),
++            ("logo-stroke", "accent_fg_color", "theme_selected_fg_color"),
++        ]
++        .into_iter()
++        .filter_map(|(token, name, fallback)| {
++            context
++                .lookup_color(name)
++                .or_else(|| context.lookup_color(fallback))
++                .map(|color| format!("--color-{token}: {color};"))
++        })
++        .collect();
++        let sheet = UserStyleSheet::new(
++            &format!(":root:not([data-theme]) {{ {colors} }}"),
++            UserContentInjectedFrames::TopFrame,
++            UserStyleLevel::Author,
++            &[],
++            &[],
++        );
++        if let Some(sheet) = previous.replace(Some(sheet.clone())) {
++            manager.remove_style_sheet(&sheet);
++        }
++        manager.add_style_sheet(&sheet);
++    };
++    let context = view.style_context();
++    update(&context);
++    context.connect_changed(update);
++}
+diff --git a/src-tauri/src/lib.rs b/src-tauri/src/lib.rs
+index 898770b..955a7db 100644
+--- a/src-tauri/src/lib.rs
++++ b/src-tauri/src/lib.rs
+@@ -9,6 +9,8 @@ mod chinese_script;
+ pub mod cli;
+ mod clipboard;
+ mod commands;
++#[cfg(target_os = "linux")]
++mod gtk_theme;
+ mod helpers;
+ mod input;
+ mod llm_client;
+@@ -959,6 +961,8 @@ pub fn run(cli_args: CliArgs) {
+             // Only used on Windows, to disable WebView2 browser accelerators.
+             #[cfg_attr(not(target_os = "windows"), allow(unused_variables))]
+             let main_window = win_builder.build()?;
++            #[cfg(target_os = "linux")]
++            main_window.with_webview(|webview| gtk_theme::apply(&webview.inner()))?;
+ 
+             // Disable WebView2 browser accelerators (F5, F6, Ctrl+F, F12, ...).
+             // A settings window has no use for them, and pressing F6 while
+diff --git a/src-tauri/src/main.rs b/src-tauri/src/main.rs
+index db502060..b57651ae 100644
+--- a/src-tauri/src/main.rs
++++ b/src-tauri/src/main.rs
+@@ -10,5 +10,7 @@ fn main() {
+     {
+         // DMABUF renderer causes crashes on various GPU/display server configurations
+         // See: https://github.com/tauri-apps/tauri/issues/9394
+-        std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
++        if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
++            std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
++        }
+     }
+diff --git a/src-tauri/src/overlay.rs b/src-tauri/src/overlay.rs
+index 292acce..a2cb487 100644
+--- a/src-tauri/src/overlay.rs
++++ b/src-tauri/src/overlay.rs
+@@ -431,6 +431,11 @@ pub fn create_recording_overlay(app_handle: &AppHandle) {
+         Ok(window) => {
+             #[cfg(target_os = "linux")]
+             {
++                if let Err(error) =
++                    window.with_webview(|webview| crate::gtk_theme::apply(&webview.inner()))
++                {
++                    log::warn!("Failed to apply GTK palette to recording overlay: {error}");
++                }
+                 // Try to initialize GTK layer shell, ignore errors if compositor doesn't support it
+                 if init_gtk_layer_shell(&window) {
+                     debug!("GTK layer shell initialized for overlay window");
